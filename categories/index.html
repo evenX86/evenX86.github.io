@@ -17,7 +17,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>曲径通幽</title>
+    <title>categories | 曲径通幽</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" type="text/css">
@@ -80,7 +80,7 @@
         
     $(function() {
         // page-id...
-        var pageId = "archives/index.html";
+        var pageId = "categories/index.html";
         pageId = pageId.substr(0, pageId.indexOf("/"));
         if(pageId === "") pageId = "index";
         
@@ -91,56 +91,39 @@
 
 <div class="container archive-body">
     <div class="row">
-        <div class="col-xs-2 well">
-            <h2 class="archive-icon">归档</h2>
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li></ul>
+        <div class="col-xs-3 well">
+            <div class="category-title" >
+                <h2 class="category-icon">分类</h2>
+                
+                <a data-src="/categories/随笔/" href="#随笔" title="随笔">随笔<sup>1</sup></a>
+                
+            </div>
         </div>
         
-        <div class="col-xs-10">
-            
-            <article class="post">
-                <div class="jumbotron">
-                    <h1><a href="/2015/03/25/hello-world/" title="Hello World">Hello World</a></h1>
-
-                    
-                        <p>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the </p>
-                    
-
-                    <p class="say-title">
-                        —— <img src="/images/avatar.gif" class="img-circle index-post-avatar" />
-                        <a href="http://evenx86.github.io" target="_blank" title="xuyifei">xuyifei</a>
-                        于2015-03-25自豪地以 <a class="article-tag-link" href="/tags/随笔/">随笔</a> 唠嗑
-                    </p>
-                </div>
-            </article>
-            
-            <article class="post">
-                <div class="jumbotron">
-                    <h1><a href="/2015/03/25/hexo/" title="hexo">hexo</a></h1>
-
-                    
-                        <p></p>
-                    
-
-                    <p class="say-title">
-                        —— <img src="/images/avatar.gif" class="img-circle index-post-avatar" />
-                        <a href="http://evenx86.github.io" target="_blank" title="xuyifei">xuyifei</a>
-                        于2015-03-25自豪地唠嗑
-                    </p>
-                </div>
-            </article>
-            
-            
-            
+        <div class="all-list-box">
         </div>
     </div>
 </div>
-
+    
 <script>
 $(function() {
-    $(".archive-list-count").addClass("badge");
+    var box = $('.all-list-box');
+    var first = $('.category-title a:first-of-type');
+    var list = $('.category-title a');
+    
+    box.load(first.attr('data-src').toString() + ' #category-list-body');
+    first.addClass('currentTag');
+    list.each(function() {
+        $(this).click(function() {
+            var listSrc = $(this).attr('data-src').toString() + ' #category-list-body';
+            box.load(listSrc);
+            list.removeClass('currentTag');
+            $(this).addClass('currentTag');
+        });
+    });
 });
 </script>
+
 
     <footer id="footer">
     <div id="bottom-tip">

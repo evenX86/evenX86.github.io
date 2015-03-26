@@ -80,7 +80,7 @@
         
     $(function() {
         // page-id...
-        var pageId = "archives/index.html";
+        var pageId = "tags/随笔/index.html";
         pageId = pageId.substr(0, pageId.indexOf("/"));
         if(pageId === "") pageId = "index";
         
@@ -88,15 +88,18 @@
     });
     </script>
     
-
 <div class="container archive-body">
     <div class="row">
-        <div class="col-xs-2 well">
-            <h2 class="archive-icon">归档</h2>
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li></ul>
+        <div class="col-xs-3 well">
+            <div class="archive-title" >
+                <h2 class="tag-icon">随笔</h2>
+                <div>
+                    <a href="/tags"><< 返回标签列表</a> 
+                </div>
+            </div>
         </div>
         
-        <div class="col-xs-10">
+        <div class="col-xs-9" id="tag-list-body">
             
             <article class="post">
                 <div class="jumbotron">
@@ -114,34 +117,14 @@
                 </div>
             </article>
             
-            <article class="post">
-                <div class="jumbotron">
-                    <h1><a href="/2015/03/25/hexo/" title="hexo">hexo</a></h1>
-
-                    
-                        <p></p>
-                    
-
-                    <p class="say-title">
-                        —— <img src="/images/avatar.gif" class="img-circle index-post-avatar" />
-                        <a href="http://evenx86.github.io" target="_blank" title="xuyifei">xuyifei</a>
-                        于2015-03-25自豪地唠嗑
-                    </p>
-                </div>
-            </article>
-            
             
             
         </div>
     </div>
+        
+    <div class="col-xs-19 all-list-box">
+    </div>
 </div>
-
-<script>
-$(function() {
-    $(".archive-list-count").addClass("badge");
-});
-</script>
-
     <footer id="footer">
     <div id="bottom-tip">
         曲径通幽
