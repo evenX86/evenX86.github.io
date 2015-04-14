@@ -18,9 +18,6 @@ body {
 a {
   transition: color ease 0.3s;
 }
-blockquote {
-  font-size: 12px;
-}
 h1,
 h2,
 h3,
