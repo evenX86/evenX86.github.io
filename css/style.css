@@ -27,6 +27,9 @@ h6,
 h7 {
   font-weight: bold;
 }
+.post-body-inner p {
+  font-size: 17.5px;
+}
 #toc {
   float: right;
   margin-left: 10px;
