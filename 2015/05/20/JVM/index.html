@@ -94,7 +94,7 @@
         <h1>Java�ڴ������������ܽᱸ��</h1>
         
         <div class="time-info">
-发表于:<time datetime="2015-05-20T12:25:21.000Z" itemprop="datePublished">2015-05-20</time>，更新于:<time datetime="2015-05-20T12:39:46.224Z" itemprop="dateModified">2015-05-20</time>，By <a href="http://evenx86.github.io" title="xuyifei">xuyifei</a>
+发表于:<time datetime="2015-05-20T12:25:21.000Z" itemprop="datePublished">2015-05-20</time>，更新于:<time datetime="2015-05-20T12:44:42.540Z" itemprop="dateModified">2015-05-20</time>，By <a href="http://evenx86.github.io" title="xuyifei">xuyifei</a>
         </div>
         
         <div class="post-body-inner">
@@ -109,7 +109,7 @@
 <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USER       PID <span class="preprocessor">%</span>CPU <span class="preprocessor">%</span>MEM    <span class="title">VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root         7840</span> <span class="number">22.3</span>     <span class="number">82.5</span>  <span class="number">45956536</span> <span class="number">27124588</span> ?   Sl   May<span class="number">19</span> <span class="number">380</span>:<span class="number">04</span> java</span><br></pre></td></tr></table></figure>
 <p>���Կ���Java ����ռ��27G��<br>һ����˵ͬ����������Ҫ��ô�����ڴ棬�鿴GC����:</p>
 <figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@localhost</span> sync]<span class="comment"># jstat  -gc 7840</span></span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       PC     PU    YGC     YGCT    FGC    FGCT     GCT   </span><br><span class="line"> <span class="number">0.0</span>   <span class="number">65536.0</span>  <span class="number">0.0</span>   <span class="number">65536.0</span> <span class="number">13148160.0</span> <span class="number">9207808.0</span> <span class="number">14049280.0</span> <span class="number">10819203.6</span> <span class="number">1048576.0</span> <span class="number">18093.7</span>    <span class="number">125</span>   <span class="number">25.202</span>   <span class="number">0</span>      <span class="number">0.000</span>   <span class="number">25.202</span></span><br></pre></td></tr></table></figure>
-<h3 id="����1:">����1:</h3><p>OLD���Ѿ�������(10/14)<br>�ع��¶��������ν���old���ģ�</p>
+<h3 id="����1:">����1:</h3><p>OLD���Ѿ�������(10/14),<br>�ع��¶��������ν���old���ģ�</p>
 <ul>
 <li>���ڴ����Ķ��󽫽�����������������Eden���о�����һ��MinorGC֮������Survivor���У�ÿ����һ��minorgc����û�б����գ�Ĭ�Ͼ���15��gc��δ�����վͻ�����old��</li>
 <li>������ֱ�ӽ������������������ṩ��һ��<code>-XX:PretenureSize</code>����,��������ֵ�Ķ���ֱ�����������з��䡣��������Eden����Survivor���з����������ڴ渴�ƣ��ò���ֻ�Լ����ռ��������ã���<br>JVM�ڴ����չ���<blockquote>
