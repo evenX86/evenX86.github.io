@@ -6,7 +6,7 @@
     
     <meta name="author" content="xuyifei">
     
-    <meta name="description" content="����12345[root@localhost sync]# free -m             total       used       free     shared    buffers     cachedMem:         32094      29292       28">
+    <meta name="description" content="引入12345[root@localhost sync]# free -m             total       used       free     shared    buffers     cachedMem:         32094      29292       2802">
     
     
 
@@ -19,7 +19,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Java�ڴ������������ܽᱸ�� | 曲径通幽</title>
+    <title>Java内存与垃圾回收总结备忘 | 曲径通幽</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" type="text/css">
@@ -82,7 +82,7 @@
         
     $(function() {
         // page-id...
-        var pageId = "2015/05/20/JVM/";
+        var pageId = "2015/05/20/jvm/";
         pageId = pageId.substr(0, pageId.indexOf("/"));
         if(pageId === "") pageId = "index";
         
@@ -91,33 +91,33 @@
     </script>
     <article class="post container">
     <div class="well post-body first-post last-post">
-        <h1>Java�ڴ������������ܽᱸ��</h1>
+        <h1>Java内存与垃圾回收总结备忘</h1>
         
         <div class="time-info">
-发表于:<time datetime="2015-05-20T12:25:21.000Z" itemprop="datePublished">2015-05-20</time>，更新于:<time datetime="2015-05-20T12:44:42.540Z" itemprop="dateModified">2015-05-20</time>，By <a href="http://evenx86.github.io" title="xuyifei">xuyifei</a>
+发表于:<time datetime="2015-05-20T12:25:21.000Z" itemprop="datePublished">2015-05-20</time>，更新于:<time datetime="2015-05-20T12:47:17.849Z" itemprop="dateModified">2015-05-20</time>，By <a href="http://evenx86.github.io" title="xuyifei">xuyifei</a>
         </div>
         
         <div class="post-body-inner">
             <div id="toc" class="toc-article well">
                 <strong class="toc-title">大纲</strong>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#����"><span class="toc-number">1.</span> <span class="toc-text">����</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#����1:"><span class="toc-number">1.1.</span> <span class="toc-text">����1:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#����2"><span class="toc-number">1.2.</span> <span class="toc-text">����2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#�ο�����:"><span class="toc-number">2.</span> <span class="toc-text">�ο�����:</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引入"><span class="toc-number">1.</span> <span class="toc-text">引入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题1:"><span class="toc-number">1.1.</span> <span class="toc-text">问题1:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题2"><span class="toc-number">1.2.</span> <span class="toc-text">问题2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接:"><span class="toc-number">2.</span> <span class="toc-text">参考链接:</span></a></li></ol>
             </div>
             
-            <h2 id="����">����</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="annotation">@localhost</span> sync]# free -m</span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line"><span class="string">Mem:</span>         <span class="number">32094</span>      <span class="number">29292</span>       <span class="number">2802</span>          <span class="number">0</span>        <span class="number">274</span>       <span class="number">1647</span></span><br><span class="line">-<span class="regexp">/+ buffers/</span><span class="string">cache:</span>      <span class="number">27370</span>       <span class="number">4724</span></span><br><span class="line"><span class="string">Swap:</span>            <span class="number">0</span>          <span class="number">0</span>          <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>����һ̨Javaͬ�����������ڴ�ռ��������ʹ��jmap�鿴������Ϣ:<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# jmap -histo 7840</span><br><span class="line"></span><br><span class="line"><span class="header"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span></span><br><span class="line"><span class="code">   1:      77399077     5156382528  [C</span></span><br><span class="line"><span class="code">   2:      41662587     3924901448  [I</span></span><br><span class="line"><span class="code">   3:      33678441     2424847752  java.util.LinkedHashMap$Entry</span></span><br><span class="line"><span class="code">   4:      64361432     2059565824  java.lang.String</span></span><br><span class="line"><span class="code">   5:      18967113     1669105944  java.util.regex.Matcher</span></span><br><span class="line"><span class="code">   6:       9996594     1534988024  [Ljava.lang.Object;</span></span><br><span class="line"><span class="code">   7:       7225435     1235477264  [Ljava.util.HashMap$Entry;</span></span><br><span class="line"><span class="code">   8:      11458421     1074750168  [B</span></span><br><span class="line"><span class="code">            ��</span></span><br><span class="line"><span class="code">            ��</span></span><br><span class="line"><span class="code">            ��</span></span><br><span class="line">Total     332044853    22585874416</span><br></pre></td></tr></table></figure></p>
-<p>���������������кü������⣬��ʱ�Ȳ��ܡ�<br>����Java�����ã�<code>Xms26g -Xmx26g -Xmn12g -XX:PermSize=1024M -Xss2M</code><br>ʵ��ռ�õ�29G�ڴ���Java heapռ��22G��<br>�ٿ���PS�Ľ�����<code>ps -aux|sort -k 1 -r |less</code></p>
+            <h2 id="引入">引入</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="annotation">@localhost</span> sync]# free -m</span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line"><span class="string">Mem:</span>         <span class="number">32094</span>      <span class="number">29292</span>       <span class="number">2802</span>          <span class="number">0</span>        <span class="number">274</span>       <span class="number">1647</span></span><br><span class="line">-<span class="regexp">/+ buffers/</span><span class="string">cache:</span>      <span class="number">27370</span>       <span class="number">4724</span></span><br><span class="line"><span class="string">Swap:</span>            <span class="number">0</span>          <span class="number">0</span>          <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>这是一台Java同步服务器的内存占用情况，使用jmap查看堆上信息:<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# jmap -histo 7840</span><br><span class="line"></span><br><span class="line"><span class="header"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span></span><br><span class="line"><span class="code">   1:      77399077     5156382528  [C</span></span><br><span class="line"><span class="code">   2:      41662587     3924901448  [I</span></span><br><span class="line"><span class="code">   3:      33678441     2424847752  java.util.LinkedHashMap$Entry</span></span><br><span class="line"><span class="code">   4:      64361432     2059565824  java.lang.String</span></span><br><span class="line"><span class="code">   5:      18967113     1669105944  java.util.regex.Matcher</span></span><br><span class="line"><span class="code">   6:       9996594     1534988024  [Ljava.lang.Object;</span></span><br><span class="line"><span class="code">   7:       7225435     1235477264  [Ljava.util.HashMap$Entry;</span></span><br><span class="line"><span class="code">   8:      11458421     1074750168  [B</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line">Total     332044853    22585874416</span><br></pre></td></tr></table></figure></p>
+<p>上面这个输出中有好几个问题，暂时先不管。<br>看下Java的配置：<code>Xms26g -Xmx26g -Xmn12g -XX:PermSize=1024M -Xss2M</code><br>实际占用的29G内存中Java heap占了22G，<br>再看下PS的结果：<code>ps -aux|sort -k 1 -r |less</code></p>
 <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USER       PID <span class="preprocessor">%</span>CPU <span class="preprocessor">%</span>MEM    <span class="title">VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root         7840</span> <span class="number">22.3</span>     <span class="number">82.5</span>  <span class="number">45956536</span> <span class="number">27124588</span> ?   Sl   May<span class="number">19</span> <span class="number">380</span>:<span class="number">04</span> java</span><br></pre></td></tr></table></figure>
-<p>���Կ���Java ����ռ��27G��<br>һ����˵ͬ����������Ҫ��ô�����ڴ棬�鿴GC����:</p>
+<p>可以看到Java 进程占了27G。<br>一般来说同步程序并需要这么多的内存，查看GC情况:</p>
 <figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@localhost</span> sync]<span class="comment"># jstat  -gc 7840</span></span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       PC     PU    YGC     YGCT    FGC    FGCT     GCT   </span><br><span class="line"> <span class="number">0.0</span>   <span class="number">65536.0</span>  <span class="number">0.0</span>   <span class="number">65536.0</span> <span class="number">13148160.0</span> <span class="number">9207808.0</span> <span class="number">14049280.0</span> <span class="number">10819203.6</span> <span class="number">1048576.0</span> <span class="number">18093.7</span>    <span class="number">125</span>   <span class="number">25.202</span>   <span class="number">0</span>      <span class="number">0.000</span>   <span class="number">25.202</span></span><br></pre></td></tr></table></figure>
-<h3 id="����1:">����1:</h3><p>OLD���Ѿ�������(10/14),<br>�ع��¶��������ν���old���ģ�</p>
+<h3 id="问题1:">问题1:</h3><p>OLD区已经快满了(10/14),<br>回顾下对象是如何进入old区的：</p>
 <ul>
-<li>���ڴ����Ķ��󽫽�����������������Eden���о�����һ��MinorGC֮������Survivor���У�ÿ����һ��minorgc����û�б����գ�Ĭ�Ͼ���15��gc��δ�����վͻ�����old��</li>
-<li>������ֱ�ӽ������������������ṩ��һ��<code>-XX:PretenureSize</code>����,��������ֵ�Ķ���ֱ�����������з��䡣��������Eden����Survivor���з����������ڴ渴�ƣ��ò���ֻ�Լ����ռ��������ã���<br>JVM�ڴ����չ���<blockquote>
-<p>1��������Eden�������ڴ�����<br>2����Eden�����ˣ��ٴ������󣬻���Ϊ���벻���ռ䣬����minorGC������young(eden+1survivor)������������<br>3��minorGCʱ��Eden���ܱ����յĶ��󱻷��뵽�յ�survivor��Eden�϶��ᱻ���գ�����һ��survivor�ﲻ�ܱ�GC���յĶ���Ҳ�ᱻ��������survivor��ʼ�ձ�֤һ��survivor�ǿյ�<br>4��������3����ʱ������������survivor���ˣ�����Щ������copy��old��������survivor��û������������Щ�����Ѿ��㹻Old��Ҳ������Old�� XX:MaxTenuringThreshold<br>5����Old����������֮�󣬽���fullGC</p>
+<li>长期存活的对象将进入老年代，对象在Eden区中经过第一次MinorGC之后进入Survivor区中，每经过一次minorgc如果没有被回收，默认经过15次gc还未被回收就会进入old区</li>
+<li>大对象直接进入老年代，虚拟机提供了一个<code>-XX:PretenureSize</code>参数,大于这个值的对象直接在老年代中分配。避免了再Eden区和Survivor区中发生大量的内存复制（该参数只对几个收集器起作用）。<br>JVM内存回收过程<blockquote>
+<p>1、对象在Eden区完成内存分配<br>2、当Eden区满了，再创建对象，会因为申请不到空间，触发minorGC，进行young(eden+1survivor)区的垃圾回收<br>3、minorGC时，Eden不能被回收的对象被放入到空的survivor（Eden肯定会被清空），另一个survivor里不能被GC回收的对象也会被放入这个survivor，始终保证一个survivor是空的<br>4、当做第3步的时候，如果发现survivor满了，则这些对象被copy到old区，或者survivor并没有满，但是有些对象已经足够Old，也被放入Old区 XX:MaxTenuringThreshold<br>5、当Old区被放满的之后，进行fullGC</p>
 </blockquote>
 </li>
 </ul>
-<h3 id="����2">����2</h3><p>heap��char����ռ���ڴ����࣬���ǳ���������ʾ����char������<br><a href="http://stackoverflow.com/questions/20388081/why-my-java-heap-is-with-so-many-char" target="_blank" rel="external">Why my Java heap is with so many char</a></p>
+<h3 id="问题2">问题2</h3><p>heap中char数组占用内存过多，但是程序并有显示生成char对象。<br><a href="http://stackoverflow.com/questions/20388081/why-my-java-heap-is-with-so-many-char" target="_blank" rel="external">Why my Java heap is with so many char</a></p>
 <blockquote>
 <p>811k of char[] correspond to 800k of Strings, so yes, you have too many Strings.<br>If you’re having a memory leak (judging by the tag), then it’s most probably are strings in a HashMap. You have 800k instances of strings, 200k instances of hash entries, 30k of maps. This probably means that your strings are kept in this cache and are not removed. Global map is a frequent cause of memory leaks, one needs to make sure that they are evicted from this cache.</p>
 </blockquote>
@@ -125,9 +125,9 @@
 <p><a href="http://stackoverflow.com/questions/1985480/why-does-the-profiler-show-large-numbers-of-char-instances-when-i-am-not-creat" target="_blank" rel="external">Why does the profiler show large numbers of char[] instances when I am not creating any?</a></p>
 <blockquote>
 <p>Take a look at the String source code. The String object itself contains a cached hash code, a count of the number of characters (again, for optimisation purposes), an offset (since a String.substr()points to the original string data) and the character array, which contains the actual string data. Hence your metrics showing that String consumes relatively little, but the majority of memory is taken by the underlying character arrays.</p>
-<p>String is the perfect example. It contains a handful of primitive fields, plus the char[]. The char[]accounts for the vast majority of the memory usage. The shallow size of String is very small, but it’s retained size is much larger, since that includes the char[].<br>���ž���˵����û��ֱ��ʹ��char���飬���Ƕ�String��Ƶ��ʹ��Ҳ�������������⡣</p>
+<p>String is the perfect example. It contains a handful of primitive fields, plus the char[]. The char[]accounts for the vast majority of the memory usage. The shallow size of String is very small, but it’s retained size is much larger, since that includes the char[].<br>大概就是说尽管没有直接使用char数组，但是对String的频繁使用也会造成这个问题。</p>
 </blockquote>
-<h2 id="�ο�����:">�ο�����:</h2><p><a href="http://www.importnew.com/14086.html" target="_blank" rel="external">Java�ڴ����������յ���</a></p>
+<h2 id="参考链接:">参考链接:</h2><p><a href="http://www.importnew.com/14086.html" target="_blank" rel="external">Java内存与垃圾回收调优</a></p>
 
             
             <section class="comment">
