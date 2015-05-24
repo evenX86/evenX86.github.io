@@ -80,7 +80,7 @@
         
     $(function() {
         // page-id...
-        var pageId = "archives/2015/04/index.html";
+        var pageId = "tags/spring-java/index.html";
         pageId = pageId.substr(0, pageId.indexOf("/"));
         if(pageId === "") pageId = "index";
         
@@ -88,48 +88,37 @@
     });
     </script>
     
-
 <div class="container archive-body">
     <div class="row">
-        <div class="col-xs-2 well">
-            <h2 class="archive-icon">2015/4</h2>
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li></ul>
+        <div class="col-xs-3 well">
+            <div class="archive-title" >
+                <h2 class="tag-icon">spring,java</h2>
+                <div>
+                    <a href="/tags"><< 返回标签列表</a> 
+                </div>
+            </div>
         </div>
         
-        <div class="col-xs-10">
+        <div class="col-xs-9" id="tag-list-body">
             
             <article class="post">
                 <div class="jumbotron">
-                    <h1><a href="/2015/04/21/JDK-Tools/" title="JDK 自带工具备忘">JDK 自带工具备忘</a></h1>
+                    <h1><a href="/2015/05/24/Spring-bean/" title="Bean的基本用法备忘">Bean的基本用法备忘</a></h1>
 
                     
-                        <p>简介
-jps JVM process status 显示系统内所有的hotspot虚拟机进程。
-jstat JVM statistics monitoring tool 收集hotspot虚拟机各方面的运行数据
-jinfo configuration info for java </p>
+                        <p>前言本文为实验楼Spring框架入门教程 学习笔记
+Spring中的相互引用
+引用不同配置文件中的Bean，可以使用ref标签，结合bean属性
+引用相同配置文件中的Bean，可以使用ref标签,结合local属性
+
+
+ref 标签中 bean 属性，既可以引用相同xml文件中的</p>
                     
 
                     <p class="say-title">
                         —— <img src="/images/avatar.gif" class="img-circle index-post-avatar" />
                         <a href="http://evenx86.github.io" target="_blank" title="xuyifei">xuyifei</a>
-                        于2015-04-21自豪地以 <a class="article-tag-link" href="/tags/jdk/">jdk</a> 唠嗑
-                    </p>
-                </div>
-            </article>
-            
-            <article class="post">
-                <div class="jumbotron">
-                    <h1><a href="/2015/04/14/jedis-pipline-test/" title="jedis pipline 性能测试">jedis pipline 性能测试</a></h1>
-
-                    
-                        <p>pipline模式
-Pipeline：“管道”，和很多设计模式中的“管道”具有同样的概念，pipleline的操作，将明确client与server端的交互，都是“单向的”：你可以将多个command，依次发给server，但在此期间，你将无法获得单个command的响应数据，此</p>
-                    
-
-                    <p class="say-title">
-                        —— <img src="/images/avatar.gif" class="img-circle index-post-avatar" />
-                        <a href="http://evenx86.github.io" target="_blank" title="xuyifei">xuyifei</a>
-                        于2015-04-14自豪地以 <a class="article-tag-link" href="/tags/jedis/">jedis</a> 唠嗑
+                        于2015-05-24自豪地以 <a class="article-tag-link" href="/tags/spring-java/">spring,java</a> 唠嗑
                     </p>
                 </div>
             </article>
@@ -138,14 +127,10 @@ Pipeline：“管道”，和很多设计模式中的“管道”具有同样的
             
         </div>
     </div>
+        
+    <div class="col-xs-19 all-list-box">
+    </div>
 </div>
-
-<script>
-$(function() {
-    $(".archive-list-count").addClass("badge");
-});
-</script>
-
     <footer id="footer">
     <div id="bottom-tip">
         曲径通幽
