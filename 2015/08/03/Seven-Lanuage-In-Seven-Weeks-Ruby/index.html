@@ -6,15 +6,20 @@
     
     <meta name="author" content="xuyifei">
     
-    <meta name="description" content="��������
+    <meta name="description" content="语言特性
 
-Ruby�ǽ���ִ�еġ�
-����NIL��false ֮������ֵ����ʾtrue
+Ruby是解释执行的。
+除了NIL和false 之外其他值都表示true
 
-Ѽ������
+鸭子类型
 
-Ruby�ڴ󲿷�ʱ���ﶼ���ֵ���һ��ǿ�������ԡ�Ruby��������ʱ���Ǳ���ʱ�������ͼ��飨��̬���ͣ���
-��νѼ�">
+Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行时而非编译时进行类型检查（动态类型）。
+所谓鸭子类型并不关心其内在类型是什么。只要看上去像就可以了。
+
+ruby 类型
+数组
+散列表。
+">
     
     
 
@@ -27,7 +32,7 @@ Ruby�ڴ󲿷�ʱ���ﶼ���ֵ���һ��ǿ�������
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>���������Զ����ʼ�֮Ruby | 曲径通幽</title>
+    <title>七周七语言读书笔记之Ruby | 曲径通幽</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" type="text/css">
@@ -99,61 +104,61 @@ Ruby�ڴ󲿷�ʱ���ﶼ���ֵ���һ��ǿ�������
     </script>
     <article class="post container">
     <div class="well post-body first-post last-post">
-        <h1>���������Զ����ʼ�֮Ruby</h1>
+        <h1>七周七语言读书笔记之Ruby</h1>
         
         <div class="time-info">
-发表于:<time datetime="2015-08-03T01:46:08.291Z" itemprop="datePublished">2015-08-03</time>，更新于:<time datetime="2015-08-03T01:46:08.291Z" itemprop="dateModified">2015-08-03</time>，By <a href="http://evenx86.github.io" title="xuyifei">xuyifei</a>
+发表于:<time datetime="2015-08-03T01:55:25.178Z" itemprop="datePublished">2015-08-03</time>，更新于:<time datetime="2015-08-03T01:55:25.178Z" itemprop="dateModified">2015-08-03</time>，By <a href="http://evenx86.github.io" title="xuyifei">xuyifei</a>
         </div>
         
         <div class="post-body-inner">
             <div id="toc" class="toc-article well">
                 <strong class="toc-title">大纲</strong>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ruby_����"><span class="toc-number">1.</span> <span class="toc-text">ruby ����</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#����"><span class="toc-number">1.1.</span> <span class="toc-text">����</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ԫ����"><span class="toc-number">2.</span> <span class="toc-text">Ԫ����</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#������"><span class="toc-number">2.1.</span> <span class="toc-text">������</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#method_missing"><span class="toc-number">2.2.</span> <span class="toc-text">method_missing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#module��ģ�顣"><span class="toc-number">2.3.</span> <span class="toc-text">module��ģ�顣</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#�ܽ�"><span class="toc-number">3.</span> <span class="toc-text">�ܽ�</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ruby_类型"><span class="toc-number">1.</span> <span class="toc-text">ruby 类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题"><span class="toc-number">1.1.</span> <span class="toc-text">问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#元编程"><span class="toc-number">2.</span> <span class="toc-text">元编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#开放类"><span class="toc-number">2.1.</span> <span class="toc-text">开放类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#method_missing"><span class="toc-number">2.2.</span> <span class="toc-text">method_missing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#module，模块。"><span class="toc-number">2.3.</span> <span class="toc-text">module，模块。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
             </div>
             
-            <p>��������</p>
+            <p>语言特性</p>
 <ul>
-<li>Ruby�ǽ���ִ�еġ�</li>
-<li>����NIL��false ֮������ֵ����ʾtrue</li>
+<li>Ruby是解释执行的。</li>
+<li>除了NIL和false 之外其他值都表示true</li>
 </ul>
-<p>Ѽ������</p>
+<p>鸭子类型</p>
 <ul>
-<li>Ruby�ڴ󲿷�ʱ���ﶼ���ֵ���һ��ǿ�������ԡ�Ruby��������ʱ���Ǳ���ʱ�������ͼ��飨��̬���ͣ���</li>
-<li>��νѼ�����Ͳ�������������������ʲô��ֻҪ����ȥ���Ϳ����ˡ�</li>
+<li>Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行时而非编译时进行类型检查（动态类型）。</li>
+<li>所谓鸭子类型并不关心其内在类型是什么。只要看上去像就可以了。</li>
 </ul>
-<h2 id="ruby_����">ruby ����</h2><ul>
-<li>����</li>
-<li>ɢ�б�</li>
-<li><p>��������yield<br>Ruby��һ�������Ǵ�����ֻռһ�е��ô����ţ�������ռ���е���doend</p>
+<h2 id="ruby_类型">ruby 类型</h2><ul>
+<li>数组</li>
+<li>散列表。</li>
+<li><p>代码块和yield<br>Ruby的一般惯例是代码块只占一行的用大括号，代码块占多行的用doend</p>
 </li>
-<li><p>������<br>Object -&gt; Module -&gt; Class-&gt; Numeric -&gt; Integer -&gt; Fixnum -&gt;4</p>
+<li><p>定义类<br>Object -&gt; Module -&gt; Class-&gt; Numeric -&gt; Integer -&gt; Fixnum -&gt;4</p>
 </li>
 </ul>
-<p>��һ���Դ�д��ĸ��ͷ��д�����շ���������ʵ������ǰ��@��������ǰ��������@@</p>
-<p><code>attr</code>��������ʵ�������ͷ��ʱ�����ͬ������<br><code>attr_accessor</code>����ʵ�����������ʷ��������÷�����</p>
-<p>Rubyʹ��ģ�����������̳С����������а�����һ��ģ�飬��ô��ģ������Ϊ�ͳ�������Ϊ����һ���֡�</p>
-<h3 id="����">����</h3><ul>
-<li>�ֱ��ҵ��ô������Ͳ��ô�������ȡ�ļ��ķ������ô�������ʲô�ô�<br>ʹ�ô�����:</li>
+<p>类一般以大写字母开头，写采用驼峰命名法，实例变量前加@，类变量前必须加上@@</p>
+<p><code>attr</code>用来定义实例变量和访问变量的同名方法<br><code>attr_accessor</code>定义实例变量，访问方法和设置方法。</p>
+<p>Ruby使用模块来处理多继承。如果在类中包含了一个模块，那么该模块的行为和常量会成为类的一部分。</p>
+<h3 id="问题">问题</h3><ul>
+<li>分别找到用代码块和不用代码块读取文件的方法，用代码块有什么好处<br>使用代码块:</li>
 </ul>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">ToFile</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>filename</span><br><span class="line">    <span class="string">"Object_24144260.txt"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>ptint_f</span><br><span class="line">    <span class="constant">File</span>.open(filename, <span class="string">'r'</span>) &#123; |f| puts f.readline &#125;</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>��ʹ�ô�����:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f = File.<span class="function"><span class="title">new</span><span class="params">(<span class="string">"text.txt"</span>,<span class="string">"r"</span>)</span></span></span><br><span class="line">puts f<span class="class">.gets</span></span><br><span class="line">f.close</span><br></pre></td></tr></table></figure></p>
-<p>�����鷽�����á�</p>
+<p>不使用代码块:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f = File.<span class="function"><span class="title">new</span><span class="params">(<span class="string">"text.txt"</span>,<span class="string">"r"</span>)</span></span></span><br><span class="line">puts f<span class="class">.gets</span></span><br><span class="line">f.close</span><br></pre></td></tr></table></figure></p>
+<p>代码块方便调用。</p>
 <ul>
-<li>���ΰ�ɢ�б�ת��������?������ת����ɢ�б���?<br>��ɢ�б�ת��������:<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">animals = &#123;'1'=&gt;'one','2'=&gt;'two'&#125;</span><br><span class="line"><span class="header">#puts animals.to_a</span></span><br><span class="line">animals = animals.to_a</span><br><span class="line">puts animals[<span class="link_label">1</span>][<span class="link_reference">1</span>] #print two</span><br></pre></td></tr></table></figure>
+<li>如何把散列表转换成数组?数组能转换成散列表吗?<br>将散列表转换成数组:<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">animals = &#123;'1'=&gt;'one','2'=&gt;'two'&#125;</span><br><span class="line"><span class="header">#puts animals.to_a</span></span><br><span class="line">animals = animals.to_a</span><br><span class="line">puts animals[<span class="link_label">1</span>][<span class="link_reference">1</span>] #print two</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>����ת����ɢ�б���:<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">animals = %w[a b c d]</span><br><span class="line">puts Hash[*animals] #<span class="built_in">print</span> &#123;<span class="string">"a"</span>=&gt;<span class="string">"b"</span>, <span class="string">"c"</span>=&gt;<span class="string">"d"</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>数组转换成散列表的:<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">animals = %w[a b c d]</span><br><span class="line">puts Hash[*animals] #<span class="built_in">print</span> &#123;<span class="string">"a"</span>=&gt;<span class="string">"b"</span>, <span class="string">"c"</span>=&gt;<span class="string">"d"</span>&#125;</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li><p>����ѭ������ɢ�б���</p>
+<li><p>你能循环遍历散列表吗</p>
 <figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">animals = &#123;<span class="string">'1'</span>=&gt;<span class="string">'one'</span>,<span class="string">'2'</span>=&gt;<span class="string">'two'</span>&#125;</span><br><span class="line">animals.each&#123;|x,y| puts <span class="string">"key is <span class="subst">#&#123;x&#125;</span>,value is <span class="subst">#&#123;y&#125;</span>"</span>&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Ruby  �� ���黹�ܵ���ջ�ã�������������Щ���õ����ݽṹ?<br>����</p>
+<li><p>Ruby  的 数组还能当做栈用，它还能用作哪些常用的数据结构?<br>队列</p>
 </li>
 </ul>
-<h2 id="Ԫ����">Ԫ����</h2><p>Ԫ����:д��д�����ĳ�����</p>
-<h3 id="������">������</h3><p>��ʱ���Ըı��κ����Ķ��壬����������������Ϊ��</p>
-<h3 id="method_missing">method_missing</h3><h3 id="module��ģ�顣">module��ģ�顣</h3><p>ֻҪĳ��ģ�鱻��һ��ģ��������ruby�ͻ����ø�ģ����include��������Ҳ��ģ�顣</p>
-<h2 id="�ܽ�">�ܽ�</h2><p>Ruby�ĺ��������������﷨�������ԣ������Ĳ���֮�����������ܡ�</p>
+<h2 id="元编程">元编程</h2><p>元编程:写能写程序的程序。</p>
+<h3 id="开放类">开放类</h3><p>随时可以改变任何类的定义，常用语添加类的行为。</p>
+<h3 id="method_missing">method_missing</h3><h3 id="module，模块。">module，模块。</h3><p>只要某个模块被另一个模块包含，ruby就会调用该模块的include方法。类也是模块。</p>
+<h2 id="总结">总结</h2><p>Ruby的核心优势是它的语法和灵活性，根本的不足之处大概是性能。</p>
 
             
             <section class="comment">
