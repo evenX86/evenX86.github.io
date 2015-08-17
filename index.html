@@ -152,6 +152,503 @@
           
           
             
+              <a class="post-title-link" href="/2015/08/17/java-web-xml/" itemprop="url">
+                Java Web部署描述文件:web.xml [部分翻译]
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-08-17T09:37:50+08:00" content="2015-08-17">
+            2015-08-17
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="前言">前言</h2><p>Java web应用使用部署描述文件来绝对URL映射到Servlets的规则,哪些URL需要验证，以及一些其他的信息，这个文件就是<code>web.xml</code>，在servlet标准中这个文件位于应用war包的<code>WEB-INF/</code>目录下。<br>更多<code>web.xml</code>标准的信息，可以访问:<a href="http://wiki.metawerx.net/wiki/Web.xml"> the Metawerx web.xml reference wiki</a>和<a href="http://jcp.org/aboutJava/communityprocess/final/jsr154/index.html"> the Metawerx web.xml reference wiki</a></p>
+<h2 id="About_Deployment_Descriptors">About Deployment Descriptors</h2><p>web应用部署描述文件可以反映class文件,资源，配置，以及Java web server 使用它们来应对web请求。当web应用接收到请求时，通过应用部署描述文件把url映射到处理请求的代码上。<br>部署描述文件是一个名为<code>web.xml</code>的文件，它存在于war包下面的<code>WEB-INF/</code>目录下，是一个以<code>&lt;web-app&gt;</code>为根的XML文件。<br>以下是一个简单的<code>web.xml</code>示例，其将所有的URL路径映射到<code>mysite.server.ComingSoonServlet</code>:<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/17/java-web-xml/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/17/jvm-startup/" itemprop="url">
+                Java内存与垃圾回收总结备忘
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-08-17T09:36:36+08:00" content="2015-08-17">
+            2015-08-17
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h2 id="引入">引入</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# free -m</span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line">Mem:         32094      29292       2802          0        274       1647</span><br><span class="line">-/+ buffers/cache:      27370       4724</span><br><span class="line">Swap:            0          0          0</span><br><span class="line"><span class="comment">&lt;!-- more --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这是一台Java同步服务器的内存占用情况，使用jmap查看堆上信息:<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# jmap -histo 7840</span><br><span class="line"></span><br><span class="line"><span class="header"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span></span><br><span class="line"><span class="code">   1:      77399077     5156382528  [C</span></span><br><span class="line"><span class="code">   2:      41662587     3924901448  [I</span></span><br><span class="line"><span class="code">   3:      33678441     2424847752  java.util.LinkedHashMap$Entry</span></span><br><span class="line"><span class="code">   4:      64361432     2059565824  java.lang.String</span></span><br><span class="line"><span class="code">   5:      18967113     1669105944  java.util.regex.Matcher</span></span><br><span class="line"><span class="code">   6:       9996594     1534988024  [Ljava.lang.Object;</span></span><br><span class="line"><span class="code">   7:       7225435     1235477264  [Ljava.util.HashMap$Entry;</span></span><br><span class="line"><span class="code">   8:      11458421     1074750168  [B</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line">Total     332044853    22585874416</span><br></pre></td></tr></table></figure></p>
+<p>上面这个输出中有好几个问题，暂时先不管。<br>看下Java的配置：<code>Xms26g -Xmx26g -Xmn12g -XX:PermSize=1024M -Xss2M</code><br>实际占用的29G内存中Java heap占了22G，<br>再看下PS的结果：<code>ps -aux|sort -k 1 -r |less</code></p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USER       PID <span class="preprocessor">%</span>CPU <span class="preprocessor">%</span>MEM    <span class="title">VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root         7840</span> <span class="number">22.3</span>     <span class="number">82.5</span>  <span class="number">45956536</span> <span class="number">27124588</span> ?   Sl   May<span class="number">19</span> <span class="number">380</span>:<span class="number">04</span> java</span><br></pre></td></tr></table></figure>
+<p>可以看到Java 进程占了27G。<br>一般来说同步程序并需要这么多的内存，查看GC情况:</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@localhost</span> sync]<span class="comment"># jstat  -gc 7840</span></span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       PC     PU    YGC     YGCT    FGC    FGCT     GCT   </span><br><span class="line"> <span class="number">0.0</span>   <span class="number">65536.0</span>  <span class="number">0.0</span>   <span class="number">65536.0</span> <span class="number">13148160.0</span> <span class="number">9207808.0</span> <span class="number">14049280.0</span> <span class="number">10819203.6</span> <span class="number">1048576.0</span> <span class="number">18093.7</span>    <span class="number">125</span>   <span class="number">25.202</span>   <span class="number">0</span>      <span class="number">0.000</span>   <span class="number">25.202</span></span><br></pre></td></tr></table></figure>
+<h3 id="问题1:">问题1:</h3><p>OLD区已经快满了(10/14),<br>回顾下对象是如何进入old区的：</p>
+<ul>
+<li>长期存活的对象将进入老年代，对象在Eden区中经过第一次MinorGC之后进入Survivor区中，每经过一次minorgc如果没有被回收，默认经过15次gc还未被回收就会进入old区</li>
+<li>大对象直接进入老年代，虚拟机提供了一个<code>-XX:PretenureSize</code>参数,大于这个值的对象直接在老年代中分配。避免了再Eden区和Survivor区中发生大量的内存复制（该参数只对几个收集器起作用）。<br>JVM内存回收过程<blockquote>
+<p>1、对象在Eden区完成内存分配<br>2、当Eden区满了，再创建对象，会因为申请不到空间，触发minorGC，进行young(eden+1survivor)区的垃圾回收<br>3、minorGC时，Eden不能被回收的对象被放入到空的survivor（Eden肯定会被清空），另一个survivor里不能被GC回收的对象也会被放入这个survivor，始终保证一个survivor是空的<br>4、当做第3步的时候，如果发现survivor满了，则这些对象被copy到old区，或者survivor并没有满，但是有些对象已经足够Old，也被放入Old区 XX:MaxTenuringThreshold<br>5、当Old区被放满的之后，进行fullGC</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="问题2">问题2</h3><p>heap中char数组占用内存过多，但是程序并有显示生成char对象。<br><a href="http://stackoverflow.com/questions/20388081/why-my-java-heap-is-with-so-many-char" target="_blank" rel="external">Why my Java heap is with so many char</a></p>
+<blockquote>
+<p>811k of char[] correspond to 800k of Strings, so yes, you have too many Strings.<br>If you’re having a memory leak (judging by the tag), then it’s most probably are strings in a HashMap. You have 800k instances of strings, 200k instances of hash entries, 30k of maps. This probably means that your strings are kept in this cache and are not removed. Global map is a frequent cause of memory leaks, one needs to make sure that they are evicted from this cache.</p>
+</blockquote>
+<p>Since all these values are not being GC-ed, you could try analyzing an object graph to see what’s holding them with a tool like JProfiler.</p>
+<p><a href="http://stackoverflow.com/questions/1985480/why-does-the-profiler-show-large-numbers-of-char-instances-when-i-am-not-creat" target="_blank" rel="external">Why does the profiler show large numbers of char[] instances when I am not creating any?</a></p>
+<blockquote>
+<p>Take a look at the String source code. The String object itself contains a cached hash code, a count of the number of characters (again, for optimisation purposes), an offset (since a String.substr()points to the original string data) and the character array, which contains the actual string data. Hence your metrics showing that String consumes relatively little, but the majority of memory is taken by the underlying character arrays.</p>
+<p>String is the perfect example. It contains a handful of primitive fields, plus the char[]. The char[]accounts for the vast majority of the memory usage. The shallow size of String is very small, but it’s retained size is much larger, since that includes the char[].<br>大概就是说尽管没有直接使用char数组，但是对String的频繁使用也会造成这个问题。</p>
+</blockquote>
+<h2 id="参考链接:">参考链接:</h2><p><a href="http://www.importnew.com/14086.html" target="_blank" rel="external">Java内存与垃圾回收调优</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/17/pipeline-sync-problem/" itemprop="url">
+                pipline sync
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-08-17T09:36:24+08:00" content="2015-08-17">
+            2015-08-17
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>之前因为项目需要先从redis中取出key的列表，再循环这些列表操作后写入到redis中，因为使用pipline，中间出现了一些问题记录学习下。<br>最初の源代码:<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/17/pipeline-sync-problem/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/17/Servlet-gzip-filter/" itemprop="url">
+                [翻译]Servlet Gzip Filter简介
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-08-17T09:36:05+08:00" content="2015-08-17">
+            2015-08-17
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>原文地址:<a href="http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html">http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html</a></p>
+<h2 id="简介">简介</h2><blockquote>
+<p>A GZip Servlet Filter can be used to GZip compress content sent to a browser from a Java web application. This text will explain how that works, and contains a GZip Servlet Filter you can use in your own Java web applications. If you do not know what a Servlet filter is, read my text on Servlet Filters.</p>
+</blockquote>
+<p>gzip servlet filter 可用来压缩网页内容。本文将介绍其如何工作，以及如何使用gzip servlet filter 在你的web服务器中。如果不了解servlet filter是什么可以参考这篇文章:<a href="http://tutorials.jenkov.com/java-servlets/servlet-filters.html">Servlet Filters.</a></p>
+<h2 id="为什么要使用gzip压缩网页内容">为什么要使用gzip压缩网页内容</h2><blockquote>
+<p>GZip compressing HTML, JavaScript, CSS etc. makes the data sent to the browser smaller. This speeds up the download. This is especially beneficial for mobile phones where internet bandwidth may be limited. GZip compressing content adds a CPU overhead on the server and browser, but it is still speeding up the total page load compared to not GZip compressing.</p>
+</blockquote>
+<p>gzip 压缩html、Javascript，css等等文件，目的是为了是发送到浏览器的数据更小，加速下载，这对于限制了带宽的移动端作用特别大。当然gzip增加了server端和浏览器端的cpu的压力，但是总体来说还是加速了页面的载入。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/17/Servlet-gzip-filter/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/17/Spring-bean/" itemprop="url">
+                Bean的基本用法备忘
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-08-17T09:35:54+08:00" content="2015-08-17">
+            2015-08-17
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="前言">前言</h2><p>本文为实验楼<a href="https://www.shiyanlou.com/courses/33">Spring框架入门教程</a> 学习笔记</p>
+<h2 id="Spring中的相互引用">Spring中的相互引用</h2><ul>
+<li>引用不同配置文件中的Bean，可以使用<code>ref</code>标签，结合<code>bean</code>属性</li>
+<li>引用相同配置文件中的Bean，可以使用<code>ref</code>标签,结合<code>local</code>属性</li>
+</ul>
+<blockquote>
+<p>ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以引用不同xml文件中的bean，但是，考虑到项目的可读性，引用相同xml配置文件的bean时，应该尽量使用 local 属性。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/17/Spring-bean/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/08/17/tomcat-architecture/" itemprop="url">
+                Tomcat源码结构分析
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-08-17T09:35:40+08:00" content="2015-08-17">
+            2015-08-17
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Tomcat/" itemprop="url" rel="index"><span itemprop="name">Tomcat</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Tomcat的总体架构">Tomcat的总体架构</h2><p>Tomcat即是一个Http服务器也是一个Servlet容器，它的总体结构我们可以用下图来描述：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858235159hn9lHQz7Ny" alt="Tomcat架构示例图"></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/17/tomcat-architecture/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/" itemprop="url">
                 七周七语言读书笔记之Ruby
               </a>
@@ -237,568 +734,6 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/03/tomcat-architecture/" itemprop="url">
-                Tomcat源码结构分析
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-08-03T09:46:55+08:00" content="2015-08-03">
-            2015-08-03
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Tomcat/" itemprop="url" rel="index"><span itemprop="name">Tomcat</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="Tomcat的总体架构">Tomcat的总体架构</h2><p>Tomcat即是一个Http服务器也是一个Servlet容器，它的总体结构我们可以用下图来描述：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858235159hn9lHQz7Ny" alt="Tomcat架构示例图"></p>
-<h3 id="Server">Server</h3><p>Server是Tomcat中最顶层的组件，它可以包含多个Service组件。在Tomcat源代码中Server组件对应源码中的<code>org.apache.catalina.core.StandardServer类。StandardServer</code>的继承关系图如下图所示：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858271928OVH8pZgi1k" alt="StandardServer继承关系图"></p>
-<h3 id="Service">Service</h3><p>接下来咋们来看看Service组件，Service组件相当于Connetor和Engine组件的包装器，它将一个或者多个Connector组件和一个Engine建立关联。缺省的的配置文件中，定义一个叫Catalina的服务，并将Http,AJP这两个Connector关联到了一个名为Catalina的Engine.Service组件对应Tomcat源代码中的<code>org.apache.catalina.core.StandardService</code>,StandardService的继承关系图如下图所示：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436865256750RzOtdyDqPK" alt="StandardService继承关系图"></p>
-<h3 id="Connector">Connector</h3><p>既然Tomcat需要提供http服务，而我们知道http应用层协议最终都是需要通过TCP层的协议进行包传递的，而Connector正是Tomcat中监听TCP网络连接的组件，一个Connector会监听一个独立的端口来处理来自客户端的连接。缺省的情况下Tomcat提供了如下两个Connector。我们分别描述一下：</p>
-<ul>
-<li>HTTP/1.1<br><code>&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot; connectionTimeout=&quot;20000&quot; redirectPort=&quot;8443&quot; /&gt;</code> 上面定义了一个Connector，它缺省监听端口8080,这个端口我们可以根据具体情况进行改动。<code>connectionTimeout</code>定义了连接超时时间，单位是毫秒，<code>redirectPort</code>定义了ssl的重定向接口，根据缺省的配置，Connector会将ssl请求重定向到8443端口。</li>
-<li>AJP/1.3<br>AJP表示<code>Apache Jserv Protocol</code>,此连接器将处理Tomcat和Aapache http服务器之间的交互，这个连机器是用来处理我们将Tomcat和Apache http服务器结合使用的情况。假如在同样的一台物理Server上面部署了一台Apache http服务器和多台Tomcat服务器，通过Apache服务器来处理静态资源以及负载均衡的时候，针对不同的Tomcat实例需要AJP监听不同的端口。<br>Connector对应源代码中的<code>org.apache.catalina.connector.Connector</code>,它的继承关系图如下所示：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858432906N1oyPsIgL7" alt="Connector继承关系"></li>
-</ul>
-<h3 id="Engine">Engine</h3><p>Tomcat中有一个容器的概念，而Engine,Host,Context都属于Contanier，我们先来说说最顶层的容器Engine.<br>一个Engine可以包含一个或者多个Host,也就是说我们一个Tomcat的实例可以配置多个虚拟主机。<br>缺省的情况下<code>&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;</code>定义了一个名称为Cataline的Engine.Engine对应源代码中的<code>org.apache.catalina.core.StandardEngine</code>，它的继承关系图如下图所示：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858459158jArksiMtar" alt="StandardEngine继承关系图"></p>
-<h3 id="Context">Context</h3><p>在Tomcat中，每一个运行的webapp其实最终都是以Context的形成存在，每个Context都有一个根路径和请求URL路径，Context对应源代码中的<code>org.apache.catalina.core.StandardContext</code>,它的继承关系图如下图所示：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858539631iz5JP5KoDh" alt="StandardContext继承关系图"></p>
-<p>在Tomcat中我们通常采用如下的两种方式创建一个Context.下面分别描述一下：</p>
-<ul>
-<li>在<catalina-home>\webapps目录中创建一个目录，这个时候将自动创建一个context，默认context的访问url为<a href="http://host:port/dirname,你也可以通过在ContextRoot\META-INF中创建一个context.xml的文件，其中包含如下的内容来指定应用的访问路径。" target="_blank" rel="external">http://host:port/dirname,你也可以通过在ContextRoot\META-INF中创建一个context.xml的文件，其中包含如下的内容来指定应用的访问路径。</a> <context path="/yourUrlPath"></context></catalina-home></li>
-<li>conf\server.xml文件中增加context元素。 第二种创建context的方法，我们可以选择在server.xml文件的<host>元素，比如我们在server.xml文件中增加如下内容：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">Context</span> <span class="attribute">path</span>=<span class="value">"/mypath"</span> <span class="attribute">docBase</span>=<span class="value">"/Users/tiger/develop/xxx"</span> <span class="attribute">reloadable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">Context</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">Host</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Engine</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">Service</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Server</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</host></li>
-</ul>
-<p>这样的话，我们就可以通过<code>http://host:port/mypath</code>访问上面配置的context了。</p>
-<h3 id="Valve">Valve</h3><p>Valve中文意思是阀门，Valve是Tomcat中责任链模式的实现，通过链接多个Valve对请求进行处理。其中Valve可以定义在任何的Container中，上面说的Engine,Host,Context都属于容器。tomcat 默认定义了一个名为org.apache.catalina.valves.AccessLogValve的Valve,这个Valve负责拦截每个请求，然后记录一条访问日志。</p>
-<h3 id="总结">总结</h3><p>通过上面的分析，我们发现Server,Service,Engine,Host,Context都实现了org.apache.catalina.Lifecycle接口，通过这个接口管理了这些核心组件的生命周期，关于这些组件的生命周期，我们在下一篇文章描述。</p>
-<h2 id="Tomcat组件生命周期管理">Tomcat组件生命周期管理</h2></span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/13/pipeline-sync-problem/" itemprop="url">
-                pipline sync
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-07-13T14:00:47+08:00" content="2015-07-13">
-            2015-07-13
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>之前因为项目需要先从redis中取出key的列表，再循环这些列表操作后写入到redis中，因为使用pipline，中间出现了一些问题记录学习下。<br>最初の源代码:<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">public class <span class="type">JedisTest</span> extends <span class="type">Sync</span> &#123;</span><br><span class="line">    protected <span class="keyword">static</span> final <span class="type">Logger</span> log = <span class="type">LoggerFactory</span>.getLogger(<span class="type">JedisTest</span>.class);</span><br><span class="line">    private <span class="keyword">static</span> final <span class="type">String</span> _SET_KEY_1 = <span class="string">"test1"</span>;</span><br><span class="line">    private <span class="keyword">static</span> final <span class="type">String</span> _SET_KEY_2 = <span class="string">"test2"</span>;</span><br><span class="line"></span><br><span class="line">    public <span class="type">void</span> process() throws <span class="type">SQLException</span> &#123;</span><br><span class="line">        <span class="type">Set</span>&lt;<span class="type">String</span>&gt; appSet = getAllUserableAppkey();</span><br><span class="line">        <span class="type">ShardedJedis</span> jedis = <span class="type">RedisHelper</span>.getJedis();</span><br><span class="line">        <span class="type">ShardedJedisPipeline</span> pipeline = jedis.pipelined();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">String</span> key : appSet) &#123;</span><br><span class="line">            <span class="type">Set</span>&lt;<span class="type">String</span>&gt; <span class="literal">result</span> = jedis.smembers(_SET_KEY_1);</span><br><span class="line">            <span class="type">Set</span>&lt;<span class="type">String</span>&gt; result2 = jedis.smembers(_SET_KEY_2);</span><br><span class="line">            log.warn(<span class="string">"result1 :&#123;&#125;,result2:&#123;&#125;"</span>,<span class="literal">result</span>,result2);</span><br><span class="line">            <span class="type">String</span> rangName = <span class="type">String</span>.format(<span class="string">"%s::%s"</span>,<span class="string">"test"</span>,key);</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">                pipeline.sadd(rangName, <span class="type">String</span>.valueOf(i));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        pipeline.sync();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (jedis != null) &#123;</span><br><span class="line">                <span class="type">RedisHelper</span>.getPool().returnResource(jedis);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="type">Set</span>&lt;<span class="type">String</span>&gt; getAllUserableAppkey() &#123;</span><br><span class="line">        <span class="type">Set</span>&lt;<span class="type">String</span>&gt; <span class="literal">result</span> = new <span class="type">HashSet</span>&lt;&gt;();</span><br><span class="line">        <span class="literal">result</span>.add(<span class="string">"test1"</span>);</span><br><span class="line">        <span class="literal">result</span>.add(<span class="string">"test2"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">result</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">static</span> <span class="type">void</span> main(<span class="type">String</span>[] args) throws <span class="type">Exception</span> &#123;</span><br><span class="line">        <span class="type">DbHelper</span>.init();</span><br><span class="line">        <span class="type">RedisHelper</span>.init();</span><br><span class="line">        <span class="type">JedisTest</span> jedisTest = new <span class="type">JedisTest</span>();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            jedisTest.process();</span><br><span class="line">        &#125; catch (<span class="type">SQLException</span> e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>报错:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">17</span>:<span class="number">37</span>:<span class="number">23</span>,<span class="number">721</span>  WARN JedisTest:<span class="number">31</span> - result1 :[],result2:[]</span><br><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java<span class="class">.lang</span><span class="class">.ClassCastException</span>: java<span class="class">.lang</span><span class="class">.Long</span> cannot be cast to java<span class="class">.util</span><span class="class">.List</span></span><br><span class="line">	at redis<span class="class">.clients</span><span class="class">.jedis</span><span class="class">.Connection</span><span class="class">.getBinaryMultiBulkReply</span>(Connection<span class="class">.java</span>:<span class="number">221</span>)</span><br><span class="line">	at redis<span class="class">.clients</span><span class="class">.jedis</span><span class="class">.Connection</span><span class="class">.getMultiBulkReply</span>(Connection<span class="class">.java</span>:<span class="number">214</span>)</span><br><span class="line">	at redis<span class="class">.clients</span><span class="class">.jedis</span><span class="class">.Jedis</span><span class="class">.smembers</span>(Jedis<span class="class">.java</span>:<span class="number">1191</span>)</span><br><span class="line">	at redis<span class="class">.clients</span><span class="class">.jedis</span><span class="class">.ShardedJedis</span><span class="class">.smembers</span>(ShardedJedis<span class="class">.java</span>:<span class="number">321</span>)</span><br><span class="line">	at com<span class="class">.snda</span><span class="class">.sync</span><span class="class">.impl</span><span class="class">.test</span><span class="class">.JedisTest</span><span class="class">.process</span>(JedisTest<span class="class">.java</span>:<span class="number">29</span>)</span><br><span class="line">	at com<span class="class">.snda</span><span class="class">.sync</span><span class="class">.impl</span><span class="class">.test</span><span class="class">.JedisTest</span><span class="class">.main</span>(JedisTest<span class="class">.java</span>:<span class="number">59</span>)</span><br><span class="line">	at sun<span class="class">.reflect</span><span class="class">.NativeMethodAccessorImpl</span><span class="class">.invoke0</span>(Native Method)</span><br><span class="line">	at sun<span class="class">.reflect</span><span class="class">.NativeMethodAccessorImpl</span><span class="class">.invoke</span>(NativeMethodAccessorImpl<span class="class">.java</span>:<span class="number">57</span>)</span><br><span class="line">	at sun<span class="class">.reflect</span><span class="class">.DelegatingMethodAccessorImpl</span><span class="class">.invoke</span>(DelegatingMethodAccessorImpl<span class="class">.java</span>:<span class="number">43</span>)</span><br><span class="line">	at java<span class="class">.lang</span><span class="class">.reflect</span><span class="class">.Method</span><span class="class">.invoke</span>(Method<span class="class">.java</span>:<span class="number">606</span>)</span><br><span class="line">	at com<span class="class">.intellij</span><span class="class">.rt</span><span class="class">.execution</span><span class="class">.application</span><span class="class">.AppMain</span><span class="class">.main</span>(AppMain<span class="class">.java</span>:<span class="number">140</span>)</span><br></pre></td></tr></table></figure></p>
-<p>Connection.java:221</p>
-<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">@SuppressWarnings(<span class="string">"unchecked"</span>)</span><br><span class="line"><span class="keyword">public</span> List&lt;<span class="built_in">byte</span>[]&gt; getBinaryMultiBulkReply() &#123;</span><br><span class="line">  flush();</span><br><span class="line">  pipelinedCommands--;</span><br><span class="line">  <span class="keyword">return</span> (List&lt;<span class="built_in">byte</span>[]&gt;) readProtocolWithCheckingBroken();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> List&lt;<span class="keyword">String</span>&gt; getMultiBulkReply() &#123;</span><br><span class="line">    <span class="keyword">return</span> (List)BuilderFactory.STRING_LIST.build(<span class="keyword">this</span>.getBinaryMultiBulkReply());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Return all the members (elements) of the set value stored at key. This is just syntax glue for</span><br><span class="line"> * &#123;@link #sinter(String...) SINTER&#125;.</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * Time complexity O(N)</span><br><span class="line"> * @param key</span><br><span class="line"> * @return Multi bulk reply</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> Set&lt;<span class="keyword">String</span>&gt; smembers(<span class="keyword">final</span> <span class="keyword">String</span> <span class="variable">key</span>) &#123;</span><br><span class="line">  checkIsInMulti();</span><br><span class="line">  client.smembers(<span class="variable">key</span>);</span><br><span class="line">  <span class="keyword">final</span> List&lt;<span class="keyword">String</span>&gt; members = client.getMultiBulkReply();</span><br><span class="line">  <span class="keyword">if</span> (members == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> HashSet&lt;<span class="keyword">String</span>&gt;(members);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Set&lt;<span class="keyword">String</span>&gt; smembers(<span class="keyword">String</span> <span class="variable">key</span>) &#123;</span><br><span class="line">    Jedis j = (Jedis)<span class="keyword">this</span>.getShard(<span class="variable">key</span>);</span><br><span class="line">    <span class="keyword">return</span> j.smembers(<span class="variable">key</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>怀疑是不是<code>pipeline.add</code>与<code>jedis.smembers</code>起了冲突，于是把<code>pipeline.sync</code>放到循环里面做，发现有报异常：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> redis<span class="class">.clients</span><span class="class">.jedis</span><span class="class">.exceptions</span><span class="class">.JedisConnectionException</span>: java<span class="class">.net</span><span class="class">.SocketTimeoutException</span>: Read timed out</span><br></pre></td></tr></table></figure></p>
-<p>这里报异常是因为<code>pipeline.sync</code>是同步并关闭通道的命令，而此时申请通道是在循环外面的，相当于只申请了一次，之后再使用就发现已经关闭了，所以放在循环里面这段代码就可跑通。代码如下:<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">String</span> key : appSet) &#123;</span><br><span class="line">    final <span class="type">ShardedJedisPipeline</span> pipeline = jedis.pipelined();</span><br><span class="line">    <span class="type">Set</span>&lt;<span class="type">String</span>&gt; <span class="literal">result</span> = jedis.smembers(_SET_KEY_1);</span><br><span class="line">    <span class="type">Set</span>&lt;<span class="type">String</span>&gt; result2 = jedis.smembers(_SET_KEY_2);</span><br><span class="line">    //log.warn(<span class="string">"result1 :&#123;&#125;,result2:&#123;&#125;"</span>,<span class="literal">result</span>,result2);</span><br><span class="line">    <span class="type">String</span> rangName = <span class="type">String</span>.format(<span class="string">"%s::%s"</span>, <span class="string">"test"</span>, key);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        pipeline.sadd(rangName, <span class="type">String</span>.valueOf(i));</span><br><span class="line">    &#125;</span><br><span class="line">    pipeline.sync();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>实际上,jedis与其pipline是不能同时使用的</strong>,其中jedis立即得到相应，而pipeline稍后得到相应，这容易混淆得到的response<br>只需要为jedis操作和pipeline操作分别获得一个jedis实例就可以解决这个问题，实例代码:</p>
-<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">final <span class="type">ShardedJedis</span> jedis = <span class="type">RedisHelper</span>.getJedis();</span><br><span class="line">      final <span class="type">ShardedJedis</span> jedis1 = <span class="type">RedisHelper</span>.getJedis();</span><br><span class="line">      final <span class="type">ShardedJedisPipeline</span> pipeline = jedis.pipelined();</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">String</span> key : appSet) &#123;</span><br><span class="line">          <span class="type">Set</span>&lt;<span class="type">String</span>&gt; <span class="literal">result</span> = jedis1.smembers(_SET_KEY_1);</span><br><span class="line">          <span class="type">Set</span>&lt;<span class="type">String</span>&gt; result2 = jedis1.smembers(_SET_KEY_2);</span><br><span class="line">          //log.warn(<span class="string">"result1 :&#123;&#125;,result2:&#123;&#125;"</span>,<span class="literal">result</span>,result2);</span><br><span class="line">          <span class="type">String</span> rangName = <span class="type">String</span>.format(<span class="string">"%s::%s"</span>, <span class="string">"test"</span>, key);</span><br><span class="line">          <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">              pipeline.sadd(rangName, <span class="type">String</span>.valueOf(i));</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">      pipeline.sync();</span><br></pre></td></tr></table></figure>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/26/Servlet-gzip-filter/" itemprop="url">
-                [翻译]Servlet Gzip Filter简介
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-06-26T20:16:25+08:00" content="2015-06-26">
-            2015-06-26
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>原文地址:<a href="http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html" target="_blank" rel="external">http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html</a></p>
-<h2 id="简介">简介</h2><blockquote>
-<p>A GZip Servlet Filter can be used to GZip compress content sent to a browser from a Java web application. This text will explain how that works, and contains a GZip Servlet Filter you can use in your own Java web applications. If you do not know what a Servlet filter is, read my text on Servlet Filters.</p>
-</blockquote>
-<p>gzip servlet filter 可用来压缩网页内容。本文将介绍其如何工作，以及如何使用gzip servlet filter 在你的web服务器中。如果不了解servlet filter是什么可以参考这篇文章:<a href="http://tutorials.jenkov.com/java-servlets/servlet-filters.html" target="_blank" rel="external">Servlet Filters.</a></p>
-<h2 id="为什么要使用gzip压缩网页内容">为什么要使用gzip压缩网页内容</h2><blockquote>
-<p>GZip compressing HTML, JavaScript, CSS etc. makes the data sent to the browser smaller. This speeds up the download. This is especially beneficial for mobile phones where internet bandwidth may be limited. GZip compressing content adds a CPU overhead on the server and browser, but it is still speeding up the total page load compared to not GZip compressing.</p>
-</blockquote>
-<p>gzip 压缩html、Javascript，css等等文件，目的是为了是发送到浏览器的数据更小，加速下载，这对于限制了带宽的移动端作用特别大。当然gzip增加了server端和浏览器端的cpu的压力，但是总体来说还是加速了页面的载入。</p>
-<h2 id="Gzip_HTTP_Header">Gzip HTTP Header</h2><blockquote>
-<p>The browser includes the Accept-Encoding HTTP header in requests sent to an HTTP server (e.g. a Java web server). The content of the Accept-Encoding header tells what content encodings the browser can accept. If that header contains the value gzip in it, the browser can accept GZip compressed content. The server can then GZip compress the content sent back to the browser.<br>If the content sent back from the server is GZip compressed, the server includes the Content-EncodingHTTP header with the value gzip in the HTTP response. That way the browser knows that the content is GZip compressed.</p>
-</blockquote>
-<p>浏览器端的HTTP报头包含<code>Accept-Encoding</code>在请求发送到一个HTTP服务器(例如Java Web Server)，包含<code>Accept-Encoding</code>请求头的主体告知服务器端该浏览器可以接收编码主体，如果头部中包含gzip，那么浏览器可以接收通过gzip压缩的主体。服务端可以发送gzip压缩主体到浏览器端。</p>
-<h2 id="为什么是Gzip_Servlet_Filter">为什么是Gzip Servlet Filter</h2><blockquote>
-<p>You could implement GZip compression in each and every Servlet or JSP in your application if you wanted to. But that gets clumsy.<br>The smart thing about a GZip Servlet filter is that it is executed before and after any Servlet, JSP, or even static files. That way you can create a single servlet filter that enables GZip compression for all content that needs it. The Servlets, JSPs etc. don’t even know that the content is being compressed, because it happens in the Servlet filter. The GZip Servlet filter enables GZip compression, sets the right HTTP headers, and makes sure that content written by Servlets, JSPs etc. is compressed.</p>
-</blockquote>
-<p>你可以在在您的应用程序中每个Servlet或JSP实现GZip压缩,但这非常麻烦。一种巧妙的GZip Servlet过滤器是它之前和之后执行任何Servlet,JSP、甚至是静态文件。通过这种方式可以创建一个servlet过滤器,使用GZip压缩所有需要的内容。Servlet、jsp等或者不需要知道什么内容的文件被压缩,因为它存在Servlet过滤器中。GZip Servlet Filter支持GZip压缩,设置正确的HTTP标头,并确保内容由Servlet、jsp等被压缩。</p>
-<h2 id="设计Gzip_Servlet_Filter">设计Gzip Servlet Filter</h2><blockquote>
-<p>The design of a GZip servlet filter looks like this:<img src="http://tutorials.jenkov.com/images/java-servlets/gzip-servlet-filter-1.png" alt="gzip-servlet-filter-1.png"><br>First you need a Servlet filter class. That class is mapped to a set of URL’s in the web.xml file.<br>When an HTTP request arrives at the Servlet container which is mapped to the filter, the filter intercepts the request before it is handled by the Servlet, JSP etc. which the request is targeted at. The GZip servlet filter checks if the client (browser) can accept GZip compressed content. If yes, it enables compression of the response.<br>GZip compression of the response is enabled by wrapping the HttpServletResponse object in a GZipServletResponseWrapper. This wrapper is passed to the Servlet, JSP etc. which handles the request. When the Servlet, JSP etc. writes output to be sent to the browser, it does so to the response wrapper object. The Servlet, JSP etc. cannot see the difference between a real HttpServletResponse and the wrapper object. The response wrapper object then compresses the written content and writes the compressed content to the HttpServletResponse. Quite simple.</p>
-</blockquote>
-<p> GZip servlet filter 的设计如上图所示，首先需要编写一个Servlet filter的类，在web.xml中设置映射到该类的URL.<br>当一个HTTP请求到达Servlet容器时候会被映射到这个filter上，filter会拦截之前处理的Servlet或者JSP等等，Gzip Servlet Filter会判断请求客户端是否接收Gzip压缩的内容，如果接收的话则允许压缩response。<br>GZip压缩的response是通过GZipServletResponseWrapper 封装 HttpServletResponse对象处理的，wrapper 处理Request传过来的Servlet、JSP等。当Servlet、JSP等写到输出并被发送到浏览器,它响应wrapper对象。Servlet和JSP等无法看到真实HttpServletResponse的区别和包装器对象,相应的wrapper对象然后压缩的内容并且写到HttpServletResponse中。</p>
-<h2 id="GZip_Servlet_Filter_编码">GZip Servlet Filter 编码</h2><p>接下来的代码是Gzip Servlet Filter的代码，事实上并没有很多方式让你去写，直截了当。<br>代码包含三个类，其中<code>GZipServletFilter</code>拦截请求，检查客户端是否接收压缩，它在传递过滤链之前封装<code>HttpServletResponse</code>.<br><code>GZipServletResponseWrapper</code>response的gzip封装.<br><code>GZipServletOutputStream</code> 输出流.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GZipServletFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, </span><br><span class="line">                       ServletResponse response,</span><br><span class="line">                       FilterChain chain)</span> </span><br><span class="line">  <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line"></span><br><span class="line">    HttpServletRequest  httpRequest  = (HttpServletRequest)  request;</span><br><span class="line">    HttpServletResponse httpResponse = (HttpServletResponse) response;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ( acceptsGZipEncoding(httpRequest) ) &#123;</span><br><span class="line">      httpResponse.addHeader(<span class="string">"Content-Encoding"</span>, <span class="string">"gzip"</span>);</span><br><span class="line">      GZipServletResponseWrapper gzipResponse =</span><br><span class="line">        <span class="keyword">new</span> GZipServletResponseWrapper(httpResponse);</span><br><span class="line">      chain.doFilter(request, gzipResponse);</span><br><span class="line">      gzipResponse.close();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      chain.doFilter(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">acceptsGZipEncoding</span><span class="params">(HttpServletRequest httpRequest)</span> </span>&#123;</span><br><span class="line">      String acceptEncoding = </span><br><span class="line">        httpRequest.getHeader(<span class="string">"Accept-Encoding"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> acceptEncoding != <span class="keyword">null</span> &amp;&amp; </span><br><span class="line">             acceptEncoding.indexOf(<span class="string">"gzip"</span>) != -<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GZipServletResponseWrapper</span> <span class="keyword">extends</span> <span class="title">HttpServletResponseWrapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> GZipServletOutputStream gzipOutputStream = <span class="keyword">null</span>;</span><br><span class="line">  <span class="keyword">private</span> PrintWriter             printWriter      = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">GZipServletResponseWrapper</span><span class="params">(HttpServletResponse response)</span></span><br><span class="line">          <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      <span class="keyword">super</span>(response);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">//PrintWriter.close does not throw exceptions.</span></span><br><span class="line">      <span class="comment">//Hence no try-catch block.</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.printWriter != <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.printWriter.close();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.gzipOutputStream != <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.gzipOutputStream.close();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="javadoc">/**</span><br><span class="line">   * Flush OutputStream or PrintWriter</span><br><span class="line">   *</span><br><span class="line">   *<span class="javadoctag"> @throws</span> IOException</span><br><span class="line">   */</span></span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flushBuffer</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//PrintWriter.flush() does not throw exception</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.printWriter != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.printWriter.flush();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    IOException exception1 = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.gzipOutputStream != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.gzipOutputStream.flush();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(IOException e) &#123;</span><br><span class="line">        exception1 = e;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    IOException exception2 = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">super</span>.flushBuffer();</span><br><span class="line">    &#125; <span class="keyword">catch</span>(IOException e)&#123;</span><br><span class="line">      exception2 = e;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(exception1 != <span class="keyword">null</span>) <span class="keyword">throw</span> exception1;</span><br><span class="line">    <span class="keyword">if</span>(exception2 != <span class="keyword">null</span>) <span class="keyword">throw</span> exception2;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> ServletOutputStream <span class="title">getOutputStream</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.printWriter != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">        <span class="string">"PrintWriter obtained already - cannot get OutputStream"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.gzipOutputStream == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.gzipOutputStream = <span class="keyword">new</span> GZipServletOutputStream(</span><br><span class="line">        getResponse().getOutputStream());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.gzipOutputStream;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> PrintWriter <span class="title">getWriter</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (<span class="keyword">this</span>.printWriter == <span class="keyword">null</span> &amp;&amp; <span class="keyword">this</span>.gzipOutputStream != <span class="keyword">null</span>) &#123;</span><br><span class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">         <span class="string">"OutputStream obtained already - cannot get PrintWriter"</span>);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">if</span> (<span class="keyword">this</span>.printWriter == <span class="keyword">null</span>) &#123;</span><br><span class="line">       <span class="keyword">this</span>.gzipOutputStream = <span class="keyword">new</span> GZipServletOutputStream(</span><br><span class="line">         getResponse().getOutputStream());</span><br><span class="line">       <span class="keyword">this</span>.printWriter      = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> OutputStreamWriter(</span><br><span class="line">       <span class="keyword">this</span>.gzipOutputStream, getResponse().getCharacterEncoding()));</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.printWriter;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentLength</span><span class="params">(<span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//ignore, since content length of zipped content</span></span><br><span class="line">    <span class="comment">//does not match content length of unzipped content.</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GZipServletOutputStream</span> <span class="keyword">extends</span> <span class="title">ServletOutputStream</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> GZIPOutputStream    gzipOutputStream = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">GZipServletOutputStream</span><span class="params">(OutputStream output)</span></span><br><span class="line">        <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">    <span class="keyword">this</span>.gzipOutputStream = <span class="keyword">new</span> GZIPOutputStream(output);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.gzipOutputStream.close();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flush</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.gzipOutputStream.flush();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">byte</span> b[])</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.gzipOutputStream.write(b);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">byte</span> b[], <span class="keyword">int</span> off, <span class="keyword">int</span> len)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.gzipOutputStream.write(b, off, len);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">int</span> b)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">     <span class="keyword">this</span>.gzipOutputStream.write(b);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="web-xml中GZip_Servlet_Filter的配置">web.xml中GZip Servlet Filter的配置</h2><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">&lt;filter&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-name&gt;</span>GzipFilter<span class="variable">&lt;/filter-name&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-class&gt;</span>com.myapp.GZipServletFilter<span class="variable">&lt;/filter-class&gt;</span></span><br><span class="line"><span class="variable">&lt;/filter&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="variable">&lt;filter-mapping&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-name&gt;</span>GzipFilter<span class="variable">&lt;/filter-name&gt;</span></span><br><span class="line">  <span class="variable">&lt;url-pattern&gt;</span><span class="keyword">*</span>.js<span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="variable">&lt;/filter-mapping&gt;</span></span><br><span class="line"><span class="variable">&lt;filter-mapping&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-name&gt;</span>GzipFilter<span class="variable">&lt;/filter-name&gt;</span></span><br><span class="line">  <span class="variable">&lt;url-pattern&gt;</span><span class="keyword">*</span>.css<span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="variable">&lt;/filter-mapping&gt;</span></span><br><span class="line"><span class="variable">&lt;filter-mapping&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-name&gt;</span>GzipFilter<span class="variable">&lt;/filter-name&gt;</span></span><br><span class="line">  <span class="variable">&lt;url-pattern&gt;</span><span class="keyword">*</span>.html<span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="variable">&lt;/filter-mapping&gt;</span></span><br><span class="line"><span class="variable">&lt;filter-mapping&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-name&gt;</span>GzipFilter<span class="variable">&lt;/filter-name&gt;</span></span><br><span class="line">  <span class="variable">&lt;url-pattern&gt;</span><span class="keyword">*</span>.jsp<span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="variable">&lt;/filter-mapping&gt;</span></span><br><span class="line"><span class="variable">&lt;filter-mapping&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-name&gt;</span>GzipFilter<span class="variable">&lt;/filter-name&gt;</span></span><br><span class="line">  <span class="variable">&lt;url-pattern&gt;</span>/<span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="variable">&lt;/filter-mapping&gt;</span></span><br></pre></td></tr></table></figure></span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/25/java-web-xml/" itemprop="url">
-                Java Web部署描述文件:web.xml [部分翻译]
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-05-25T16:45:00+08:00" content="2015-05-25">
-            2015-05-25
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="前言">前言</h2><p>Java web应用使用部署描述文件来绝对URL映射到Servlets的规则,哪些URL需要验证，以及一些其他的信息，这个文件就是<code>web.xml</code>，在servlet标准中这个文件位于应用war包的<code>WEB-INF/</code>目录下。<br>更多<code>web.xml</code>标准的信息，可以访问:<a href="http://wiki.metawerx.net/wiki/Web.xml" target="_blank" rel="external"> the Metawerx web.xml reference wiki</a>和<a href="http://jcp.org/aboutJava/communityprocess/final/jsr154/index.html" target="_blank" rel="external"> the Metawerx web.xml reference wiki</a></p>
-<h2 id="About_Deployment_Descriptors">About Deployment Descriptors</h2><p>web应用部署描述文件可以反映class文件,资源，配置，以及Java web server 使用它们来应对web请求。当web应用接收到请求时，通过应用部署描述文件把url映射到处理请求的代码上。<br>部署描述文件是一个名为<code>web.xml</code>的文件，它存在于war包下面的<code>WEB-INF/</code>目录下，是一个以<code>&lt;web-app&gt;</code>为根的XML文件。<br>以下是一个简单的<code>web.xml</code>示例，其将所有的URL路径映射到<code>mysite.server.ComingSoonServlet</code>:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">web-app</span> <span class="attribute">xmlns</span>=<span class="value">"http://java.sun.com/xml/ns/javaee"</span> <span class="attribute">version</span>=<span class="value">"2.5"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>comingsoon<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>mysite.server.ComingSoonServlet<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>comingsoon<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="title">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>如果你将应用程序分为多个模块，则需要为每个模块配置额外的参数，这个在<a href="https://cloud.google.com/appengine/docs/java/modules/#Java_Configuration" target="_blank" rel="external"> Modules </a>有详解。</p>
-</blockquote>
-<h2 id="Servlets_and_URL_Paths">Servlets and URL Paths</h2><p><code>web.xml</code>定义了URL的路径和处理请求的servlets之间的映射关系。例如web服务器使用配置用来把HTTP GET请求映射到请求处理函数<code>doGet()</code>。<br>通过<code>&lt;servlet&gt;</code>元素声明一个servlet，然后通过<code>&lt;servlet -mapping&gt;</code>元素定义一个映射关系。<br><code>&lt;servlet&gt;</code> 元素声明了servlet,包括一个servlet名,servlet使用的类,初始化参数。您可以声明多个servlet使用相同的类有不同的初始化参数。每个servlet的名称必须是惟一的。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>redteam<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>mysite.server.TeamServlet<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">init-param</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">param-name</span>&gt;</span>teamColor<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">param-value</span>&gt;</span>red<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">init-param</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">param-name</span>&gt;</span>bgColor<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">param-value</span>&gt;</span>#CC0000<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">init-param</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>blueteam<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>mysite.server.TeamServlet<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">init-param</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">param-name</span>&gt;</span>teamColor<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">param-value</span>&gt;</span>blue<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">init-param</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">param-name</span>&gt;</span>bgColor<span class="tag">&lt;/<span class="title">param-name</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">param-value</span>&gt;</span>#0000CC<span class="tag">&lt;/<span class="title">param-value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">init-param</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p><code>&lt;servlet-mapping&gt;</code>元素指定一个URL模式和模式名。URL模式可以使用星号(*)的开头或结尾的模式来表示零个或多个任意字符。(标准不支持在中间的通配符,并且不允许多个通配符) 模式匹配的完整路径的URL,开始,包括域名后的正斜杠<code>(/)</code>。<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">&lt;servlet-mapping&gt;</span></span><br><span class="line">       <span class="variable">&lt;servlet-name&gt;</span>redteam<span class="variable">&lt;/servlet-name&gt;</span></span><br><span class="line">       <span class="variable">&lt;url-pattern&gt;</span>/red/<span class="keyword">*</span><span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line">   <span class="variable">&lt;/servlet-mapping&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="variable">&lt;servlet-mapping&gt;</span></span><br><span class="line">       <span class="variable">&lt;servlet-name&gt;</span>blueteam<span class="variable">&lt;/servlet-name&gt;</span></span><br><span class="line">       <span class="variable">&lt;url-pattern&gt;</span>/blue/<span class="keyword">*</span><span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line">   <span class="variable">&lt;/servlet-mapping&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>在上述例子中可以看出，请求URL<code>http://www.example.com/blue/teamProfile</code>带着ServletConfig的参数被 <code>TeamServlet</code>类处理，Servlet也可以用过<code>request.getPathInfo()</code>得到URL的一部分。</p>
-<blockquote>
-<p>静态文件,文件逐字用户比如图像、CSS或JavaScript,分开处理路径在部署描述符中提到。请求URL路径相匹配的路径到一个文件在战争中,被认为是一个静态文件将提供文件,无论servlet和过滤器映射在部署描述符中。您可以排除文件从那些使用appengine-web视为静态文件。xml文件。</p>
-</blockquote>
-<p>servlet可以访问它的初始化参数通过servlet的<code>getServletConfig()</code>方法和<code>getInitParameter()</code>方法使用参数的名称作为参数，如下:<br><code>String teamColor = getServletConfig().getInitParameter(&quot;teamColor&quot;);</code></p>
-<h2 id="JSPs">JSPs</h2><p>一个应用可以使用JSP来扩展web页面，jsp就是HTML代码与Java代码的混合页面。<br>App Engine支持jsp的自动编译和URL映射。JSP文件在应用程序的war包(<code>WEB-INF/</code>之外)的以<code>.jsp</code>结尾是自动编译成servlet类和映射到URL路径相当于jsp文件的路径从WAR根源。例如,如果应用程序有一个JSP文件命名的开始。jsp在子目录命名<code>register/</code> WAR中,App Engine编译它并将它映射到URL路径<code>/register/ start.jsp</code>。<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">&lt;servlet&gt;</span></span><br><span class="line">        <span class="variable">&lt;servlet-name&gt;</span>register<span class="variable">&lt;/servlet-name&gt;</span></span><br><span class="line">        <span class="variable">&lt;jsp-file&gt;</span>/register/start.jsp<span class="variable">&lt;/jsp-file&gt;</span></span><br><span class="line">    <span class="variable">&lt;/servlet&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="variable">&lt;servlet-mapping&gt;</span></span><br><span class="line">        <span class="variable">&lt;servlet-name&gt;</span>register<span class="variable">&lt;/servlet-name&gt;</span></span><br><span class="line">        <span class="variable">&lt;url-pattern&gt;</span>/register/<span class="keyword">*</span><span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line">    <span class="variable">&lt;/servlet-mapping&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="Security_and_Authentication">Security and Authentication</h2><h2 id="Secure_URLs">Secure URLs</h2><h2 id="The_Welcome_File_List">The Welcome File List</h2><h2 id="Filters">Filters</h2><h2 id="Error_Handlers">Error Handlers</h2><h2 id="web-xml_Features_Not_Supported">web.xml Features Not Supported</h2><p>原文链接:<a href="https://cloud.google.com/appengine/docs/java/config/webxml" target="_blank" rel="external">The Deployment Descriptor: web.xml</a></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/24/Spring-bean/" itemprop="url">
-                Bean的基本用法备忘
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-05-24T19:17:07+08:00" content="2015-05-24">
-            2015-05-24
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="前言">前言</h2><p>本文为实验楼<a href="https://www.shiyanlou.com/courses/33" target="_blank" rel="external">Spring框架入门教程</a> 学习笔记</p>
-<h2 id="Spring中的相互引用">Spring中的相互引用</h2><ul>
-<li>引用不同配置文件中的Bean，可以使用<code>ref</code>标签，结合<code>bean</code>属性</li>
-<li>引用相同配置文件中的Bean，可以使用<code>ref</code>标签,结合<code>local</code>属性</li>
-</ul>
-<blockquote>
-<p>ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以引用不同xml文件中的bean，但是，考虑到项目的可读性，引用相同xml配置文件的bean时，应该尽量使用 local 属性。</p>
-</blockquote>
-<h2 id="Spring给bean属性注入value">Spring给bean属性注入value</h2><p>示例给两个properties注入value<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package com<span class="built_in">.</span>shiyanlou<span class="built_in">.</span>common;</span><br><span class="line"><span class="keyword">public</span> class FileNameGenerator &#123;</span><br><span class="line"><span class="keyword">private</span> <span class="built_in">String</span> name;</span><br><span class="line"><span class="keyword">private</span> <span class="built_in">String</span> <span class="keyword">type</span>;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="built_in">String</span> getName() &#123;</span><br><span class="line">    <span class="keyword">return</span> name;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="literal">void</span> setName(<span class="built_in">String</span> name) &#123;</span><br><span class="line">    this<span class="built_in">.</span>name <span class="subst">=</span> name;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="built_in">String</span> getType() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">type</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="literal">void</span> setType(<span class="built_in">String</span> <span class="keyword">type</span>) &#123;</span><br><span class="line">    this<span class="built_in">.</span><span class="keyword">type</span> <span class="subst">=</span> <span class="keyword">type</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p>一般方法:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"FileNameGenerator"</span> <span class="attribute">class</span>=<span class="value">"com.shiyanlou.common.FileNameGenerator"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"name"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">value</span>&gt;</span>shiyanlou<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"type"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">value</span>&gt;</span>txt<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>缩写方法: </p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean <span class="property">id</span>=<span class="string">"FileNameGenerator"</span> <span class="type">class</span>=<span class="string">"com.shiyanlou.common.FileNameGenerator"</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">property</span> <span class="property">name</span>=<span class="string">"name"</span> value=<span class="string">"shiyanlou"</span> /&gt;</span><br><span class="line">    &lt;<span class="keyword">property</span> <span class="property">name</span>=<span class="string">"type"</span> value=<span class="string">"txt"</span> /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>“p”  schema</p>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans <span class="variable">xmlns=</span><span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">    xmlns:<span class="variable">xsi=</span><span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">    xmlns:<span class="variable">p=</span><span class="string">"http://www.springframework.org/schema/p"</span></span><br><span class="line">    xsi:<span class="variable">schemaLocation=</span><span class="string">"http://www.springframework.org/schema/beans</span><br><span class="line">    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"</span>&gt;</span><br><span class="line"> </span><br><span class="line">    &lt;bean <span class="variable">id=</span><span class="string">"FileNameGenerator"</span> <span class="variable">class=</span><span class="string">"com.shiyanlou.common.FileNameGenerator"</span></span><br><span class="line">             p:<span class="variable">name=</span><span class="string">"shiyanlou"</span> p:<span class="variable">type=</span><span class="string">"txt"</span> /&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>注意</strong><br>p语法需要添加<code>xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</code></p>
-<h2 id="Bean的作用域">Bean的作用域</h2><blockquote>
-<ul>
-<li>singleton — 单例模式，由IOC容器返回一个唯一的bean实例。</li>
-<li>prototype — 原型模式，被请求时，每次返回一个新的bean实例。</li>
-<li>request — 每个HTTP Request请求返回一个唯一的Bean实例。</li>
-<li>session — 每个HTTP Session返回一个唯一的Bean实例。</li>
-<li>globalSession — Http Session全局Bean实例。</li>
-</ul>
-</blockquote>
-<p>一般情况下只需要使用单例模式和原型模式，并且默认情况下是单例模式。</p>
-<h2 id="Spring的集合类型Bean">Spring的集合类型Bean</h2><blockquote>
-<ul>
-<li>List</li>
-<li>Set</li>
-<li>Map </li>
-<li>Properties</li>
-</ul>
-</blockquote>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/20/jvm-startup/" itemprop="url">
-                Java内存与垃圾回收总结备忘
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-05-20T20:54:52+08:00" content="2015-05-20">
-            2015-05-20
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h2 id="引入">引入</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="annotation">@localhost</span> sync]# free -m</span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line"><span class="string">Mem:</span>         <span class="number">32094</span>      <span class="number">29292</span>       <span class="number">2802</span>          <span class="number">0</span>        <span class="number">274</span>       <span class="number">1647</span></span><br><span class="line">-<span class="regexp">/+ buffers/</span><span class="string">cache:</span>      <span class="number">27370</span>       <span class="number">4724</span></span><br><span class="line"><span class="string">Swap:</span>            <span class="number">0</span>          <span class="number">0</span>          <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>这是一台Java同步服务器的内存占用情况，使用jmap查看堆上信息:<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# jmap -histo 7840</span><br><span class="line"></span><br><span class="line"><span class="header"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span></span><br><span class="line"><span class="code">   1:      77399077     5156382528  [C</span></span><br><span class="line"><span class="code">   2:      41662587     3924901448  [I</span></span><br><span class="line"><span class="code">   3:      33678441     2424847752  java.util.LinkedHashMap$Entry</span></span><br><span class="line"><span class="code">   4:      64361432     2059565824  java.lang.String</span></span><br><span class="line"><span class="code">   5:      18967113     1669105944  java.util.regex.Matcher</span></span><br><span class="line"><span class="code">   6:       9996594     1534988024  [Ljava.lang.Object;</span></span><br><span class="line"><span class="code">   7:       7225435     1235477264  [Ljava.util.HashMap$Entry;</span></span><br><span class="line"><span class="code">   8:      11458421     1074750168  [B</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line">Total     332044853    22585874416</span><br></pre></td></tr></table></figure></p>
-<p>上面这个输出中有好几个问题，暂时先不管。<br>看下Java的配置：<code>Xms26g -Xmx26g -Xmn12g -XX:PermSize=1024M -Xss2M</code><br>实际占用的29G内存中Java heap占了22G，<br>再看下PS的结果：<code>ps -aux|sort -k 1 -r |less</code></p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USER       PID <span class="preprocessor">%</span>CPU <span class="preprocessor">%</span>MEM    <span class="title">VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root         7840</span> <span class="number">22.3</span>     <span class="number">82.5</span>  <span class="number">45956536</span> <span class="number">27124588</span> ?   Sl   May<span class="number">19</span> <span class="number">380</span>:<span class="number">04</span> java</span><br></pre></td></tr></table></figure>
-<p>可以看到Java 进程占了27G。<br>一般来说同步程序并需要这么多的内存，查看GC情况:</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@localhost</span> sync]<span class="comment"># jstat  -gc 7840</span></span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       PC     PU    YGC     YGCT    FGC    FGCT     GCT   </span><br><span class="line"> <span class="number">0.0</span>   <span class="number">65536.0</span>  <span class="number">0.0</span>   <span class="number">65536.0</span> <span class="number">13148160.0</span> <span class="number">9207808.0</span> <span class="number">14049280.0</span> <span class="number">10819203.6</span> <span class="number">1048576.0</span> <span class="number">18093.7</span>    <span class="number">125</span>   <span class="number">25.202</span>   <span class="number">0</span>      <span class="number">0.000</span>   <span class="number">25.202</span></span><br></pre></td></tr></table></figure>
-<h3 id="问题1:">问题1:</h3><p>OLD区已经快满了(10/14),<br>回顾下对象是如何进入old区的：</p>
-<ul>
-<li>长期存活的对象将进入老年代，对象在Eden区中经过第一次MinorGC之后进入Survivor区中，每经过一次minorgc如果没有被回收，默认经过15次gc还未被回收就会进入old区</li>
-<li>大对象直接进入老年代，虚拟机提供了一个<code>-XX:PretenureSize</code>参数,大于这个值的对象直接在老年代中分配。避免了再Eden区和Survivor区中发生大量的内存复制（该参数只对几个收集器起作用）。<br>JVM内存回收过程<blockquote>
-<p>1、对象在Eden区完成内存分配<br>2、当Eden区满了，再创建对象，会因为申请不到空间，触发minorGC，进行young(eden+1survivor)区的垃圾回收<br>3、minorGC时，Eden不能被回收的对象被放入到空的survivor（Eden肯定会被清空），另一个survivor里不能被GC回收的对象也会被放入这个survivor，始终保证一个survivor是空的<br>4、当做第3步的时候，如果发现survivor满了，则这些对象被copy到old区，或者survivor并没有满，但是有些对象已经足够Old，也被放入Old区 XX:MaxTenuringThreshold<br>5、当Old区被放满的之后，进行fullGC</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="问题2">问题2</h3><p>heap中char数组占用内存过多，但是程序并有显示生成char对象。<br><a href="http://stackoverflow.com/questions/20388081/why-my-java-heap-is-with-so-many-char" target="_blank" rel="external">Why my Java heap is with so many char</a></p>
-<blockquote>
-<p>811k of char[] correspond to 800k of Strings, so yes, you have too many Strings.<br>If you’re having a memory leak (judging by the tag), then it’s most probably are strings in a HashMap. You have 800k instances of strings, 200k instances of hash entries, 30k of maps. This probably means that your strings are kept in this cache and are not removed. Global map is a frequent cause of memory leaks, one needs to make sure that they are evicted from this cache.</p>
-</blockquote>
-<p>Since all these values are not being GC-ed, you could try analyzing an object graph to see what’s holding them with a tool like JProfiler.</p>
-<p><a href="http://stackoverflow.com/questions/1985480/why-does-the-profiler-show-large-numbers-of-char-instances-when-i-am-not-creat" target="_blank" rel="external">Why does the profiler show large numbers of char[] instances when I am not creating any?</a></p>
-<blockquote>
-<p>Take a look at the String source code. The String object itself contains a cached hash code, a count of the number of characters (again, for optimisation purposes), an offset (since a String.substr()points to the original string data) and the character array, which contains the actual string data. Hence your metrics showing that String consumes relatively little, but the majority of memory is taken by the underlying character arrays.</p>
-<p>String is the perfect example. It contains a handful of primitive fields, plus the char[]. The char[]accounts for the vast majority of the memory usage. The shallow size of String is very small, but it’s retained size is much larger, since that includes the char[].<br>大概就是说尽管没有直接使用char数组，但是对String的频繁使用也会造成这个问题。</p>
-</blockquote>
-<h2 id="参考链接:">参考链接:</h2><p><a href="http://www.importnew.com/14086.html" target="_blank" rel="external">Java内存与垃圾回收调优</a></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
               <a class="post-title-link" href="/2015/04/21/JDK-Tools/" itemprop="url">
                 JDK 自带工具备忘
               </a>
@@ -841,44 +776,18 @@
 
       
         
-          <span itemprop="articleBody"><h2 id="简介">简介</h2><ul>
+          <h2 id="简介">简介</h2><ul>
 <li>jps JVM process status 显示系统内所有的hotspot虚拟机进程。</li>
 <li>jstat JVM statistics monitoring tool 收集hotspot虚拟机各方面的运行数据</li>
 <li>jinfo configuration info for java 显示虚拟机配置信息</li>
 <li>jmap 生成虚拟机的内存转储快照</li>
 <li>jhat JVM heap dump browser 用于分析heapdump文件。</li>
-<li>jstack stack trace for java 显示虚拟机上的线程快照</li>
-</ul>
-<h2 id="jps">jps</h2><p>参数列表</p>
-<blockquote>
-<p>-q Suppress the output of the class name, JAR file name, and arguments passed to the main method, producing only a list of local VM identifiers. 只显示LVMID省略主类名称<br>-m Output the arguments passed to the main method. The output may be null for embedded JVMs. 显示进程启动时传递的参数<br>-l Output the full package name for the application’s main class or the full path name to the application’s JAR file. 显示主类全名，jar路径<br>-v Output the arguments passed to the JVM. 显示进程启动时JVM参数<br>-V Output the arguments passed to the JVM through the flags file (the .hotspotrc file or the file specified by the -XX:Flags=<filename> argument).</filename></p>
-</blockquote>
-<h2 id="jstat">jstat</h2><p>JStat可以用来查看JVM的一些统计信息，及GC的情况等。JStat命令本身支持了定时刷新功能。<br>     jstat-gc [pid] 2000 10</p>
-<p>具体参数含义如下：<br>   jstat -classpid:显示加载class的数量，及所占空间等信息。<br>   jstat -compilerpid:显示VM实时编译的数量等信息。<br>   jstat -gc pid:可以显示gc的信息，查看gc的次数，及时间。其中最后五项，分别是young gc的次数，younggc的时间，full gc的次数，fullgc的时间，gc的总时间。<br>  jstat-gccapacity:可以显示，VM内存中三代（young,old,perm）对象的使用和占用大小，如：PGCMN显示的是最小perm的内存使用量，PGCMX显示的是perm的内存最大使用量，PGC是当前新生成的perm内存占用量，PC是但前perm内存占用量。其他的可以根据这个类推，OC是old内纯的占用量。<br>   jstat -gcnewpid:new对象的信息。<br>   jstat -gcnewcapacitypid:new对象的信息及其占用量。<br>   jstat -gcoldpid:old对象的信息。<br>   jstat -gcoldcapacitypid:old对象的信息及其占用量。<br>   jstat -gcpermcapacity pid:perm对象的信息及其占用量。<br>   jstat -utilpid:统计gc信息统计。<br>   jstat -printcompilationpid:当前VM执行的信息。  </p>
-<h2 id="jmap">jmap</h2><p>使用JMap可以解决上面提到的问题，并通过Linux的watch命令达到实时监控的效果。<br>例如，通过下面命令打印堆上apache包占用内存最大的前30个对象，每一秒刷新一次： <code>watch-n 1 -d &quot;jmap -histo:live [pid] | grep &quot;apache&quot; | head -n 30&quot;</code><br> jmap [option] vmid</p>
-<ul>
-<li>-dump 生成Java堆转储快照</li>
-<li>-heap 显示Java堆的详细信息</li>
-<li>-histo 显示堆中对象统计信息，包括类实例数量合计容量</li>
-</ul>
-<blockquote>
-<p>watch 是周期性的执行下个程序并全屏显示执行结果，。<br>-n或—interval  watch缺省每2秒运行一下程序，可以用-n或-interval来指定间隔的时间。<br>-d或—differences  用-d或—differences 选项watch 会高亮显示变化的区域。 而-d=cumulative选项会把变动过的地方(不管最近的那次有没有变动)都高亮显示出来。<br>-t 或-no-title  会关闭watch命令在顶部的时间间隔,命令，当前时间的输出。</p>
-</blockquote>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# jmap -histo 27109</span><br><span class="line"></span><br><span class="line"><span class="header"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span></span><br><span class="line"><span class="code">   1:      30115700     2278829352  [I</span></span><br><span class="line"><span class="code">   2:      29118169     1620754128  [C</span></span><br><span class="line"><span class="code">   3:      13780299     1212666312  java.util.regex.Matcher</span></span><br><span class="line"><span class="code">   4:       7813981      707061400  [B</span></span><br><span class="line"><span class="code">   5:      20477817      655290144  java.lang.String</span></span><br><span class="line"><span class="code">   6:       2988315      472124848  [Ljava.lang.Object;</span></span><br><span class="line"><span class="code">   7:       7817628      437787168  java.util.HashMap$Entry</span></span><br><span class="line"><span class="code">   8:       1098010      265252184  [Ljava.util.HashMap$Entry;</span></span><br><span class="line"><span class="code">   9:       1973855      142117560  java.util.LinkedHashMap$Entry</span></span><br><span class="line"><span class="code">  10:       1010641      121276920  java.util.TreeMap$AscendingSubMap</span></span><br><span class="line"><span class="code">  11:       1948128      109095168  java.nio.HeapByteBuffer</span></span><br><span class="line"><span class="code">  12:             4       86507584  [Ljava.io.ObjectInputStream$HandleTable$HandleList;</span></span><br><span class="line"><span class="code">  13:       3482239       83573736  java.lang.Long</span></span><br></pre></td></tr></table></figure>
-<p>这里涉及到一个问题：</p>
-<p><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html#getName%28%29" target="_blank" rel="external">http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html#getName%28%29</a></p>
-<p>其中I,C等表示class文件里的class的标识。<br>对应关系如下:</p>
-<ul>
-<li>B 代表<code>byte</code></li>
-<li>C 代表<code>char</code></li>
-<li>D 代表<code>double</code></li>
-<li>F 代表<code>float</code></li>
-<li>I 代表<code>int</code></li>
-<li>J 代表<code>long</code></li>
-<li>Z代表<code>boolean</code><br>前边有<code>[</code>代表数组，<code>[I</code> 就相当于<code>int[]</code><br>对象用<code>[L</code>+类名表示</li>
-</ul>
-<h2 id="参考链接">参考链接</h2><p><a href="http://itzoo.info/?p=256" target="_blank" rel="external">http://itzoo.info/?p=256</a></p>
-</span>
+<li>jstack stack trace for java 显示虚拟机上的线程快照
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/04/21/JDK-Tools/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -950,14 +859,13 @@
 
       
         
-          <span itemprop="articleBody"><h2 id="pipline模式">pipline模式</h2><blockquote>
-<p>Pipeline：“管道”，和很多设计模式中的“管道”具有同样的概念，pipleline的操作，将明确client与server端的交互，都是“单向的”：你可以将多个command，依次发给server，但在此期间，你将无法获得单个command的响应数据，此后你可以关闭“请求”，然后依次获取每个command的响应结果。<br>    从简单来说，在IO操作层面，对于client而言，就是一次批量的连续的“write”请求，然后是批量的连续的“read”操作。其实对于底层Socket-IO而言，对于client而言，只不过是多次write，然后一次read的操作；对于server端，input通道上read到数据之后，就会立即被实施，也会和非pipeline一样在output通道上输出执行的结果，只不过此时数据会被阻塞在网络缓冲区上，直到client端开始read或者关闭链接。神秘的面纱已被解开，或许你也能创造一个pipeline的实现。<br>    非pipleline模式：<br>    Request——&gt;执行<br>    ——&gt;Response<br>    Request——&gt;执行<br>    ——&gt;Response<br>    Pipeline模式下：<br>    Request——&gt;执行，Server将响应结果队列化<br>    Request——&gt;执行，Server将响应结果队列化<br>    ——&gt;Response<br>    ——&gt;Response<br>    Client端根据Redis的数据协议，将响应结果进行解析，并将结果做类似于“队列化”的操作。</p>
-</blockquote>
-<h2 id="测试代码">测试代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="javadoc">/**</span><br><span class="line"> * 测试redis的效率</span><br><span class="line"> * Created by xuyifei01 on 2015/4/14.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestPipeline</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="javadoc">/**</span><br><span class="line">     *<span class="javadoctag"> @param</span> args</span><br><span class="line">     */</span></span><br><span class="line"></span><br><span class="line">    ShardedJedis jedis;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Number of iterations</span></span><br><span class="line">    <span class="comment">// Use 1000 to test with the pipeline, 100 otherwise</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> N = <span class="number">1000</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String rangename = <span class="string">"taojiaen"</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String field = <span class="string">"dashen"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TestPipeline</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        JedisShardInfo si = <span class="keyword">new</span> JedisShardInfo(<span class="string">"ip"</span>, <span class="string">"port"</span>);</span><br><span class="line">        si.setPassword(<span class="string">"passwd"</span>);</span><br><span class="line">        List&lt;JedisShardInfo&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list.add(si);</span><br><span class="line">        jedis = <span class="keyword">new</span> ShardedJedis(list);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        ShardedJedisPipeline pipeline = jedis.pipelined();</span><br><span class="line">        <span class="keyword">for</span> ( <span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; k++) &#123;</span><br><span class="line">            pipeline.hincrBy(rangename,field,<span class="number">5</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        pipeline.sync();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push2</span><span class="params">( <span class="keyword">int</span> n )</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> ( <span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; k++) &#123;</span><br><span class="line">            jedis.hincrBy(rangename,field,<span class="number">5</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        TestPipeline obj = <span class="keyword">new</span> TestPipeline();</span><br><span class="line">        <span class="keyword">long</span> startTime = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">for</span> ( <span class="keyword">int</span> j=<span class="number">0</span>; j&lt;N; j++ ) &#123;</span><br><span class="line">            obj.push2(<span class="number">1000</span>);</span><br><span class="line">            <span class="comment">//pipline方式</span></span><br><span class="line">            <span class="comment">//obj.push(1000);</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> endTime = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">double</span> d = (<span class="keyword">double</span>)(endTime - startTime);</span><br><span class="line">        System.out.println(<span class="string">"总共用时: "</span>+d);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="测试结果">测试结果</h2><p>总共100w的数据，使用了redis中的hash操作。<br>其中push方法pipline 实际用时: 66135ms<br>push2方法jedis方式实际用时N分钟（N&gt;30），并且很耗CPU与内存</p>
-<h2 id="结论">结论</h2><p>pipline作为一种异步方式,执行效率非常高。</p>
-<h2 id="参考链接:">参考链接:</h2><p><a href="http://stackoverflow.com/questions/16697389/why-it-is-so-slow-with-100-000-records-when-using-pipeline-in-redis" target="_blank" rel="external">http://stackoverflow.com/questions/16697389/why-it-is-so-slow-with-100-000-records-when-using-pipeline-in-redis</a><br><a href="http://blog.csdn.net/jiangguilong2000/article/details/9356229" target="_blank" rel="external">http://blog.csdn.net/jiangguilong2000/article/details/9356229</a></p>
-</span>
+          <h2 id="pipline模式">pipline模式</h2><blockquote>
+<p>Pipeline：“管道”，和很多设计模式中的“管道”具有同样的概念，pipleline的操作，将明确client与server端的交互，都是“单向的”：你可以将多个command，依次发给server，但在此期间，你将无法获得单个command的响应数据，此后你可以关闭“请求”，然后依次获取每个command的响应结果。<br>    从简单来说，在IO操作层面，对于client而言，就是一次批量的连续的“write”请求，然后是批量的连续的“read”操作。其实对于底层Socket-IO而言，对于client而言，只不过是多次write，然后一次read的操作；对于server端，input通道上read到数据之后，就会立即被实施，也会和非pipeline一样在output通道上输出执行的结果，只不过此时数据会被阻塞在网络缓冲区上，直到client端开始read或者关闭链接。神秘的面纱已被解开，或许你也能创造一个pipeline的实现。<br>    非pipleline模式：<br>    Request——&gt;执行<br>    ——&gt;Response<br>    Request——&gt;执行<br>    ——&gt;Response<br>    Pipeline模式下：<br>    Request——&gt;执行，Server将响应结果队列化<br>    Request——&gt;执行，Server将响应结果队列化<br>    ——&gt;Response<br>    ——&gt;Response<br>    Client端根据Redis的数据协议，将响应结果进行解析，并将结果做类似于“队列化”的操作。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/04/14/jedis-pipline-test/#more" rel="contents">
+              閱讀全文 &raquo;
+            </a>
+          </div>
         
       
     </div>

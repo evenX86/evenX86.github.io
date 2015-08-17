@@ -42,7 +42,7 @@
 A GZip Servlet Filter can be used to GZip compress content sent to a browser from a Java web application. This text will expl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[翻译]Servlet Gzip Filter简介">
-<meta property="og:url" content="http://evenx86.github.io/2015/06/26/Servlet-gzip-filter/index.html">
+<meta property="og:url" content="http://evenx86.github.io/2015/08/17/Servlet-gzip-filter/index.html">
 <meta property="og:site_name" content="曲径通幽">
 <meta property="og:description" content="原文地址:http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html
 简介
@@ -166,8 +166,8 @@ A GZip Servlet Filter can be used to GZip compress content sent to a browser fro
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-06-26T20:16:25+08:00" content="2015-06-26">
-            2015-06-26
+          <time itemprop="dateCreated" datetime="2015-08-17T09:36:05+08:00" content="2015-08-17">
+            2015-08-17
           </time>
         </span>
 
@@ -204,7 +204,7 @@ A GZip Servlet Filter can be used to GZip compress content sent to a browser fro
 <h2 id="为什么要使用gzip压缩网页内容">为什么要使用gzip压缩网页内容</h2><blockquote>
 <p>GZip compressing HTML, JavaScript, CSS etc. makes the data sent to the browser smaller. This speeds up the download. This is especially beneficial for mobile phones where internet bandwidth may be limited. GZip compressing content adds a CPU overhead on the server and browser, but it is still speeding up the total page load compared to not GZip compressing.</p>
 </blockquote>
-<p>gzip 压缩html、Javascript，css等等文件，目的是为了是发送到浏览器的数据更小，加速下载，这对于限制了带宽的移动端作用特别大。当然gzip增加了server端和浏览器端的cpu的压力，但是总体来说还是加速了页面的载入。</p>
+<p>gzip 压缩html、Javascript，css等等文件，目的是为了是发送到浏览器的数据更小，加速下载，这对于限制了带宽的移动端作用特别大。当然gzip增加了server端和浏览器端的cpu的压力，但是总体来说还是加速了页面的载入。<br> <a id="more"></a></p>
 <h2 id="Gzip_HTTP_Header">Gzip HTTP Header</h2><blockquote>
 <p>The browser includes the Accept-Encoding HTTP header in requests sent to an HTTP server (e.g. a Java web server). The content of the Accept-Encoding header tells what content encodings the browser can accept. If that header contains the value gzip in it, the browser can accept GZip compressed content. The server can then GZip compress the content sent back to the browser.<br>If the content sent back from the server is GZip compressed, the server includes the Content-EncodingHTTP header with the value gzip in the HTTP response. That way the browser knows that the content is GZip compressed.</p>
 </blockquote>
@@ -238,13 +238,13 @@ A GZip Servlet Filter can be used to GZip compress content sent to a browser fro
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/13/pipeline-sync-problem/" rel="prev">pipline sync</a>
+              <a href="/2015/08/17/pipeline-sync-problem/" rel="prev">pipline sync</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/25/java-web-xml/" rel="next">Java Web部署描述文件:web.xml [部分翻译]</a>
+              <a href="/2015/08/17/Spring-bean/" rel="next">Bean的基本用法备忘</a>
             
           </div>
         </div>

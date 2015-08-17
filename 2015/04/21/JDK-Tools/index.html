@@ -210,12 +210,12 @@ jhat JVM heap dump browser 用于分析h">
 <li>jinfo configuration info for java 显示虚拟机配置信息</li>
 <li>jmap 生成虚拟机的内存转储快照</li>
 <li>jhat JVM heap dump browser 用于分析heapdump文件。</li>
-<li>jstack stack trace for java 显示虚拟机上的线程快照</li>
-</ul>
-<h2 id="jps">jps</h2><p>参数列表</p>
-<blockquote>
+<li>jstack stack trace for java 显示虚拟机上的线程快照<a id="more"></a>
+<h2 id="jps">jps</h2>参数列表<blockquote>
 <p>-q Suppress the output of the class name, JAR file name, and arguments passed to the main method, producing only a list of local VM identifiers. 只显示LVMID省略主类名称<br>-m Output the arguments passed to the main method. The output may be null for embedded JVMs. 显示进程启动时传递的参数<br>-l Output the full package name for the application’s main class or the full path name to the application’s JAR file. 显示主类全名，jar路径<br>-v Output the arguments passed to the JVM. 显示进程启动时JVM参数<br>-V Output the arguments passed to the JVM through the flags file (the .hotspotrc file or the file specified by the -XX:Flags=<filename> argument).</filename></p>
 </blockquote>
+</li>
+</ul>
 <h2 id="jstat">jstat</h2><p>JStat可以用来查看JVM的一些统计信息，及GC的情况等。JStat命令本身支持了定时刷新功能。<br>     jstat-gc [pid] 2000 10</p>
 <p>具体参数含义如下：<br>   jstat -classpid:显示加载class的数量，及所占空间等信息。<br>   jstat -compilerpid:显示VM实时编译的数量等信息。<br>   jstat -gc pid:可以显示gc的信息，查看gc的次数，及时间。其中最后五项，分别是young gc的次数，younggc的时间，full gc的次数，fullgc的时间，gc的总时间。<br>  jstat-gccapacity:可以显示，VM内存中三代（young,old,perm）对象的使用和占用大小，如：PGCMN显示的是最小perm的内存使用量，PGCMX显示的是perm的内存最大使用量，PGC是当前新生成的perm内存占用量，PC是但前perm内存占用量。其他的可以根据这个类推，OC是old内纯的占用量。<br>   jstat -gcnewpid:new对象的信息。<br>   jstat -gcnewcapacitypid:new对象的信息及其占用量。<br>   jstat -gcoldpid:old对象的信息。<br>   jstat -gcoldcapacitypid:old对象的信息及其占用量。<br>   jstat -gcpermcapacity pid:perm对象的信息及其占用量。<br>   jstat -utilpid:统计gc信息统计。<br>   jstat -printcompilationpid:当前VM执行的信息。  </p>
 <h2 id="jmap">jmap</h2><p>使用JMap可以解决上面提到的问题，并通过Linux的watch命令达到实时监控的效果。<br>例如，通过下面命令打印堆上apache包占用内存最大的前30个对象，每一秒刷新一次： <code>watch-n 1 -d &quot;jmap -histo:live [pid] | grep &quot;apache&quot; | head -n 30&quot;</code><br> jmap [option] vmid</p>
@@ -258,7 +258,7 @@ jhat JVM heap dump browser 用于分析h">
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/05/20/jvm-startup/" rel="prev">Java内存与垃圾回收总结备忘</a>
+              <a href="/2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/" rel="prev">七周七语言读书笔记之Ruby</a>
             
           </div>
 

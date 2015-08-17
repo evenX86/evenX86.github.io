@@ -28,7 +28,7 @@
 
 
 
-  <meta name="keywords" content="spring," />
+  <meta name="keywords" content="tomcat," />
 
 
 
@@ -37,33 +37,21 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="前言本文为实验楼Spring框架入门教程 学习笔记
-Spring中的相互引用
-引用不同配置文件中的Bean，可以使用ref标签，结合bean属性
-引用相同配置文件中的Bean，可以使用ref标签,结合local属性
-
-
-ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以引用不同xml文件中的bean，但是，考虑到项目的可读性，引用相同xml配置文件的bean时，应该尽量使">
+<meta name="description" content="Tomcat的总体架构Tomcat即是一个Http服务器也是一个Servlet容器，它的总体结构我们可以用下图来描述：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bean的基本用法备忘">
-<meta property="og:url" content="http://evenx86.github.io/2015/05/24/Spring-bean/index.html">
+<meta property="og:title" content="Tomcat源码结构分析">
+<meta property="og:url" content="http://evenx86.github.io/2015/08/17/tomcat-architecture/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="前言本文为实验楼Spring框架入门教程 学习笔记
-Spring中的相互引用
-引用不同配置文件中的Bean，可以使用ref标签，结合bean属性
-引用相同配置文件中的Bean，可以使用ref标签,结合local属性
-
-
-ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以引用不同xml文件中的bean，但是，考虑到项目的可读性，引用相同xml配置文件的bean时，应该尽量使">
+<meta property="og:description" content="Tomcat的总体架构Tomcat即是一个Http服务器也是一个Servlet容器，它的总体结构我们可以用下图来描述：">
+<meta property="og:image" content="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858235159hn9lHQz7Ny">
+<meta property="og:image" content="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858271928OVH8pZgi1k">
+<meta property="og:image" content="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436865256750RzOtdyDqPK">
+<meta property="og:image" content="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858432906N1oyPsIgL7">
+<meta property="og:image" content="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858459158jArksiMtar">
+<meta property="og:image" content="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858539631iz5JP5KoDh">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Bean的基本用法备忘">
-<meta name="twitter:description" content="前言本文为实验楼Spring框架入门教程 学习笔记
-Spring中的相互引用
-引用不同配置文件中的Bean，可以使用ref标签，结合bean属性
-引用相同配置文件中的Bean，可以使用ref标签,结合local属性
-
-
-ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以引用不同xml文件中的bean，但是，考虑到项目的可读性，引用相同xml配置文件的bean时，应该尽量使">
+<meta name="twitter:title" content="Tomcat源码结构分析">
+<meta name="twitter:description" content="Tomcat的总体架构Tomcat即是一个Http服务器也是一个Servlet容器，它的总体结构我们可以用下图来描述：">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -73,7 +61,7 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
   };
 </script>
 
-    <title> Bean的基本用法备忘 // 曲径通幽 </title>
+    <title> Tomcat源码结构分析 // 曲径通幽 </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
 <!--[if lte IE 8]>
@@ -168,7 +156,7 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
           
           
             
-              Bean的基本用法备忘
+              Tomcat源码结构分析
             
           
         </h1>
@@ -177,8 +165,8 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-05-24T19:17:07+08:00" content="2015-05-24">
-            2015-05-24
+          <time itemprop="dateCreated" datetime="2015-08-17T09:35:40+08:00" content="2015-08-17">
+            2015-08-17
           </time>
         </span>
 
@@ -186,7 +174,7 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
           <span class="post-category" >
             &nbsp; | &nbsp; 分類於
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Tomcat/" itemprop="url" rel="index"><span itemprop="name">Tomcat</span></a></span>
 
               
               
@@ -207,46 +195,27 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
       
 
       
-        <span itemprop="articleBody"><h2 id="前言">前言</h2><p>本文为实验楼<a href="https://www.shiyanlou.com/courses/33" target="_blank" rel="external">Spring框架入门教程</a> 学习笔记</p>
-<h2 id="Spring中的相互引用">Spring中的相互引用</h2><ul>
-<li>引用不同配置文件中的Bean，可以使用<code>ref</code>标签，结合<code>bean</code>属性</li>
-<li>引用相同配置文件中的Bean，可以使用<code>ref</code>标签,结合<code>local</code>属性</li>
-</ul>
-<blockquote>
-<p>ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以引用不同xml文件中的bean，但是，考虑到项目的可读性，引用相同xml配置文件的bean时，应该尽量使用 local 属性。</p>
-</blockquote>
-<h2 id="Spring给bean属性注入value">Spring给bean属性注入value</h2><p>示例给两个properties注入value<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package com<span class="built_in">.</span>shiyanlou<span class="built_in">.</span>common;</span><br><span class="line"><span class="keyword">public</span> class FileNameGenerator &#123;</span><br><span class="line"><span class="keyword">private</span> <span class="built_in">String</span> name;</span><br><span class="line"><span class="keyword">private</span> <span class="built_in">String</span> <span class="keyword">type</span>;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="built_in">String</span> getName() &#123;</span><br><span class="line">    <span class="keyword">return</span> name;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="literal">void</span> setName(<span class="built_in">String</span> name) &#123;</span><br><span class="line">    this<span class="built_in">.</span>name <span class="subst">=</span> name;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="built_in">String</span> getType() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">type</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="literal">void</span> setType(<span class="built_in">String</span> <span class="keyword">type</span>) &#123;</span><br><span class="line">    this<span class="built_in">.</span><span class="keyword">type</span> <span class="subst">=</span> <span class="keyword">type</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <span itemprop="articleBody"><h2 id="Tomcat的总体架构">Tomcat的总体架构</h2><p>Tomcat即是一个Http服务器也是一个Servlet容器，它的总体结构我们可以用下图来描述：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858235159hn9lHQz7Ny" alt="Tomcat架构示例图"></p>
+<a id="more"></a>
+<h3 id="Server">Server</h3><p>Server是Tomcat中最顶层的组件，它可以包含多个Service组件。在Tomcat源代码中Server组件对应源码中的<code>org.apache.catalina.core.StandardServer类。StandardServer</code>的继承关系图如下图所示：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858271928OVH8pZgi1k" alt="StandardServer继承关系图"></p>
+<h3 id="Service">Service</h3><p>接下来咋们来看看Service组件，Service组件相当于Connetor和Engine组件的包装器，它将一个或者多个Connector组件和一个Engine建立关联。缺省的的配置文件中，定义一个叫Catalina的服务，并将Http,AJP这两个Connector关联到了一个名为Catalina的Engine.Service组件对应Tomcat源代码中的<code>org.apache.catalina.core.StandardService</code>,StandardService的继承关系图如下图所示：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436865256750RzOtdyDqPK" alt="StandardService继承关系图"></p>
+<h3 id="Connector">Connector</h3><p>既然Tomcat需要提供http服务，而我们知道http应用层协议最终都是需要通过TCP层的协议进行包传递的，而Connector正是Tomcat中监听TCP网络连接的组件，一个Connector会监听一个独立的端口来处理来自客户端的连接。缺省的情况下Tomcat提供了如下两个Connector。我们分别描述一下：</p>
 <ul>
-<li><p>一般方法:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"FileNameGenerator"</span> <span class="attribute">class</span>=<span class="value">"com.shiyanlou.common.FileNameGenerator"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"name"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">value</span>&gt;</span>shiyanlou<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"type"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">value</span>&gt;</span>txt<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>缩写方法: </p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean <span class="property">id</span>=<span class="string">"FileNameGenerator"</span> <span class="type">class</span>=<span class="string">"com.shiyanlou.common.FileNameGenerator"</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">property</span> <span class="property">name</span>=<span class="string">"name"</span> value=<span class="string">"shiyanlou"</span> /&gt;</span><br><span class="line">    &lt;<span class="keyword">property</span> <span class="property">name</span>=<span class="string">"type"</span> value=<span class="string">"txt"</span> /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>“p”  schema</p>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans <span class="variable">xmlns=</span><span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">    xmlns:<span class="variable">xsi=</span><span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">    xmlns:<span class="variable">p=</span><span class="string">"http://www.springframework.org/schema/p"</span></span><br><span class="line">    xsi:<span class="variable">schemaLocation=</span><span class="string">"http://www.springframework.org/schema/beans</span><br><span class="line">    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"</span>&gt;</span><br><span class="line"> </span><br><span class="line">    &lt;bean <span class="variable">id=</span><span class="string">"FileNameGenerator"</span> <span class="variable">class=</span><span class="string">"com.shiyanlou.common.FileNameGenerator"</span></span><br><span class="line">             p:<span class="variable">name=</span><span class="string">"shiyanlou"</span> p:<span class="variable">type=</span><span class="string">"txt"</span> /&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
-</li>
+<li>HTTP/1.1<br><code>&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot; connectionTimeout=&quot;20000&quot; redirectPort=&quot;8443&quot; /&gt;</code> 上面定义了一个Connector，它缺省监听端口8080,这个端口我们可以根据具体情况进行改动。<code>connectionTimeout</code>定义了连接超时时间，单位是毫秒，<code>redirectPort</code>定义了ssl的重定向接口，根据缺省的配置，Connector会将ssl请求重定向到8443端口。</li>
+<li>AJP/1.3<br>AJP表示<code>Apache Jserv Protocol</code>,此连接器将处理Tomcat和Aapache http服务器之间的交互，这个连机器是用来处理我们将Tomcat和Apache http服务器结合使用的情况。假如在同样的一台物理Server上面部署了一台Apache http服务器和多台Tomcat服务器，通过Apache服务器来处理静态资源以及负载均衡的时候，针对不同的Tomcat实例需要AJP监听不同的端口。<br>Connector对应源代码中的<code>org.apache.catalina.connector.Connector</code>,它的继承关系图如下所示：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858432906N1oyPsIgL7" alt="Connector继承关系"></li>
 </ul>
-<p><strong>注意</strong><br>p语法需要添加<code>xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</code></p>
-<h2 id="Bean的作用域">Bean的作用域</h2><blockquote>
+<h3 id="Engine">Engine</h3><p>Tomcat中有一个容器的概念，而Engine,Host,Context都属于Contanier，我们先来说说最顶层的容器Engine.<br>一个Engine可以包含一个或者多个Host,也就是说我们一个Tomcat的实例可以配置多个虚拟主机。<br>缺省的情况下<code>&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;</code>定义了一个名称为Cataline的Engine.Engine对应源代码中的<code>org.apache.catalina.core.StandardEngine</code>，它的继承关系图如下图所示：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858459158jArksiMtar" alt="StandardEngine继承关系图"></p>
+<h3 id="Context">Context</h3><p>在Tomcat中，每一个运行的webapp其实最终都是以Context的形成存在，每个Context都有一个根路径和请求URL路径，Context对应源代码中的<code>org.apache.catalina.core.StandardContext</code>,它的继承关系图如下图所示：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858539631iz5JP5KoDh" alt="StandardContext继承关系图"></p>
+<p>在Tomcat中我们通常采用如下的两种方式创建一个Context.下面分别描述一下：</p>
 <ul>
-<li>singleton — 单例模式，由IOC容器返回一个唯一的bean实例。</li>
-<li>prototype — 原型模式，被请求时，每次返回一个新的bean实例。</li>
-<li>request — 每个HTTP Request请求返回一个唯一的Bean实例。</li>
-<li>session — 每个HTTP Session返回一个唯一的Bean实例。</li>
-<li>globalSession — Http Session全局Bean实例。</li>
+<li>在<catalina-home>\webapps目录中创建一个目录，这个时候将自动创建一个context，默认context的访问url为<a href="http://host:port/dirname,你也可以通过在ContextRoot\META-INF中创建一个context.xml的文件，其中包含如下的内容来指定应用的访问路径。" target="_blank" rel="external">http://host:port/dirname,你也可以通过在ContextRoot\META-INF中创建一个context.xml的文件，其中包含如下的内容来指定应用的访问路径。</a> <context path="/yourUrlPath"></context></catalina-home></li>
+<li>conf\server.xml文件中增加context元素。 第二种创建context的方法，我们可以选择在server.xml文件的<host>元素，比如我们在server.xml文件中增加如下内容：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">Context</span> <span class="attribute">path</span>=<span class="value">"/mypath"</span> <span class="attribute">docBase</span>=<span class="value">"/Users/tiger/develop/xxx"</span> <span class="attribute">reloadable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">Context</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">Host</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Engine</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">Service</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">Server</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</host></li>
 </ul>
-</blockquote>
-<p>一般情况下只需要使用单例模式和原型模式，并且默认情况下是单例模式。</p>
-<h2 id="Spring的集合类型Bean">Spring的集合类型Bean</h2><blockquote>
-<ul>
-<li>List</li>
-<li>Set</li>
-<li>Map </li>
-<li>Properties</li>
-</ul>
-</blockquote>
-</span>
+<p>这样的话，我们就可以通过<code>http://host:port/mypath</code>访问上面配置的context了。</p>
+<h3 id="Valve">Valve</h3><p>Valve中文意思是阀门，Valve是Tomcat中责任链模式的实现，通过链接多个Valve对请求进行处理。其中Valve可以定义在任何的Container中，上面说的Engine,Host,Context都属于容器。tomcat 默认定义了一个名为org.apache.catalina.valves.AccessLogValve的Valve,这个Valve负责拦截每个请求，然后记录一条访问日志。</p>
+<h3 id="总结">总结</h3><p>通过上面的分析，我们发现Server,Service,Engine,Host,Context都实现了org.apache.catalina.Lifecycle接口，通过这个接口管理了这些核心组件的生命周期，关于这些组件的生命周期，我们在下一篇文章描述。</p>
+<h2 id="Tomcat组件生命周期管理">Tomcat组件生命周期管理</h2></span>
       
     </div>
 
@@ -254,7 +223,7 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
       
         <div class="post-tags">
           
-            <a href="/tags/spring/" rel="tag">#spring</a>
+            <a href="/tags/tomcat/" rel="tag">#tomcat</a>
           
         </div>
       
@@ -263,13 +232,13 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/05/25/java-web-xml/" rel="prev">Java Web部署描述文件:web.xml [部分翻译]</a>
+              <a href="/2015/08/17/Spring-bean/" rel="prev">Bean的基本用法备忘</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/20/jvm-startup/" rel="next">Java内存与垃圾回收总结备忘</a>
+              <a href="/2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/" rel="next">七周七语言读书笔记之Ruby</a>
             
           </div>
         </div>
@@ -374,7 +343,7 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring中的相互引用"><span class="nav-number">2.</span> <span class="nav-text">Spring中的相互引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring给bean属性注入value"><span class="nav-number">3.</span> <span class="nav-text">Spring给bean属性注入value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean的作用域"><span class="nav-number">4.</span> <span class="nav-text">Bean的作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring的集合类型Bean"><span class="nav-number">5.</span> <span class="nav-text">Spring的集合类型Bean</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat的总体架构"><span class="nav-number">1.</span> <span class="nav-text">Tomcat的总体架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Server"><span class="nav-number">1.1.</span> <span class="nav-text">Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service"><span class="nav-number">1.2.</span> <span class="nav-text">Service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Connector"><span class="nav-number">1.3.</span> <span class="nav-text">Connector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Engine"><span class="nav-number">1.4.</span> <span class="nav-text">Engine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context"><span class="nav-number">1.5.</span> <span class="nav-text">Context</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Valve"><span class="nav-number">1.6.</span> <span class="nav-text">Valve</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.7.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat组件生命周期管理"><span class="nav-number">2.</span> <span class="nav-text">Tomcat组件生命周期管理</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

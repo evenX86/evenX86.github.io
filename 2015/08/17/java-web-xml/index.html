@@ -40,7 +40,7 @@
 <meta name="description" content="前言Java web应用使用部署描述文件来绝对URL映射到Servlets的规则,哪些URL需要验证，以及一些其他的信息，这个文件就是web.xml，在servlet标准中这个文件位于应用war包的WEB-INF/目录下。更多web.xml标准的信息，可以访问: the Metawerx web.xml reference wiki和 the Metawerx web.xml reference">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java Web部署描述文件:web.xml [部分翻译]">
-<meta property="og:url" content="http://evenx86.github.io/2015/05/25/java-web-xml/index.html">
+<meta property="og:url" content="http://evenx86.github.io/2015/08/17/java-web-xml/index.html">
 <meta property="og:site_name" content="曲径通幽">
 <meta property="og:description" content="前言Java web应用使用部署描述文件来绝对URL映射到Servlets的规则,哪些URL需要验证，以及一些其他的信息，这个文件就是web.xml，在servlet标准中这个文件位于应用war包的WEB-INF/目录下。更多web.xml标准的信息，可以访问: the Metawerx web.xml reference wiki和 the Metawerx web.xml reference">
 <meta name="twitter:card" content="summary">
@@ -159,8 +159,8 @@
       <div class="post-meta">
         <span class="post-time">
           發表於
-          <time itemprop="dateCreated" datetime="2015-05-25T16:45:00+08:00" content="2015-05-25">
-            2015-05-25
+          <time itemprop="dateCreated" datetime="2015-08-17T09:37:50+08:00" content="2015-08-17">
+            2015-08-17
           </time>
         </span>
 
@@ -190,7 +190,7 @@
 
       
         <span itemprop="articleBody"><h2 id="前言">前言</h2><p>Java web应用使用部署描述文件来绝对URL映射到Servlets的规则,哪些URL需要验证，以及一些其他的信息，这个文件就是<code>web.xml</code>，在servlet标准中这个文件位于应用war包的<code>WEB-INF/</code>目录下。<br>更多<code>web.xml</code>标准的信息，可以访问:<a href="http://wiki.metawerx.net/wiki/Web.xml" target="_blank" rel="external"> the Metawerx web.xml reference wiki</a>和<a href="http://jcp.org/aboutJava/communityprocess/final/jsr154/index.html" target="_blank" rel="external"> the Metawerx web.xml reference wiki</a></p>
-<h2 id="About_Deployment_Descriptors">About Deployment Descriptors</h2><p>web应用部署描述文件可以反映class文件,资源，配置，以及Java web server 使用它们来应对web请求。当web应用接收到请求时，通过应用部署描述文件把url映射到处理请求的代码上。<br>部署描述文件是一个名为<code>web.xml</code>的文件，它存在于war包下面的<code>WEB-INF/</code>目录下，是一个以<code>&lt;web-app&gt;</code>为根的XML文件。<br>以下是一个简单的<code>web.xml</code>示例，其将所有的URL路径映射到<code>mysite.server.ComingSoonServlet</code>:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">web-app</span> <span class="attribute">xmlns</span>=<span class="value">"http://java.sun.com/xml/ns/javaee"</span> <span class="attribute">version</span>=<span class="value">"2.5"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>comingsoon<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>mysite.server.ComingSoonServlet<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>comingsoon<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="title">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="About_Deployment_Descriptors">About Deployment Descriptors</h2><p>web应用部署描述文件可以反映class文件,资源，配置，以及Java web server 使用它们来应对web请求。当web应用接收到请求时，通过应用部署描述文件把url映射到处理请求的代码上。<br>部署描述文件是一个名为<code>web.xml</code>的文件，它存在于war包下面的<code>WEB-INF/</code>目录下，是一个以<code>&lt;web-app&gt;</code>为根的XML文件。<br>以下是一个简单的<code>web.xml</code>示例，其将所有的URL路径映射到<code>mysite.server.ComingSoonServlet</code>:<br><a id="more"></a><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">web-app</span> <span class="attribute">xmlns</span>=<span class="value">"http://java.sun.com/xml/ns/javaee"</span> <span class="attribute">version</span>=<span class="value">"2.5"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>comingsoon<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">servlet-class</span>&gt;</span>mysite.server.ComingSoonServlet<span class="tag">&lt;/<span class="title">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">servlet-name</span>&gt;</span>comingsoon<span class="tag">&lt;/<span class="title">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="title">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>如果你将应用程序分为多个模块，则需要为每个模块配置额外的参数，这个在<a href="https://cloud.google.com/appengine/docs/java/modules/#Java_Configuration" target="_blank" rel="external"> Modules </a>有详解。</p>
 </blockquote>
@@ -220,13 +220,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/06/26/Servlet-gzip-filter/" rel="prev">[翻译]Servlet Gzip Filter简介</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/05/24/Spring-bean/" rel="next">Bean的基本用法备忘</a>
+              <a href="/2015/08/17/jvm-startup/" rel="next">Java内存与垃圾回收总结备忘</a>
             
           </div>
         </div>
