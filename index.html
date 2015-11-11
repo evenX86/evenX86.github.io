@@ -152,6 +152,149 @@
           
           
             
+              <a class="post-title-link" href="/2015/11/11/hadoop-configure/" itemprop="url">
+                Hadoop 伪分布式模式配置
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於
+          <time itemprop="dateCreated" datetime="2015-11-11T16:19:01+08:00" content="2015-11-11">
+            2015-11-11
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分類於
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Hadoop/" itemprop="url" rel="index"><span itemprop="name">Hadoop</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h3 id="机器准备:">机器准备:</h3><p>8核32G<br>平时写程序还是会在伪分布式环境下调试。</p>
+<h4 id="添加hadoop用户（笔记里为了方便还是用了root）">添加hadoop用户（笔记里为了方便还是用了root）</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">adduser</span> hadoop  <span class="comment">#添加hadoop用户</span></span><br><span class="line">passwd hadoop   <span class="comment">#为hadoop用户设置密码</span></span><br></pre></td></tr></table></figure>
+<h4 id="添加Java环境">添加Java环境</h4><p>解压jdk压缩包后添加下列配置信息<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/java/jdk1.7.0_80</span><br><span class="line">export JRE_HOME=/usr/local/java/jdk1.7.0_80/jre</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</span><br><span class="line">```    </span><br><span class="line"><span class="comment">&lt;!-- more --&gt;</span></span><br><span class="line">####安装hadoop</span><br></pre></td></tr></table></figure></p>
+<p>wget <a href="http://mirror.bit.edu.cn/apache/hadoop/common/stable2/hadoop-2.7.1.tar.gz" target="_blank" rel="external">http://mirror.bit.edu.cn/apache/hadoop/common/stable2/hadoop-2.7.1.tar.gz</a><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">解压完成后单机hadoop就算是完成了可以运行如下命令进行测试:</span><br></pre></td></tr></table></figure></p>
+<p>bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar grep input outout ‘dfs[a-z.]+’<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以看到结果</span><br></pre></td></tr></table></figure></p>
+<p>[root@wft-wh-test hadoop]# cat outout/*<br>1    dfsadmin<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">###hadoop的伪分布式配置</span><br><span class="line">所谓的伪分布式就是namenode和datanode在同一个节点上。</span><br><span class="line">伪分布式需要修改<span class="number">2</span>个配置文件 core-site<span class="class">.xml</span> 和 hdfs-site.xml</span><br></pre></td></tr></table></figure></p>
+<p><configuration><br>  <property><br>    <name>hadoop.tmp.dir</name><br>    <value>file:/usr/local/hadoop/tmp</value><br>    <description>Abase for other temporary directories.</description><br>  </property><br>  <property><br>    <name>fs.defaultFS</name><br>    <value>hdfs://localhost:9000</value><br>  </property><br></configuration><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"><span class="tag">&lt;<span class="title">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">value</span>&gt;</span>1<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">value</span>&gt;</span>file:/usr/local/hadoop/tmp/dfs/name<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">value</span>&gt;</span>file:/usr/local/hadoop/tmp/dfs/data<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>配置完成后执行namenode格式化<br><code>hdfs namenode -format</code></p>
+<p>然后开启datanode和namenode的守护进程。<br><code>start-dfs.sh</code><br>启动过程中诺出现</p>
+<blockquote>
+<p>WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable</p>
+</blockquote>
+<p>此类warn则无需关心，直接忽略即可。</p>
+<p>执行完毕后查看java进程<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@wft</span>-wh-test hadoop]<span class="comment"># jps</span></span><br><span class="line"><span class="number">15304</span> Jps</span><br><span class="line"><span class="number">14826</span> NameNode</span><br><span class="line"><span class="number">14949</span> DataNode</span><br><span class="line"><span class="number">15121</span> SecondaryNameNode</span><br></pre></td></tr></table></figure></p>
+<p>启动完成可以在ip:50070查看hadoop信息</p>
+<p>启动中遇到的问题:</p>
+<blockquote>
+<p>FATAL org.apache.hadoop.hdfs.server.datanode.DataNode: Initialization failed for Block pool <registering> (Datanode Uuid unassigned) service to localhost/127.0.0.1:9000. Exiting.<br>重新启动进程可以解决,不行再查看日志分析。<br>[root@wft-wh-test logs]# hdfs dfs -ls<br>15/11/09 17:37:10 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>ls: `.’: No such file or directory</registering></p>
+</blockquote>
+<p>查看文件:</p>
+<blockquote>
+<p>[root@wft-wh-test native]# file *<br>libhadoop.a:        current ar archive<br>libhadooppipes.a:   current ar archive<br>libhadoop.so:       symbolic link to <code>libhadoop.so.1.0.0&#39;
+libhadoop.so.1.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, not stripped
+libhadooputils.a:   current ar archive
+libhdfs.a:          current ar archive
+libhdfs.so:         symbolic link to</code>libhdfs.so.0.0.0’<br>libhdfs.so.0.0.0:   ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, not stripped</p>
+</blockquote>
+<p>发现并不是像很多博客所说的那样是32位的，而是64位的那为啥会出现这个问题。</p>
+<p>其实问题并不是那个warn而是下面的.<code>ls:</code>.’: No such file or directory`</p>
+<p>这里需要建个当前用户目录，<code>hadoop fs -mkdir -p /user/[current login user]</code></p>
+<h3 id="伪分布式Hadoop实例">伪分布式Hadoop实例</h3><p>在伪分布式环境下执行单机实例<br><code>hdfs dfs -mkdir input</code>新建input 目录并将,xml文件复制进去,<code>hdfs dfs -put etc/hadoop/*.xml input</code></p>
+<p>执行<code>hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-*.jar grep input output &#39;dfs[a-z.]+&#39;</code><br>查看结果<br><code>hdfs dfs -cat output/*</code></p>
+<h3 id="关闭Hadoop">关闭Hadoop</h3><p><code>sbin/stop-dfs.sh</code></p>
+<h3 id="安装Httpfs">安装Httpfs</h3><ul>
+<li><p>core-site.xml添加</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="variable">&lt;property&gt;</span></span><br><span class="line">         <span class="variable">&lt;name&gt;</span>hadoop.proxyuser.root.hosts<span class="variable">&lt;/name&gt;</span></span><br><span class="line">         <span class="variable">&lt;value&gt;</span>localhost<span class="variable">&lt;/value&gt;</span></span><br><span class="line"><span class="variable">&lt;/property&gt;</span></span><br><span class="line"><span class="variable">&lt;property&gt;</span></span><br><span class="line">         <span class="variable">&lt;name&gt;</span>hadoop.proxyuser.root.groups<span class="variable">&lt;/name&gt;</span></span><br><span class="line">         <span class="variable">&lt;value&gt;</span><span class="keyword">*</span><span class="variable">&lt;/value&gt;</span></span><br><span class="line"><span class="variable">&lt;/property&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置httpfs的环境变量<br><code>export CATALINA_BASE=/opt/work/hadoop/share/hadoop/httpfs/tomcat</code></p>
+</li>
+<li>重启hadoop集群<br>注意不要使用killall java不然namenode会启动不了</li>
+<li>启动httpfs服务: <code>sbin/httpfs.sh</code></li>
+<li>检测httpfs服务: <figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@wft-wh-test hadoop]# curl -i -X PUT -T /opt/hadoop/etc/hadoop/hadoop-env.sh  <span class="string">"http://localhost:14000/webhdfs/v1/tmp/hadoop-env.sh?op=CREATE&amp;data=true&amp;user.name=root"</span> -H <span class="string">"Content-Type:application/octet-stream"</span></span><br><span class="line">HTTP/<span class="number">1.1</span> <span class="number">100</span> <span class="keyword">Continue</span></span><br><span class="line">HTTP/<span class="number">1.1</span> <span class="number">201</span> Created</span><br><span class="line">Server: Apache-Coyote/<span class="number">1.1</span></span><br><span class="line"><span class="keyword">Set</span>-Cookie: hadoop.auth=<span class="string">"u=root&amp;p=root&amp;t=simple&amp;e=1447264691666&amp;s=+lpTYq5LRs0C8YBtXSj6bQZxP2U="</span>; <span class="keyword">Path</span>=/; Expires=   , <span class="number">11</span>-   -<span class="number">2015</span> <span class="number">17</span>:<span class="number">58</span>:<span class="number">11</span> GMT; HttpOnly</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-<span class="keyword">Length</span>: <span class="number">0</span></span><br><span class="line"><span class="keyword">Date</span>: Wed, <span class="number">11</span> Nov <span class="number">2015</span> <span class="number">07</span>:<span class="number">58</span>:<span class="number">12</span> GMT</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>访问:<code>http://hostname:14000/webhdfs/v1/tmp/hadoop-env.sh?user.name=root&amp;op=open</code><br>验证.</p>
+<h3 id="注意点">注意点</h3><p>hadoop-2.x版本中不存在JobTracker和TaskTracker，可以参考博客<a href="http://blog.csdn.net/skywalker_only/article/details/37905463" target="_blank" rel="external">http://blog.csdn.net/skywalker_only/article/details/37905463</a><br>，启动NameNode和DataNode的命令为start-dfs.sh，启动yarn的命令为start-yarn.sh。</p>
+<h4 id="namenode无法启动解决:">namenode无法启动解决:</h4><ul>
+<li>关停hadoo,<code>sbin/stop-dfs.sh</code></li>
+<li>删除tmp 文件夹，<code>rm -fr /usr/local/hadoop/tmp</code></li>
+<li>重新格式化namenode <code>hdfs namenode -format</code></li>
+<li>启动dfs　<code>sbin/start-dfs.sh</code></li>
+<li>检查java 进程<code>jps</code></li>
+</ul>
+<h4 id="datanode无法启动">datanode无法启动</h4><blockquote>
+<p>FATAL org.apache.hadoop.hdfs.server.datanode.DataNode: Initialization failed for Block pool</p>
+</blockquote>
+<p>解决:</p>
+<blockquote>
+<p>The problem could be that the namenode was formatted after the cluster was set up and the datanodes were not, so the slaves are still referring to the old namenode.<br>We have to delete and recreate the folder /home/hadoop/dfs/data on the local filesystem for the datanode.</p>
+</blockquote>
+<p>Check your hdfs-site.xml file to see where dfs.data.dir is pointing to<br>and delete that folder<br>and then restart the datanode daemon on the machine<br>The steps above should recreate the folder and resolve the problem.</p>
+<p>Please share your config info if the instructions above do not work</p>
+<p>大致意思就是namenode被格式化之后，但是datanode还是指向原来的namenode。<br>所以需要把dfs.data.dir指向的路径给删除。</p>
+<h3 id="参考文档:">参考文档:</h3><ul>
+<li><a href="http://www.powerxing.com/install-hadoop-cluster/" target="_blank" rel="external">http://www.powerxing.com/install-hadoop-cluster/</a></li>
+<li><a href="https://www.htredleaf.com/archives/92" target="_blank" rel="external">https://www.htredleaf.com/archives/92</a></li>
+<li><a href="http://www.powerxing.com/install-hadoop/" target="_blank" rel="external">http://www.powerxing.com/install-hadoop/</a></li>
+<li><a href="http://duguyiren3476.iteye.com/blog/2209388" target="_blank" rel="external">http://duguyiren3476.iteye.com/blog/2209388</a></li>
+<li><a href="http://stackoverflow.com/questions/20821584/hadoop-2-2-installation-no-such-file-or-directory" target="_blank" rel="external">http://stackoverflow.com/questions/20821584/hadoop-2-2-installation-no-such-file-or-directory</a></li>
+<li><a href="http://stackoverflow.com/questions/16020334/hadoop-datanode-process-killed" target="_blank" rel="external">http://stackoverflow.com/questions/16020334/hadoop-datanode-process-killed</a></li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/17/java-web-xml/" itemprop="url">
                 Java Web部署描述文件:web.xml [部分翻译]
               </a>
@@ -884,87 +1027,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/03/25/hello-world/" itemprop="url">
-                Hello World
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-03-25T20:15:06+08:00" content="2015-03-25">
-            2015-03-25
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/随笔/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1004,21 +1066,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">分類</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
