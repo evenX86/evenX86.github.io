@@ -1,11 +1,10 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next   use-motion ">
 <head>
-    
-
-<meta charset="UTF-8"/>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
@@ -16,16 +15,26 @@
 
 
 
-  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
 
 
 
-  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
 
-<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
 
 
+
+
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="hadoop," />
@@ -34,37 +43,48 @@
 
 
 
-  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
 
 
 <meta name="description" content="机器准备:8核32G平时写程序还是会在伪分布式环境下调试。
 添加hadoop用户（笔记里为了方便还是用了root）12adduser hadoop  #添加hadoop用户passwd hadoop   #为hadoop用户设置密码
-添加Java环境解压jdk压缩包后添加下列配置信息123456export JAVA_HOME=/usr/local/java/jdk1.7.0_80export J">
+添加Java环境解压jdk压缩包后添加下列配置信息12345678export JAVA_HOME=/usr/local/java/jdk1.7.0_80export">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hadoop 伪分布式模式配置">
 <meta property="og:url" content="http://evenx86.github.io/2015/11/11/hadoop-configure/index.html">
 <meta property="og:site_name" content="曲径通幽">
 <meta property="og:description" content="机器准备:8核32G平时写程序还是会在伪分布式环境下调试。
 添加hadoop用户（笔记里为了方便还是用了root）12adduser hadoop  #添加hadoop用户passwd hadoop   #为hadoop用户设置密码
-添加Java环境解压jdk压缩包后添加下列配置信息123456export JAVA_HOME=/usr/local/java/jdk1.7.0_80export J">
+添加Java环境解压jdk压缩包后添加下列配置信息12345678export JAVA_HOME=/usr/local/java/jdk1.7.0_80export">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop 伪分布式模式配置">
 <meta name="twitter:description" content="机器准备:8核32G平时写程序还是会在伪分布式环境下调试。
 添加hadoop用户（笔记里为了方便还是用了root）12adduser hadoop  #添加hadoop用户passwd hadoop   #为hadoop用户设置密码
-添加Java环境解压jdk压缩包后添加下列配置信息123456export JAVA_HOME=/usr/local/java/jdk1.7.0_80export J">
+添加Java环境解压jdk压缩包后添加下列配置信息12345678export JAVA_HOME=/usr/local/java/jdk1.7.0_80export">
+
 
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
     scheme: '',
-    sidebar: 'post'
+    sidebar: 'post',
+    motion: true
   };
 </script>
 
-    <title> Hadoop 伪分布式模式配置 // 曲径通幽 </title>
+  <title> Hadoop 伪分布式模式配置 | 曲径通幽 </title>
 </head>
+
 <body itemscope itemtype="http://schema.org/WebPage" lang="">
-<!--[if lte IE 8]>
+
+  <!--[if lte IE 8]>
   <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
     <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
       <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
@@ -73,23 +93,29 @@
     </a>
   </div>
 <![endif]-->
+  
 
 
 
 
-<div class="container one-column page-post-detail">
+
+
+  <div class="container one-column page-post-detail">
     <div class="headband"></div>
+
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-        <div class="header-inner"><h1 class="site-meta">
-  <span class="logo-line-before"><i></i></span>
-  <a href="/" class="brand" rel="start">
-      <span class="logo">
-        <i class="icon-logo"></i>
-      </span>
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
       <span class="site-title">曲径通幽</span>
-  </a>
-  <span class="logo-line-after"><i></i></span>
-</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
 
 <div class="site-nav-toggle">
   <button>
@@ -108,7 +134,9 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon icon-home"></i> <br />
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
             首頁
           </a>
         </li>
@@ -116,7 +144,9 @@
         
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
-            <i class="menu-item-icon icon-archives"></i> <br />
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
             歸檔
           </a>
         </li>
@@ -124,10 +154,15 @@
         
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
-            <i class="menu-item-icon icon-tags"></i> <br />
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
             標籤
           </a>
         </li>
+      
+
+      
       
     </ul>
   
@@ -135,59 +170,76 @@
   
 </nav>
 
-
-        </div>
+ </div>
     </header>
 
     <main id="main" class="main">
-        <div class="main-inner">
-            <div id="content" class="content">
-                
+      <div class="main-inner">
+        <div id="content" class="content">
+          
 
   <div id="posts" class="posts-expand">
     
 
+  
+  
+
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              Hadoop 伪分布式模式配置
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          發表於
-          <time itemprop="dateCreated" datetime="2015-11-11T16:19:01+08:00" content="2015-11-11">
-            2015-11-11
-          </time>
-        </span>
+    
+      <header class="post-header">
 
         
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分類於
+        
+          <h1 class="post-title" itemprop="name headline">
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/Hadoop/" itemprop="url" rel="index"><span itemprop="name">Hadoop</span></a></span>
-
-              
-              
-
             
+              
+                Hadoop 伪分布式模式配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            發表於
+            <time itemprop="dateCreated" datetime="2015-11-11T16:51:44+08:00" content="2015-11-11">
+              2015-11-11
+            </time>
           </span>
-        
 
-        
           
-        
-      </div>
-    </header>
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分類於
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
 
     <div class="post-body">
 
@@ -197,7 +249,7 @@
       
         <span itemprop="articleBody"><h3 id="机器准备:">机器准备:</h3><p>8核32G<br>平时写程序还是会在伪分布式环境下调试。</p>
 <h4 id="添加hadoop用户（笔记里为了方便还是用了root）">添加hadoop用户（笔记里为了方便还是用了root）</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">adduser</span> hadoop  <span class="comment">#添加hadoop用户</span></span><br><span class="line">passwd hadoop   <span class="comment">#为hadoop用户设置密码</span></span><br></pre></td></tr></table></figure>
-<h4 id="添加Java环境">添加Java环境</h4><p>解压jdk压缩包后添加下列配置信息<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/java/jdk1.7.0_80</span><br><span class="line">export JRE_HOME=/usr/local/java/jdk1.7.0_80/jre</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</span><br><span class="line">```    </span><br><span class="line"><span class="comment">&lt;!-- more --&gt;</span></span><br><span class="line">####安装hadoop</span><br></pre></td></tr></table></figure></p>
+<h4 id="添加Java环境">添加Java环境</h4><p>解压jdk压缩包后添加下列配置信息<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/java/jdk1.7.0_80</span><br><span class="line">export JRE_HOME=/usr/local/java/jdk1.7.0_80/jre</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- more --&gt;</span></span><br><span class="line"></span><br><span class="line">####安装hadoop</span><br></pre></td></tr></table></figure></p>
 <p>wget <a href="http://mirror.bit.edu.cn/apache/hadoop/common/stable2/hadoop-2.7.1.tar.gz" target="_blank" rel="external">http://mirror.bit.edu.cn/apache/hadoop/common/stable2/hadoop-2.7.1.tar.gz</a><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">解压完成后单机hadoop就算是完成了可以运行如下命令进行测试:</span><br></pre></td></tr></table></figure></p>
 <p>bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar grep input outout ‘dfs[a-z.]+’<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以看到结果</span><br></pre></td></tr></table></figure></p>
 <p>[root@wft-wh-test hadoop]# cat outout/*<br>1    dfsadmin<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">###hadoop的伪分布式配置</span><br><span class="line">所谓的伪分布式就是namenode和datanode在同一个节点上。</span><br><span class="line">伪分布式需要修改<span class="number">2</span>个配置文件 core-site<span class="class">.xml</span> 和 hdfs-site.xml</span><br></pre></td></tr></table></figure></p>
@@ -281,13 +333,15 @@ libhdfs.so:         symbolic link to</code>libhdfs.so.0.0.0’<br>libhdfs.so.0.0
 
       
         <div class="post-nav">
-          <div class="post-nav-prev post-nav-item">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/17/java-web-xml/" rel="next" title="Java Web部署描述文件:web.xml [部分翻译]">
+                <i class="fa fa-chevron-left"></i> Java Web部署描述文件:web.xml [部分翻译]
+              </a>
             
           </div>
 
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2015/08/17/java-web-xml/" rel="next">Java Web部署描述文件:web.xml [部分翻译]</a>
+          <div class="post-nav-prev post-nav-item">
             
           </div>
         </div>
@@ -306,17 +360,20 @@ libhdfs.so:         symbolic link to</code>libhdfs.so.0.0.0’<br>libhdfs.so.0.0
   </div>
 
 
-            </div>
-
-            
-
-            
-              <div class="comments" id="comments">
-                
-              </div>
-            
         </div>
 
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </div>
+
+      
         
   
   <div class="sidebar-toggle">
@@ -331,6 +388,8 @@ libhdfs.so:         symbolic link to</code>libhdfs.so.0.0.0’<br>libhdfs.so.0.0
     <div class="sidebar-inner">
 
       
+
+      
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
             文章目錄
@@ -341,7 +400,7 @@ libhdfs.so:         symbolic link to</code>libhdfs.so.0.0.0’<br>libhdfs.so.0.0
         </ul>
       
 
-      <section class="site-overview">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" src="/images/default_avatar.jpg" alt="xuyifei" itemprop="image"/>
           <p class="site-author-name" itemprop="name">xuyifei</p>
@@ -387,15 +446,21 @@ libhdfs.so:         symbolic link to</code>libhdfs.so.0.0.0’<br>libhdfs.so.0.0
       </section>
 
       
-        <section class="post-toc-wrap sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator"></div>
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
           <div class="post-toc">
+            
+              
             
             
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#机器准备:"><span class="nav-number">1.</span> <span class="nav-text">机器准备:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加hadoop用户（笔记里为了方便还是用了root）"><span class="nav-number">1.1.</span> <span class="nav-text">添加hadoop用户（笔记里为了方便还是用了root）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加Java环境"><span class="nav-number">1.2.</span> <span class="nav-text">添加Java环境</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#伪分布式Hadoop实例"><span class="nav-number">2.</span> <span class="nav-text">伪分布式Hadoop实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭Hadoop"><span class="nav-number">3.</span> <span class="nav-text">关闭Hadoop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Httpfs"><span class="nav-number">4.</span> <span class="nav-text">安装Httpfs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意点"><span class="nav-number">5.</span> <span class="nav-text">注意点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#namenode无法启动解决:"><span class="nav-number">5.1.</span> <span class="nav-text">namenode无法启动解决:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#datanode无法启动"><span class="nav-number">5.2.</span> <span class="nav-text">datanode无法启动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文档:"><span class="nav-number">6.</span> <span class="nav-text">参考文档:</span></a></li></ol></div>
             
           </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
         </section>
       
 
@@ -403,16 +468,17 @@ libhdfs.so:         symbolic link to</code>libhdfs.so.0.0.0’<br>libhdfs.so.0.0
   </aside>
 
 
+      
     </main>
 
     <footer id="footer" class="footer">
-        <div class="footer-inner">
-            <div class="copyright" >
+      <div class="footer-inner">
+        <div class="copyright" >
   
-  &copy; &nbsp; 
+  &copy; 
   <span itemprop="copyrightYear">2015</span>
   <span class="with-love">
-    <i class="icon-heart"></i>
+    <i class="icon-next-heart fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">xuyifei</span>
 </div>
@@ -430,16 +496,17 @@ libhdfs.so:         symbolic link to</code>libhdfs.so.0.0.0’<br>libhdfs.so.0.0
 
 
 
-        </div>
+      </div>
     </footer>
 
     <div class="back-to-top"></div>
-</div>
+  </div>
 
-<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
 
   
   
+
   
     
     
@@ -448,26 +515,25 @@ libhdfs.so:         symbolic link to</code>libhdfs.so.0.0.0’<br>libhdfs.so.0.0
 
 
   
+
   
   <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
 
 
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
-  
-
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
   <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
 
-  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
 
 
-
-  <script type="text/javascript" src="/js/search-toggle.js"></script>
-
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
 
 
 <script type="text/javascript" id="sidebar.toc.highlight">
@@ -548,7 +614,7 @@ libhdfs.so:         symbolic link to</code>libhdfs.so.0.0.0’<br>libhdfs.so.0.0
 
     function tocOverflowIndicator (indicator, action) {
       var $indicator = $(indicator);
-      var opacity = action === 'show' ? 0.4 : 0;
+      var opacity = action === 'show' ? 1 : 0;
       $indicator.velocity ?
         $indicator.velocity('stop').velocity({
           opacity: opacity
@@ -615,41 +681,26 @@ libhdfs.so:         symbolic link to</code>libhdfs.so.0.0.0’<br>libhdfs.so.0.0
     });
 
     // Expand sidebar on post detail page by default, when post has a toc.
-    var $tocContent = $('.post-toc-content');
-    if (isDesktop() && CONFIG.sidebar === 'post') {
-      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-        displaySidebar();
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
       }
-    }
+    };
   });
 </script>
 
 
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        if (CONFIG.sidebar === 'always') {
-            displaySidebar();
-        }
-    });
-</script>
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
 
+  
+  
 
+  
+  
 
-
-
-
-
-
-<!-- lazyload -->
-<script type="text/javascript" src="/js/lazyload.js"></script>
-<script type="text/javascript">
-    jQuery(function () {
-        jQuery("#posts img").lazyload({
-            placeholder: "/images/loading.gif",
-            effect: "fadeIn"
-        });
-    });
-</script>
 </body>
 </html>
