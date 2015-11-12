@@ -55,19 +55,19 @@
 
 <meta name="description" content="机器准备:8核32G平时写程序还是会在伪分布式环境下调试。
 添加hadoop用户（笔记里为了方便还是用了root）12adduser hadoop  #添加hadoop用户passwd hadoop   #为hadoop用户设置密码
-添加Java环境解压jdk压缩包后添加下列配置信息12345678export JAVA_HOME=/usr/local/java/jdk1.7.0_80export">
+添加Java环境解压jdk压缩包后添加下列配置信息123456export JAVA_HOME=/usr/local/java/jdk1.7.0_80export J">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hadoop 伪分布式模式配置">
-<meta property="og:url" content="http://evenx86.github.io/2015/11/11/hadoop-configure/index.html">
+<meta property="og:url" content="http://evenx86.github.io/2015/11/12/hadoop-configure/index.html">
 <meta property="og:site_name" content="曲径通幽">
 <meta property="og:description" content="机器准备:8核32G平时写程序还是会在伪分布式环境下调试。
 添加hadoop用户（笔记里为了方便还是用了root）12adduser hadoop  #添加hadoop用户passwd hadoop   #为hadoop用户设置密码
-添加Java环境解压jdk压缩包后添加下列配置信息12345678export JAVA_HOME=/usr/local/java/jdk1.7.0_80export">
+添加Java环境解压jdk压缩包后添加下列配置信息123456export JAVA_HOME=/usr/local/java/jdk1.7.0_80export J">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop 伪分布式模式配置">
 <meta name="twitter:description" content="机器准备:8核32G平时写程序还是会在伪分布式环境下调试。
 添加hadoop用户（笔记里为了方便还是用了root）12adduser hadoop  #添加hadoop用户passwd hadoop   #为hadoop用户设置密码
-添加Java环境解压jdk压缩包后添加下列配置信息12345678export JAVA_HOME=/usr/local/java/jdk1.7.0_80export">
+添加Java环境解压jdk压缩包后添加下列配置信息123456export JAVA_HOME=/usr/local/java/jdk1.7.0_80export J">
 
 
 
@@ -218,8 +218,8 @@
         <div class="post-meta">
           <span class="post-time">
             發表於
-            <time itemprop="dateCreated" datetime="2015-11-11T16:51:44+08:00" content="2015-11-11">
-              2015-11-11
+            <time itemprop="dateCreated" datetime="2015-11-12T09:25:45+08:00" content="2015-11-12">
+              2015-11-12
             </time>
           </span>
 
@@ -244,8 +244,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/11/hadoop-configure/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/11/hadoop-configure/" itemprop="commentsCount"></span>
+                <a href="/2015/11/12/hadoop-configure/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/12/hadoop-configure/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -266,9 +266,9 @@
       
         <span itemprop="articleBody"><h3 id="机器准备:">机器准备:</h3><p>8核32G<br>平时写程序还是会在伪分布式环境下调试。</p>
 <h4 id="添加hadoop用户（笔记里为了方便还是用了root）">添加hadoop用户（笔记里为了方便还是用了root）</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">adduser</span> hadoop  <span class="comment">#添加hadoop用户</span></span><br><span class="line">passwd hadoop   <span class="comment">#为hadoop用户设置密码</span></span><br></pre></td></tr></table></figure>
-<h4 id="添加Java环境">添加Java环境</h4><p>解压jdk压缩包后添加下列配置信息<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/java/jdk1.7.0_80</span><br><span class="line">export JRE_HOME=/usr/local/java/jdk1.7.0_80/jre</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- more --&gt;</span></span><br><span class="line"></span><br><span class="line">####安装hadoop</span><br></pre></td></tr></table></figure></p>
+<h4 id="添加Java环境">添加Java环境</h4><p>解压jdk压缩包后添加下列配置信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/<span class="built_in">local</span>/java/jdk1.<span class="number">7.0</span>_80</span><br><span class="line"><span class="built_in">export</span> JRE_HOME=/usr/<span class="built_in">local</span>/java/jdk1.<span class="number">7.0</span>_80/jre</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$JRE_HOME</span>/bin</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line"><span class="comment">####安装hadoop</span></span><br></pre></td></tr></table></figure></p>
 <p>wget <a href="http://mirror.bit.edu.cn/apache/hadoop/common/stable2/hadoop-2.7.1.tar.gz" target="_blank" rel="external">http://mirror.bit.edu.cn/apache/hadoop/common/stable2/hadoop-2.7.1.tar.gz</a><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">解压完成后单机hadoop就算是完成了可以运行如下命令进行测试:</span><br></pre></td></tr></table></figure></p>
-<p>bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar grep input outout ‘dfs[a-z.]+’<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可以看到结果</span><br></pre></td></tr></table></figure></p>
+<p>bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar grep input outout ‘dfs[a-z.]+’<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- more --&gt;</span></span><br><span class="line"></span><br><span class="line">可以看到结果</span><br></pre></td></tr></table></figure></p>
 <p>[root@wft-wh-test hadoop]# cat outout/*<br>1    dfsadmin<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">###hadoop的伪分布式配置</span><br><span class="line">所谓的伪分布式就是namenode和datanode在同一个节点上。</span><br><span class="line">伪分布式需要修改<span class="number">2</span>个配置文件 core-site<span class="class">.xml</span> 和 hdfs-site.xml</span><br></pre></td></tr></table></figure></p>
 <p><configuration><br>  <property><br>    <name>hadoop.tmp.dir</name><br>    <value>file:/usr/local/hadoop/tmp</value><br>    <description>Abase for other temporary directories.</description><br>  </property><br>  <property><br>    <name>fs.defaultFS</name><br>    <value>hdfs://localhost:9000</value><br>  </property><br></configuration><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"><span class="tag">&lt;<span class="title">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">value</span>&gt;</span>1<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">value</span>&gt;</span>file:/usr/local/hadoop/tmp/dfs/name<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">value</span>&gt;</span>file:/usr/local/hadoop/tmp/dfs/data<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>配置完成后执行namenode格式化<br><code>hdfs namenode -format</code></p>
@@ -385,8 +385,8 @@ libhdfs.so:         symbolic link to</code>libhdfs.so.0.0.0’<br>libhdfs.so.0.0
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/11/hadoop-configure/"
-           data-title="Hadoop 伪分布式模式配置" data-url="http://evenx86.github.io/2015/11/11/hadoop-configure/">
+      <div class="ds-thread" data-thread-key="2015/11/12/hadoop-configure/"
+           data-title="Hadoop 伪分布式模式配置" data-url="http://evenx86.github.io/2015/11/12/hadoop-configure/">
       </div>
     
   </div>
