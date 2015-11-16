@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="hadoop," />
 
 
 
@@ -53,15 +53,109 @@
 
 
 
-<meta name="description" content="hexo操作命令简介hexo n &amp;quot;new article name&amp;quot; 生成hexo g 相当于commithexo d 发布到github">
+<meta name="description" content="简介本文以Hadoop实战为主，另外参考hadoop权威指南，hadoop技术内幕还有网上的资料给出的一个hadoop生态圈的一个简介，主要以要点为主。
+Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性。
+
+
+
+特性
+1.x
+0.22
+2.x
+
+
+
+
+安全认证
+是
+否
+是
+
+
+旧的配置名称
+是
+弃用
+弃用
+
+
+新的配置名称
+否
+是
+是
+
+
+旧的MapRed">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo">
-<meta property="og:url" content="http://evenx86.github.io/2015/03/25/hexo/index.html">
+<meta property="og:title" content="Hadoop简介の备忘">
+<meta property="og:url" content="http://evenx86.github.io/2015/11/16/hadoop-introduce/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="hexo操作命令简介hexo n &amp;quot;new article name&amp;quot; 生成hexo g 相当于commithexo d 发布到github">
+<meta property="og:description" content="简介本文以Hadoop实战为主，另外参考hadoop权威指南，hadoop技术内幕还有网上的资料给出的一个hadoop生态圈的一个简介，主要以要点为主。
+Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性。
+
+
+
+特性
+1.x
+0.22
+2.x
+
+
+
+
+安全认证
+是
+否
+是
+
+
+旧的配置名称
+是
+弃用
+弃用
+
+
+新的配置名称
+否
+是
+是
+
+
+旧的MapRed">
+<meta property="og:image" content="https://camo.githubusercontent.com/4a373927162da0f36fa41c0eda5b7c914fea8cbc/687474703a2f2f68696a69616e6774616f2e6769746875622e696f2f6173736574732f323031342d30322d32362d6861646f6f70737472756374706963747572652e6a7067">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hexo">
-<meta name="twitter:description" content="hexo操作命令简介hexo n &amp;quot;new article name&amp;quot; 生成hexo g 相当于commithexo d 发布到github">
+<meta name="twitter:title" content="Hadoop简介の备忘">
+<meta name="twitter:description" content="简介本文以Hadoop实战为主，另外参考hadoop权威指南，hadoop技术内幕还有网上的资料给出的一个hadoop生态圈的一个简介，主要以要点为主。
+Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性。
+
+
+
+特性
+1.x
+0.22
+2.x
+
+
+
+
+安全认证
+是
+否
+是
+
+
+旧的配置名称
+是
+弃用
+弃用
+
+
+新的配置名称
+否
+是
+是
+
+
+旧的MapRed">
 
 
 
@@ -73,7 +167,7 @@
   };
 </script>
 
-  <title> hexo | 曲径通幽 </title>
+  <title> Hadoop简介の备忘 | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -203,7 +297,7 @@
             
             
               
-                hexo
+                Hadoop简介の备忘
               
             
           </h1>
@@ -212,19 +306,34 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-03-25T17:17:29+08:00" content="2015-03-25">
-              2015-03-25
+            <time itemprop="dateCreated" datetime="2015-11-16T23:36:10+08:00" content="2015-11-16">
+              2015-11-16
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/03/25/hexo/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/25/hexo/" itemprop="commentsCount"></span>
+                <a href="/2015/11/16/hadoop-introduce/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/16/hadoop-introduce/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -243,25 +352,123 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="hexo操作命令简介">hexo操作命令简介</h2><p><code>hexo n &quot;new article name&quot;</code> 生成<br><code>hexo g</code> 相当于commit<br><code>hexo d</code> 发布到github</p>
-</span>
+        <span itemprop="articleBody"><h2 id="简介">简介</h2><p>本文以Hadoop实战为主，另外参考hadoop权威指南，hadoop技术内幕还有网上的资料给出的一个hadoop生态圈的一个简介，<br>主要以要点为主。</p>
+<h2 id="Hadoop历史">Hadoop历史</h2><p>hadoop的历史blablabla….<br>主要记下hadoop不同版本的特性。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">特性</th>
+<th style="text-align:center">1.x</th>
+<th style="text-align:center">0.22</th>
+<th style="text-align:center">2.x</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">安全认证</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td style="text-align:center">旧的配置名称</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">弃用</td>
+<td style="text-align:center">弃用</td>
+</tr>
+<tr>
+<td style="text-align:center">新的配置名称</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td style="text-align:center">旧的MapReduce API</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td style="text-align:center">新的MapReduce API</td>
+<td style="text-align:center">是（加入部分缺失类库）</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td style="text-align:center">MR1运行环境（经典）</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">否</td>
+</tr>
+<tr>
+<td style="text-align:center">MR2 运行环境（YARN）</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td style="text-align:center">HDFS联邦管理</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">是</td>
+</tr>
+<tr>
+<td style="text-align:center">HDFS高可用</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">是</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<p>hadoop最早稳定版本是0.20。<br>0.23版本系列改名为2.x。<br>1.x之后的版本是0.20发行版本系列的延续。</p>
+<h2 id="Hadoop项目及其结构">Hadoop项目及其结构</h2><p><img src="https://camo.githubusercontent.com/4a373927162da0f36fa41c0eda5b7c914fea8cbc/687474703a2f2f68696a69616e6774616f2e6769746875622e696f2f6173736574732f323031342d30322d32362d6861646f6f70737472756374706963747572652e6a7067" alt="1"></p>
+<ul>
+<li>Common 主要包括你FileSystem，RPC和串行化库。</li>
+<li>Avro Avro是用户数据序列化的系统.提供了丰富的数据结构类型，快速可压缩的二进制数据格式，存储持久性数据的文件集，远程调用RPC的功能和简单的动态语言集成功能。</li>
+<li>MapReduce: 用于大规模数据集（大于1TB）</li>
+<li>HDFS: 分布式文件系统，</li>
+<li>Hive : 数据仓库</li>
+<li>HBase : 按列存储的数据库，使用HDFS作为底层存储</li>
+<li>ZooKeeper : 分布式协调任务</li>
+</ul>
+<h2 id="Hadoop与分布式开发">Hadoop与分布式开发</h2><ul>
+<li>数据分布存储</li>
+<li>分布式并行计算</li>
+<li>本地计算</li>
+<li>任务粒度</li>
+<li>数据分割</li>
+<li>数据合并</li>
+<li>Reduce</li>
+<li>任务管道</li>
+</ul>
+<h2 id="Hadoop计算模型-MapReuduce">Hadoop计算模型-MapReuduce</h2><h2 id="Hadoop_数据管理">Hadoop 数据管理</h2><h3 id="HBase的数据管理">HBase的数据管理</h3><h3 id="Hive的数据管理">Hive的数据管理</h3><p>含*的查询不会生成MR任务</p>
+<p>每个table在hive中都有一个相应的目录来存储数据。<br>比如一个表pvs: /wh/pvs/,其中wh是hive-site.xml中指定的数据仓库的目录。</p>
+<p>Hive将元数据存储在RDBMS中，如Mysql中，hive中的元数据包括表的名字，表的列，表的分区，表分区的属性，表的属性，表的数据所在的目录等。</p>
+<h2 id="Hadoop集群安全策略">Hadoop集群安全策略</h2></span>
       
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hadoop/" rel="tag">#hadoop</a>
+          
+        </div>
       
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2015/11/12/hadoop-configure/" rel="next" title="Hadoop 伪分布式模式配置">
+                <i class="fa fa-chevron-left"></i> Hadoop 伪分布式模式配置
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/03/25/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -288,8 +495,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/03/25/hexo/"
-           data-title="hexo" data-url="http://evenx86.github.io/2015/03/25/hexo/">
+      <div class="ds-thread" data-thread-key="2015/11/16/hadoop-introduce/"
+           data-title="Hadoop简介の备忘" data-url="http://evenx86.github.io/2015/11/16/hadoop-introduce/">
       </div>
     
   </div>
@@ -379,7 +586,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo操作命令简介"><span class="nav-number">1.</span> <span class="nav-text">hexo操作命令简介</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop历史"><span class="nav-number">2.</span> <span class="nav-text">Hadoop历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop项目及其结构"><span class="nav-number">3.</span> <span class="nav-text">Hadoop项目及其结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop与分布式开发"><span class="nav-number">4.</span> <span class="nav-text">Hadoop与分布式开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop计算模型-MapReuduce"><span class="nav-number">5.</span> <span class="nav-text">Hadoop计算模型-MapReuduce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop_数据管理"><span class="nav-number">6.</span> <span class="nav-text">Hadoop 数据管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HBase的数据管理"><span class="nav-number">6.1.</span> <span class="nav-text">HBase的数据管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hive的数据管理"><span class="nav-number">6.2.</span> <span class="nav-text">Hive的数据管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop集群安全策略"><span class="nav-number">7.</span> <span class="nav-text">Hadoop集群安全策略</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
