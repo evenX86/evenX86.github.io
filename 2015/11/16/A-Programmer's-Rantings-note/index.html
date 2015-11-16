@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="jvm," />
+  <meta name="keywords" content="程序员,读书笔记," />
 
 
 
@@ -53,15 +53,33 @@
 
 
 
-<meta name="description" content="引入123456[root@localhost sync]# free -m             total       used       free     shared    buffers     cachedMem:         32094      29292       2802          0        274       1647-/+ buffers/cach">
+<meta name="description" content="对这本书没什么很大的期待，但是看完之后感觉对我的职业观产生了冲击了。而且很多观点其实我一直在想的，但是经验和觉悟太低一直都没能写出来，看到文中写的就深有同感。
+编程语言里的宗教
+语言本身不给力，类库再牛也是有限的
+
+额这不是在吐槽Java吗，但是至少现在看来Java还是挺牛逼的呀。还是自己接触的语言太少了。作者在后面提到语言就是程序员的宗教。此言不差。
+
+Java 在语言层面上和C++也就打个平手">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java内存与垃圾回收总结备忘">
-<meta property="og:url" content="http://evenx86.github.io/2015/08/17/jvm-startup/index.html">
+<meta property="og:title" content="《程序员的呐喊》读书笔记">
+<meta property="og:url" content="http://evenx86.github.io/2015/11/16/A-Programmer's-Rantings-note/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="引入123456[root@localhost sync]# free -m             total       used       free     shared    buffers     cachedMem:         32094      29292       2802          0        274       1647-/+ buffers/cach">
+<meta property="og:description" content="对这本书没什么很大的期待，但是看完之后感觉对我的职业观产生了冲击了。而且很多观点其实我一直在想的，但是经验和觉悟太低一直都没能写出来，看到文中写的就深有同感。
+编程语言里的宗教
+语言本身不给力，类库再牛也是有限的
+
+额这不是在吐槽Java吗，但是至少现在看来Java还是挺牛逼的呀。还是自己接触的语言太少了。作者在后面提到语言就是程序员的宗教。此言不差。
+
+Java 在语言层面上和C++也就打个平手">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java内存与垃圾回收总结备忘">
-<meta name="twitter:description" content="引入123456[root@localhost sync]# free -m             total       used       free     shared    buffers     cachedMem:         32094      29292       2802          0        274       1647-/+ buffers/cach">
+<meta name="twitter:title" content="《程序员的呐喊》读书笔记">
+<meta name="twitter:description" content="对这本书没什么很大的期待，但是看完之后感觉对我的职业观产生了冲击了。而且很多观点其实我一直在想的，但是经验和觉悟太低一直都没能写出来，看到文中写的就深有同感。
+编程语言里的宗教
+语言本身不给力，类库再牛也是有限的
+
+额这不是在吐槽Java吗，但是至少现在看来Java还是挺牛逼的呀。还是自己接触的语言太少了。作者在后面提到语言就是程序员的宗教。此言不差。
+
+Java 在语言层面上和C++也就打个平手">
 
 
 
@@ -73,7 +91,7 @@
   };
 </script>
 
-  <title> Java内存与垃圾回收总结备忘 | 曲径通幽 </title>
+  <title> 《程序员的呐喊》读书笔记 | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -203,7 +221,7 @@
             
             
               
-                Java内存与垃圾回收总结备忘
+                《程序员的呐喊》读书笔记
               
             
           </h1>
@@ -212,8 +230,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-08-17T09:36:36+08:00" content="2015-08-17">
-              2015-08-17
+            <time itemprop="dateCreated" datetime="2015-11-16T23:50:52+08:00" content="2015-11-16">
+              2015-11-16
             </time>
           </span>
 
@@ -222,8 +240,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
                   </a>
                 </span>
 
@@ -238,8 +256,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/08/17/jvm-startup/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/jvm-startup/" itemprop="commentsCount"></span>
+                <a href="/2015/11/16/A-Programmer's-Rantings-note/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/16/A-Programmer's-Rantings-note/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -258,31 +276,85 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="引入">引入</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# free -m</span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line">Mem:         32094      29292       2802          0        274       1647</span><br><span class="line">-/+ buffers/cache:      27370       4724</span><br><span class="line">Swap:            0          0          0</span><br><span class="line"><span class="comment">&lt;!-- more --&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这是一台Java同步服务器的内存占用情况，使用jmap查看堆上信息:<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# jmap -histo 7840</span><br><span class="line"></span><br><span class="line"><span class="header"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span></span><br><span class="line"><span class="code">   1:      77399077     5156382528  [C</span></span><br><span class="line"><span class="code">   2:      41662587     3924901448  [I</span></span><br><span class="line"><span class="code">   3:      33678441     2424847752  java.util.LinkedHashMap$Entry</span></span><br><span class="line"><span class="code">   4:      64361432     2059565824  java.lang.String</span></span><br><span class="line"><span class="code">   5:      18967113     1669105944  java.util.regex.Matcher</span></span><br><span class="line"><span class="code">   6:       9996594     1534988024  [Ljava.lang.Object;</span></span><br><span class="line"><span class="code">   7:       7225435     1235477264  [Ljava.util.HashMap$Entry;</span></span><br><span class="line"><span class="code">   8:      11458421     1074750168  [B</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line">Total     332044853    22585874416</span><br></pre></td></tr></table></figure></p>
-<p>上面这个输出中有好几个问题，暂时先不管。<br>看下Java的配置：<code>Xms26g -Xmx26g -Xmn12g -XX:PermSize=1024M -Xss2M</code><br>实际占用的29G内存中Java heap占了22G，<br>再看下PS的结果：<code>ps -aux|sort -k 1 -r |less</code></p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USER       PID <span class="preprocessor">%</span>CPU <span class="preprocessor">%</span>MEM    <span class="title">VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root         7840</span> <span class="number">22.3</span>     <span class="number">82.5</span>  <span class="number">45956536</span> <span class="number">27124588</span> ?   Sl   May<span class="number">19</span> <span class="number">380</span>:<span class="number">04</span> java</span><br></pre></td></tr></table></figure>
-<p>可以看到Java 进程占了27G。<br>一般来说同步程序并需要这么多的内存，查看GC情况:</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@localhost</span> sync]<span class="comment"># jstat  -gc 7840</span></span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       PC     PU    YGC     YGCT    FGC    FGCT     GCT   </span><br><span class="line"> <span class="number">0.0</span>   <span class="number">65536.0</span>  <span class="number">0.0</span>   <span class="number">65536.0</span> <span class="number">13148160.0</span> <span class="number">9207808.0</span> <span class="number">14049280.0</span> <span class="number">10819203.6</span> <span class="number">1048576.0</span> <span class="number">18093.7</span>    <span class="number">125</span>   <span class="number">25.202</span>   <span class="number">0</span>      <span class="number">0.000</span>   <span class="number">25.202</span></span><br></pre></td></tr></table></figure>
-<h3 id="问题1:">问题1:</h3><p>OLD区已经快满了(10/14),<br>回顾下对象是如何进入old区的：</p>
-<ul>
-<li>长期存活的对象将进入老年代，对象在Eden区中经过第一次MinorGC之后进入Survivor区中，每经过一次minorgc如果没有被回收，默认经过15次gc还未被回收就会进入old区</li>
-<li>大对象直接进入老年代，虚拟机提供了一个<code>-XX:PretenureSize</code>参数,大于这个值的对象直接在老年代中分配。避免了再Eden区和Survivor区中发生大量的内存复制（该参数只对几个收集器起作用）。<br>JVM内存回收过程<blockquote>
-<p>1、对象在Eden区完成内存分配<br>2、当Eden区满了，再创建对象，会因为申请不到空间，触发minorGC，进行young(eden+1survivor)区的垃圾回收<br>3、minorGC时，Eden不能被回收的对象被放入到空的survivor（Eden肯定会被清空），另一个survivor里不能被GC回收的对象也会被放入这个survivor，始终保证一个survivor是空的<br>4、当做第3步的时候，如果发现survivor满了，则这些对象被copy到old区，或者survivor并没有满，但是有些对象已经足够Old，也被放入Old区 XX:MaxTenuringThreshold<br>5、当Old区被放满的之后，进行fullGC</p>
+        <span itemprop="articleBody"><p>对这本书没什么很大的期待，但是看完之后感觉对我的职业观产生了冲击了。而且很多观点其实我一直在想的，但是经验和觉悟太低一直都没能写出来，看到文中写的就深有同感。</p>
+<h2 id="编程语言里的宗教">编程语言里的宗教</h2><blockquote>
+<p>语言本身不给力，类库再牛也是有限的</p>
 </blockquote>
-</li>
-</ul>
-<h3 id="问题2">问题2</h3><p>heap中char数组占用内存过多，但是程序并有显示生成char对象。<br><a href="http://stackoverflow.com/questions/20388081/why-my-java-heap-is-with-so-many-char" target="_blank" rel="external">Why my Java heap is with so many char</a></p>
+<p>额这不是在吐槽Java吗，但是至少现在看来Java还是挺牛逼的呀。还是自己接触的语言太少了。作者在后面提到语言就是程序员的宗教。此言不差。</p>
 <blockquote>
-<p>811k of char[] correspond to 800k of Strings, so yes, you have too many Strings.<br>If you’re having a memory leak (judging by the tag), then it’s most probably are strings in a HashMap. You have 800k instances of strings, 200k instances of hash entries, 30k of maps. This probably means that your strings are kept in this cache and are not removed. Global map is a frequent cause of memory leaks, one needs to make sure that they are evicted from this cache.</p>
+<p>Java 在语言层面上和C++也就打个平手，其实Java 要好的多，至少他有了字符串，连字符串都支持不好的语言哪是人用的。</p>
 </blockquote>
-<p>Since all these values are not being GC-ed, you could try analyzing an object graph to see what’s holding them with a tool like JProfiler.</p>
-<p><a href="http://stackoverflow.com/questions/1985480/why-does-the-profiler-show-large-numbers-of-char-instances-when-i-am-not-creat" target="_blank" rel="external">Why does the profiler show large numbers of char[] instances when I am not creating any?</a></p>
+<p>这个把C++喷的，其实还是赞同的哈哈哈，不过貌似作者对字符串有执念，所以对perl也非常喜欢。</p>
+<a id="more"></a>
 <blockquote>
-<p>Take a look at the String source code. The String object itself contains a cached hash code, a count of the number of characters (again, for optimisation purposes), an offset (since a String.substr()points to the original string data) and the character array, which contains the actual string data. Hence your metrics showing that String consumes relatively little, but the majority of memory is taken by the underlying character arrays.</p>
-<p>String is the perfect example. It contains a handful of primitive fields, plus the char[]. The char[]accounts for the vast majority of the memory usage. The shallow size of String is very small, but it’s retained size is much larger, since that includes the char[].<br>大概就是说尽管没有直接使用char数组，但是对String的频繁使用也会造成这个问题。</p>
+<p>高斯林自己也承认，要是有机会重来的话，绝对不会考虑接口。</p>
 </blockquote>
-<h2 id="参考链接:">参考链接:</h2><p><a href="http://www.importnew.com/14086.html" target="_blank" rel="external">Java内存与垃圾回收调优</a></p>
+<p>这里又开始怀念C++的多重继承了XD</p>
+<blockquote>
+<p>软件工程有自己的政治轴心。一端是保守派，另一端是自由派。</p>
+</blockquote>
+<p>本质上，保守主义就是风险管理。</p>
+<p>软件自由主义者在保守派眼里就是一帮邋里邋遢，缺乏纪律，天真无邪，没有原则，彻头彻尾的坏工程师，而保守主义者，在自由派眼里就是偏执狂，只会散播恐惧，自欺欺人的官僚主义者。</p>
+<p>我有时候觉得自己是个保守派，更多时候觉得自己是个自由派。大概算什么混乱中立阵营吧2333</p>
+<blockquote>
+<p>无关政治的有算法，数据结构，具体数学，复杂度分析，信息理论，类型理论等计算机科学理论。</p>
+<p>Google这几年越来越擅长用更多的机器和更少的代码来工作</p>
+</blockquote>
+<p>好黑。</p>
+<blockquote>
+<p>学习是一件很困难的事情，要是你觉得很简单，那你肯定是在摸鱼，不去挑战一些过去做不到的事情。要么是你觉得很简单，那你是不可能提高自己的。</p>
+</blockquote>
+<p>啊，这么一说感觉自己最近一年一直在做简单的事情o(╯□╰)o</p>
+<blockquote>
+<p>学习是一件很痛苦的事情，但是荒废时间会让人更痛苦,</p>
+</blockquote>
+<p>更让我生气的是安于现状，不思进取。</p>
+<p>虽然很有道理的样子，但是怎么开始贩卖鸡汤了。</p>
+<blockquote>
+<p>身为程序员不沉迷于性能的话，还叫什么程序员呢。</p>
+</blockquote>
+<p>程序员非常在意性能，他们愿意为此花费无数时间，去摆弄算法和数据结构，压榨程序里的每个指令周期和字节，但却不愿意用这些时间去学习在新硬件上新语言。</p>
+<p>对语言的执念啊。。。</p>
+<blockquote>
+<p>如果你想上进的话，唯一要做的就是持之以恒，不管你是想要提高自己的编程水平，还是数学水平，或者是想要健身，玩风筝，甚至克服人类比害怕死亡更甚的第一恐惧：公开演讲。只要脚踏实地，就能循序渐进。</p>
+</blockquote>
+<p>有舍就有得，这就是零和博弈。</p>
+<p>好好享受生活吧，其他的顺气自然就好。</p>
+<h2 id="代码里的哲学">代码里的哲学</h2><p>软件需要哲学家</p>
+<blockquote>
+<p>一般大家都觉得自己生在启蒙时代，其实并非如此，人类压根就没怎么变过，我们依旧互相折磨。杀伐不断。</p>
+<p>代码的最大的敌人就是体格。</p>
+</blockquote>
+<p>任何聪明的团队都会尽一切努力避免代码成山。</p>
+<p>10年以来把代码拆成小函数的做法一直都被标榜为“良好的设计”，这完全要归功于马丁福勒的《重构》</p>
+<blockquote>
+<p>假如你下定决定要精简代码量，那最终的结果就是要被迫放弃Java</p>
+<p>要激起语言之争，一般有两个要素，意识绝大多数程序员都不喜欢学习新语言，其次是经济因素，最终一切还是向钱看。</p>
+</blockquote>
+<p>程序员的数学</p>
+<blockquote>
+<p>程序员觉得数学没用，我经常听到这种观点。说难听点，只要你活下去，什么都不懂又怎么样。所以我才会同意他们的观点，就算不懂数学，你的生活也会好好的。</p>
+</blockquote>
+<p>这段比较讽刺。</p>
+<blockquote>
+<p>学习数学的正确方法</p>
+</blockquote>
+<p>广度优先才是学习数学的正确方法，深度优先不行的。先打开眼界，搞清楚什么是什么。</p>
+<p>学习数学的正确方法应该是忘记那些算法和证明，去了解那些技术的方方面面，名称和作用，大概是怎么计算的，历史有多悠久，是谁发明的，局限性在哪里，相互之剑的关联是什么。大概这就是所谓的数学里的素质教育。</p>
+<blockquote>
+<p>我觉得学习数学的最佳方式是每天花上15—30分钟浏览下维基百科。</p>
+</blockquote>
+<p>不要被习题抹杀了你对数学的兴趣，要是对某个题目章节让你觉得无聊，不妨大胆跳过去，在频繁也没关系，跟着感觉走这样你的学习速度会快很多，也有助于培养自信。</p>
+<p>这段学习数学的方法全部摘抄下来还是挺有价值的。</p>
+<p>关于编译器</p>
+<blockquote>
+<p>对于编译器一无所知的人往往在计算机科学教育和系统架构的整体把握上有缺陷。</p>
+</blockquote>
+<p>编译原理和面试变现之间的线性关系。</p>
+<p>不懂编译器原理的人也不懂计算机的原理，如果你吃不准自己是不是真的懂，那么你就是不懂。</p>
+<p>编译原理是计算机科学里第二重要的课程。</p>
+<p>编译原理之所以是一门重要的计算机科学课程的原因就是它非常切实的将以前学过几乎所有东西都捏合在了一起。</p>
+<p>如果你不选修编译原理，那就要冒着永远混迹与二流程序员行列的风险:就是那种从热情的青年架构师最后混成阴郁的古董架构师，终其一生都在构建某种大型系统，还引以为傲。</p>
 </span>
       
     </div>
@@ -291,7 +363,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/jvm/" rel="tag">#jvm</a>
+            <a href="/tags/程序员/" rel="tag">#程序员</a>
+          
+            <a href="/tags/读书笔记/" rel="tag">#读书笔记</a>
           
         </div>
       
@@ -300,17 +374,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/17/pipeline-sync-problem/" rel="next" title="pipline sync">
-                <i class="fa fa-chevron-left"></i> pipline sync
+              <a href="/2015/11/16/hadoop-introduce/" rel="next" title="Hadoop简介の备忘">
+                <i class="fa fa-chevron-left"></i> Hadoop简介の备忘
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/08/17/java-web-xml/" rel="prev" title="Java Web部署描述文件:web.xml [部分翻译]">
-                Java Web部署描述文件:web.xml [部分翻译] <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -337,8 +407,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/08/17/jvm-startup/"
-           data-title="Java内存与垃圾回收总结备忘" data-url="http://evenx86.github.io/2015/08/17/jvm-startup/">
+      <div class="ds-thread" data-thread-key="2015/11/16/A-Programmer's-Rantings-note/"
+           data-title="《程序员的呐喊》读书笔记" data-url="http://evenx86.github.io/2015/11/16/A-Programmer's-Rantings-note/">
       </div>
     
   </div>
@@ -428,7 +498,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引入"><span class="nav-number">1.</span> <span class="nav-text">引入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1:"><span class="nav-number">1.1.</span> <span class="nav-text">问题1:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2"><span class="nav-number">1.2.</span> <span class="nav-text">问题2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接:"><span class="nav-number">2.</span> <span class="nav-text">参考链接:</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编程语言里的宗教"><span class="nav-number">1.</span> <span class="nav-text">编程语言里的宗教</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码里的哲学"><span class="nav-number">2.</span> <span class="nav-text">代码里的哲学</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
