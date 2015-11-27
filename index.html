@@ -120,7 +120,7 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle"></p>
+  <p class="site-subtitle">代码与数据搬运工</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -223,7 +223,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-11-20T15:52:08+08:00" content="2015-11-20">
+            <time itemprop="dateCreated" datetime="2015-11-20T15:54:34+08:00" content="2015-11-20">
               2015-11-20
             </time>
           </span>
@@ -270,9 +270,7 @@
 
       
         
-          <span itemprop="articleBody">
-            
-              <h2 id="前言">前言</h2><p>现在hadoop生态发展的这么完善，实际这些书讲的也已经非常好了，还有一些大神的博客，废话不多说。</p>
+          <h2 id="前言">前言</h2><p>现在hadoop生态发展的这么完善，实际这些书讲的也已经非常好了，还有一些大神的博客，废话不多说。</p>
 <p>本书建了一个以hbase为数据库的twitter作为实例用来介绍hbase。</p>
 <h2 id="连接管理">连接管理</h2><h3 id="创建表">创建表</h3><p><code>create &#39;user&#39;,&#39;info&#39;</code><br>其中表名是<code>user</code>,<code>info</code>是列族(column family)</p>
 <blockquote>
@@ -285,55 +283,11 @@
 <blockquote>
 <p>HBase使用JRuby实现。</p>
 </blockquote>
-<h3 id="HBase连接管理">HBase连接管理</h3><blockquote>
-<p>使用Java连接HBase使用HTablePool比直接使用HTable更为城建，使用连接池更好一些，连接从连接池里分配。<br>完成工作及时关闭表，连接资源会返回到连接池中。</p>
-</blockquote>
-<h3 id="数据操作">数据操作</h3><blockquote>
-<p>HBase表的行有唯一标识符，叫做行键。<br>HBase中的所有数据都是作为原始数据使用字节数组形式存储的，行键也还是如此。<br>HBase使用坐标来定位表中的数据。</p>
-<ul>
-<li>行键</li>
-<li>列族</li>
-<li>列限定符</li>
-<li>时间</li>
-</ul>
-</blockquote>
-<h4 id="工作机制">工作机制</h4><p>HBase写路径 :</p>
-<blockquote>
-<p>HBase中，无论是增加新行还是修改已有的行，其内部流程都是相同的。<br>MemStore是内存里的写入缓冲区，HBase中数据在永久写入硬盘之前在这里累计，当MemStore填满后，其中的数据会刷鞋到硬盘，生成一个HFile，但是一个HFile不能存多个列族的数据，在集群的每个节点上，没个列族有一个MemStore。</p>
-</blockquote>
-<p>针对分布式系统常见的硬件故障导致的数据丢失问题，,HBase是这么解决:</p>
-<blockquote>
-<p>在写入之前先写入WAL。集群中每台服务器维护一个WAL来记录发生的变化，<br>WAL是底层文件系统上的一个文件，直到WAL新记录成功写入后，写动作才会被认为成功完成。大多数情况喜爱HBase使用HDFS作为底层文件系统。</p>
-<p>HBase写入时需要来自WAL和MemStore确认，这两个确认确保每次写入HBase 在尽可能快的同时保证持久性，当MemStore写满时刷<br>写到一个新HFile，写入时跳过WAL应该会提升写性能，但是不建议禁用WAL。</p>
-</blockquote>
-<p>HBase读路径</p>
-<blockquote>
-<p>读操作可以做到毫秒级，HBase读动作必须重新衔接持久化到硬盘上的HFile和内存中的MemStore中的数据<br>使用了LRU缓存技术，缓存叫做BlockCache，和MemStore在一个JVM堆里，BlockCache用来保存从HFile里读入内存的频繁访问的数据，避免硬盘读。每个列族都有自己的BlockCache。<br>BlockCache中的block是HBase从硬盘中完成一次读取的数据单位。Block是建立索引的最小数据单位。Block大小按照列族设定，默认值是64KB。<br>从HBase中读出一行首先会检查MemStore等待修改的队列，然后检查BlockCache看包含该行的Block是否最近被<br>访问过，最后才是访问硬盘上对应的HFile。</p>
-</blockquote>
-<p>合并:</p>
-<blockquote>
-<p>Delete命令不会立即删除内容，实际它只是个记录打上删除的标记。标志删除的内容不能在Get和Scan中返回结果，HFile是不能改变的，直到一次大合并，这些记录才会被出里，被删除记录的空间才会释放。</p>
-</blockquote>
-<p>时间版本数据库</p>
-<blockquote>
-<p>每次你在单元上执行操作，HBase都隐式存储一个新时间版本。单元的新建，修改和删除都会同样处理。它们都会留下新时间版本。时间版本是访问特定单元的最后一个坐标，没有设置这个坐标时候HBase就会使用当前时间。<br>如果一个单元的版本超过了最大数量，多处的记录会在下一次大合并时候扔掉。</p>
-</blockquote>
-<h3 id="数据组织">数据组织</h3><ul>
-<li>表: </li>
-<li>行  : 在表里数据按照行存储，行由行健唯一标识。</li>
-<li>列族 :  行里的数据按照列族分组，列族也影响到HBase数据的物理存放，因此列族必须事前定义且不轻易修改。</li>
-<li>列限定符: 列族里的数据通过列限定符来定位。</li>
-<li>单元 ： 行健列族和列限定符一起确定一个单元。</li>
-<li>时间版本: 单元值有时间版本，默认数量是3个</li>
-</ul>
-<h3 id="命令操作">命令操作</h3><ul>
-<li><h4 id="get">get</h4><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Get g <span class="subst">=</span> <span class="literal">new</span> Get(<span class="built_in">Bytes</span><span class="built_in">.</span>toBytes(<span class="string">"Name"</span>));</span><br><span class="line">g<span class="built_in">.</span>addColumn(<span class="built_in">Bytes</span><span class="built_in">.</span>toBytes(<span class="string">"info"</span>)) <span class="comment">//在Get中防止限制条件来减少返回的数据量。</span></span><br><span class="line">Result r <span class="subst">=</span> userTable<span class="built_in">.</span>get(g);</span><br><span class="line"><span class="string">``</span><span class="string">`   </span><br><span class="line">- #### put</span><br><span class="line">与get相似</span><br><span class="line"></span><br><span class="line">- #### delete</span><br><span class="line">`</span><span class="string">``</span>Delete d <span class="subst">=</span> <span class="literal">new</span> Delete (<span class="built_in">Bytes</span><span class="built_in">.</span>toBytes(<span class="string">""</span>Name));</span><br><span class="line">d<span class="built_in">.</span>deleteColumns(<span class="built_in">Bytes</span><span class="built_in">.</span>toBytes(<span class="string">"info"</span>));<span class="comment">//指定删除行的一部分</span></span><br><span class="line">table<span class="built_in">.</span>delete(d);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><code>deleteColumn</code> 是删除单元的内容<br><code>deleteColumn</code> 是删除一个单元</p>
-
-            
-          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/11/20/hbase-introduce/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
