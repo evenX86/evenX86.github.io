@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="jdk," />
+  <meta name="keywords" content="HBase,Hadoop," />
 
 
 
@@ -53,30 +53,21 @@
 
 
 
-<meta name="description" content="简介
-jps JVM process status 显示系统内所有的hotspot虚拟机进程。
-jstat JVM statistics monitoring tool 收集hotspot虚拟机各方面的运行数据
-jinfo configuration info for java 显示虚拟机配置信息
-jmap 生成虚拟机的内存转储快照
-jhat JVM heap dump browser 用于分析h">
+<meta name="description" content="出现这种问题一般来说是Hadoop1.x和2.x冲突了。
+之前一直使用
+12345&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.apache.hadoop&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;hadoop-core&amp;lt;/artifactId&amp;gt;    &amp;lt;version&amp;gt;1.2.1&amp;lt;/version&amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JDK 自带工具备忘">
-<meta property="og:url" content="http://evenx86.github.io/2015/04/21/JDK-Tools/index.html">
+<meta property="og:title" content="HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected">
+<meta property="og:url" content="http://evenx86.github.io/2016/01/13/hbase-problem/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="简介
-jps JVM process status 显示系统内所有的hotspot虚拟机进程。
-jstat JVM statistics monitoring tool 收集hotspot虚拟机各方面的运行数据
-jinfo configuration info for java 显示虚拟机配置信息
-jmap 生成虚拟机的内存转储快照
-jhat JVM heap dump browser 用于分析h">
+<meta property="og:description" content="出现这种问题一般来说是Hadoop1.x和2.x冲突了。
+之前一直使用
+12345&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.apache.hadoop&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;hadoop-core&amp;lt;/artifactId&amp;gt;    &amp;lt;version&amp;gt;1.2.1&amp;lt;/version&amp;">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JDK 自带工具备忘">
-<meta name="twitter:description" content="简介
-jps JVM process status 显示系统内所有的hotspot虚拟机进程。
-jstat JVM statistics monitoring tool 收集hotspot虚拟机各方面的运行数据
-jinfo configuration info for java 显示虚拟机配置信息
-jmap 生成虚拟机的内存转储快照
-jhat JVM heap dump browser 用于分析h">
+<meta name="twitter:title" content="HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected">
+<meta name="twitter:description" content="出现这种问题一般来说是Hadoop1.x和2.x冲突了。
+之前一直使用
+12345&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.apache.hadoop&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;hadoop-core&amp;lt;/artifactId&amp;gt;    &amp;lt;version&amp;gt;1.2.1&amp;lt;/version&amp;">
 
 
 
@@ -88,7 +79,7 @@ jhat JVM heap dump browser 用于分析h">
   };
 </script>
 
-  <title> JDK 自带工具备忘 | 曲径通幽 </title>
+  <title> HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -218,7 +209,7 @@ jhat JVM heap dump browser 用于分析h">
             
             
               
-                JDK 自带工具备忘
+                HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected
               
             
           </h1>
@@ -227,8 +218,8 @@ jhat JVM heap dump browser 用于分析h">
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-04-21T13:31:08+08:00" content="2015-04-21">
-              2015-04-21
+            <time itemprop="dateCreated" datetime="2016-01-13T15:21:43+08:00" content="2016-01-13">
+              2016-01-13
             </time>
           </span>
 
@@ -237,8 +228,8 @@ jhat JVM heap dump browser 用于分析h">
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
                   </a>
                 </span>
 
@@ -253,8 +244,8 @@ jhat JVM heap dump browser 用于分析h">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/04/21/JDK-Tools/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/21/JDK-Tools/" itemprop="commentsCount"></span>
+                <a href="/2016/01/13/hbase-problem/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/13/hbase-problem/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -273,43 +264,14 @@ jhat JVM heap dump browser 用于分析h">
       
 
       
-        <span itemprop="articleBody"><h2 id="简介">简介</h2><ul>
-<li>jps JVM process status 显示系统内所有的hotspot虚拟机进程。</li>
-<li>jstat JVM statistics monitoring tool 收集hotspot虚拟机各方面的运行数据</li>
-<li>jinfo configuration info for java 显示虚拟机配置信息</li>
-<li>jmap 生成虚拟机的内存转储快照</li>
-<li>jhat JVM heap dump browser 用于分析heapdump文件。</li>
-<li>jstack stack trace for java 显示虚拟机上的线程快照<a id="more"></a>
-<h2 id="jps">jps</h2>参数列表<blockquote>
-<p>-q Suppress the output of the class name, JAR file name, and arguments passed to the main method, producing only a list of local VM identifiers. 只显示LVMID省略主类名称<br>-m Output the arguments passed to the main method. The output may be null for embedded JVMs. 显示进程启动时传递的参数<br>-l Output the full package name for the application’s main class or the full path name to the application’s JAR file. 显示主类全名，jar路径<br>-v Output the arguments passed to the JVM. 显示进程启动时JVM参数<br>-V Output the arguments passed to the JVM through the flags file (the .hotspotrc file or the file specified by the -XX:Flags=<filename> argument).</filename></p>
-</blockquote>
-</li>
-</ul>
-<h2 id="jstat">jstat</h2><p>JStat可以用来查看JVM的一些统计信息，及GC的情况等。JStat命令本身支持了定时刷新功能。<br>     jstat-gc [pid] 2000 10</p>
-<p>具体参数含义如下：<br>   jstat -classpid:显示加载class的数量，及所占空间等信息。<br>   jstat -compilerpid:显示VM实时编译的数量等信息。<br>   jstat -gc pid:可以显示gc的信息，查看gc的次数，及时间。其中最后五项，分别是young gc的次数，younggc的时间，full gc的次数，fullgc的时间，gc的总时间。<br>  jstat-gccapacity:可以显示，VM内存中三代（young,old,perm）对象的使用和占用大小，如：PGCMN显示的是最小perm的内存使用量，PGCMX显示的是perm的内存最大使用量，PGC是当前新生成的perm内存占用量，PC是但前perm内存占用量。其他的可以根据这个类推，OC是old内纯的占用量。<br>   jstat -gcnewpid:new对象的信息。<br>   jstat -gcnewcapacitypid:new对象的信息及其占用量。<br>   jstat -gcoldpid:old对象的信息。<br>   jstat -gcoldcapacitypid:old对象的信息及其占用量。<br>   jstat -gcpermcapacity pid:perm对象的信息及其占用量。<br>   jstat -utilpid:统计gc信息统计。<br>   jstat -printcompilationpid:当前VM执行的信息。  </p>
-<h2 id="jmap">jmap</h2><p>使用JMap可以解决上面提到的问题，并通过Linux的watch命令达到实时监控的效果。<br>例如，通过下面命令打印堆上apache包占用内存最大的前30个对象，每一秒刷新一次： <code>watch-n 1 -d &quot;jmap -histo:live [pid] | grep &quot;apache&quot; | head -n 30&quot;</code><br> jmap [option] vmid</p>
-<ul>
-<li>-dump 生成Java堆转储快照</li>
-<li>-heap 显示Java堆的详细信息</li>
-<li>-histo 显示堆中对象统计信息，包括类实例数量合计容量</li>
-</ul>
-<blockquote>
-<p>watch 是周期性的执行下个程序并全屏显示执行结果，。<br>-n或—interval  watch缺省每2秒运行一下程序，可以用-n或-interval来指定间隔的时间。<br>-d或—differences  用-d或—differences 选项watch 会高亮显示变化的区域。 而-d=cumulative选项会把变动过的地方(不管最近的那次有没有变动)都高亮显示出来。<br>-t 或-no-title  会关闭watch命令在顶部的时间间隔,命令，当前时间的输出。</p>
-</blockquote>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# jmap -histo 27109</span><br><span class="line"></span><br><span class="line"><span class="header"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span></span><br><span class="line"><span class="code">   1:      30115700     2278829352  [I</span></span><br><span class="line"><span class="code">   2:      29118169     1620754128  [C</span></span><br><span class="line"><span class="code">   3:      13780299     1212666312  java.util.regex.Matcher</span></span><br><span class="line"><span class="code">   4:       7813981      707061400  [B</span></span><br><span class="line"><span class="code">   5:      20477817      655290144  java.lang.String</span></span><br><span class="line"><span class="code">   6:       2988315      472124848  [Ljava.lang.Object;</span></span><br><span class="line"><span class="code">   7:       7817628      437787168  java.util.HashMap$Entry</span></span><br><span class="line"><span class="code">   8:       1098010      265252184  [Ljava.util.HashMap$Entry;</span></span><br><span class="line"><span class="code">   9:       1973855      142117560  java.util.LinkedHashMap$Entry</span></span><br><span class="line"><span class="code">  10:       1010641      121276920  java.util.TreeMap$AscendingSubMap</span></span><br><span class="line"><span class="code">  11:       1948128      109095168  java.nio.HeapByteBuffer</span></span><br><span class="line"><span class="code">  12:             4       86507584  [Ljava.io.ObjectInputStream$HandleTable$HandleList;</span></span><br><span class="line"><span class="code">  13:       3482239       83573736  java.lang.Long</span></span><br></pre></td></tr></table></figure>
-<p>这里涉及到一个问题：</p>
-<p><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html#getName%28%29" target="_blank" rel="external">http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html#getName%28%29</a></p>
-<p>其中I,C等表示class文件里的class的标识。<br>对应关系如下:</p>
-<ul>
-<li>B 代表<code>byte</code></li>
-<li>C 代表<code>char</code></li>
-<li>D 代表<code>double</code></li>
-<li>F 代表<code>float</code></li>
-<li>I 代表<code>int</code></li>
-<li>J 代表<code>long</code></li>
-<li>Z代表<code>boolean</code><br>前边有<code>[</code>代表数组，<code>[I</code> 就相当于<code>int[]</code><br>对象用<code>[L</code>+类名表示</li>
-</ul>
-<h2 id="参考链接">参考链接</h2><p><a href="http://itzoo.info/?p=256" target="_blank" rel="external">http://itzoo.info/?p=256</a></p>
+        <span itemprop="articleBody"><p>出现这种问题一般来说是Hadoop1.x和2.x冲突了。</p>
+<p>之前一直使用</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>hadoop-core<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.2.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这个依赖包, hadoop-core 1.2.1是最新的，但是还是1.x的client。</p>
+<p>Counter是class</p>
+<p>解决这个问题需要把这个依赖包换成:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>hadoop-mapreduce-client-core<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>2.7.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Ok，问题解决.</p>
 </span>
       
     </div>
@@ -318,7 +280,9 @@ jhat JVM heap dump browser 用于分析h">
       
         <div class="post-tags">
           
-            <a href="/tags/jdk/" rel="tag">#jdk</a>
+            <a href="/tags/HBase/" rel="tag">#HBase</a>
+          
+            <a href="/tags/Hadoop/" rel="tag">#Hadoop</a>
           
         </div>
       
@@ -327,17 +291,13 @@ jhat JVM heap dump browser 用于分析h">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/04/14/jedis-pipline-test/" rel="next" title="jedis pipline 性能测试">
-                <i class="fa fa-chevron-left"></i> jedis pipline 性能测试
+              <a href="/2016/01/13/hbase-introduce/" rel="next" title="HBase简介の备忘">
+                <i class="fa fa-chevron-left"></i> HBase简介の备忘
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/" rel="prev" title="七周七语言读书笔记之Ruby">
-                七周七语言读书笔记之Ruby <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -364,8 +324,8 @@ jhat JVM heap dump browser 用于分析h">
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/04/21/JDK-Tools/"
-           data-title="JDK 自带工具备忘" data-url="http://evenx86.github.io/2015/04/21/JDK-Tools/">
+      <div class="ds-thread" data-thread-key="2016/01/13/hbase-problem/"
+           data-title="HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected" data-url="http://evenx86.github.io/2016/01/13/hbase-problem/">
       </div>
     
   </div>
@@ -455,7 +415,7 @@ jhat JVM heap dump browser 用于分析h">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jps"><span class="nav-number">2.</span> <span class="nav-text">jps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jstat"><span class="nav-number">3.</span> <span class="nav-text">jstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jmap"><span class="nav-number">4.</span> <span class="nav-text">jmap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
