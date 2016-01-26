@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="HBase,Hadoop," />
+  <meta name="keywords" content="Git," />
 
 
 
@@ -53,21 +53,24 @@
 
 
 
-<meta name="description" content="出现这种问题一般来说是Hadoop1.x和2.x冲突了。
-之前一直使用
-12345&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.apache.hadoop&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;hadoop-core&amp;lt;/artifactId&amp;gt;    &amp;lt;version&amp;gt;1.2.1&amp;lt;/version&amp;">
+<meta name="description" content="����git diff ��������ʾ��û���ݴ������ĸĶ������������ι������ϴ��ύ֮���Ĳ��졣������ʱ����һ�����ݴ������и��¹����ļ��������� git diff ��ȴʲôҲû��git diff --cached�鿴�Ѿ��ݴ������ı仯
+
+git �������������� :
+1git archive -o">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected">
-<meta property="og:url" content="http://evenx86.github.io/2016/01/13/hbase-problem/index.html">
+<meta property="og:title" content="Git �Զ�����">
+<meta property="og:url" content="http://evenx86.github.io/2016/01/26/git-auto-deploy/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="出现这种问题一般来说是Hadoop1.x和2.x冲突了。
-之前一直使用
-12345&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.apache.hadoop&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;hadoop-core&amp;lt;/artifactId&amp;gt;    &amp;lt;version&amp;gt;1.2.1&amp;lt;/version&amp;">
+<meta property="og:description" content="����git diff ��������ʾ��û���ݴ������ĸĶ������������ι������ϴ��ύ֮���Ĳ��졣������ʱ����һ�����ݴ������и��¹����ļ��������� git diff ��ȴʲôҲû��git diff --cached�鿴�Ѿ��ݴ������ı仯
+
+git �������������� :
+1git archive -o">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected">
-<meta name="twitter:description" content="出现这种问题一般来说是Hadoop1.x和2.x冲突了。
-之前一直使用
-12345&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.apache.hadoop&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;hadoop-core&amp;lt;/artifactId&amp;gt;    &amp;lt;version&amp;gt;1.2.1&amp;lt;/version&amp;">
+<meta name="twitter:title" content="Git �Զ�����">
+<meta name="twitter:description" content="����git diff ��������ʾ��û���ݴ������ĸĶ������������ι������ϴ��ύ֮���Ĳ��졣������ʱ����һ�����ݴ������и��¹����ļ��������� git diff ��ȴʲôҲû��git diff --cached�鿴�Ѿ��ݴ������ı仯
+
+git �������������� :
+1git archive -o">
 
 
 
@@ -79,7 +82,7 @@
   };
 </script>
 
-  <title> HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected | 曲径通幽 </title>
+  <title> Git �Զ����� | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -209,7 +212,7 @@
             
             
               
-                HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected
+                Git �Զ�����
               
             
           </h1>
@@ -218,8 +221,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-13T15:21:43+08:00" content="2016-01-13">
-              2016-01-13
+            <time itemprop="dateCreated" datetime="2016-01-26T15:41:45+08:00" content="2016-01-26">
+              2016-01-26
             </time>
           </span>
 
@@ -228,8 +231,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop</span>
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
                   </a>
                 </span>
 
@@ -244,8 +247,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/01/13/hbase-problem/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/13/hbase-problem/" itemprop="commentsCount"></span>
+                <a href="/2016/01/26/git-auto-deploy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/26/git-auto-deploy/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -264,14 +267,16 @@
       
 
       
-        <span itemprop="articleBody"><p>出现这种问题一般来说是Hadoop1.x和2.x冲突了。</p>
-<p>之前一直使用</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>hadoop-core<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.2.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这个依赖包, hadoop-core 1.2.1是最新的，但是还是1.x的client。</p>
-<p>Counter是class</p>
-<p>解决这个问题需要把这个依赖包换成:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>hadoop-mapreduce-client-core<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>2.7.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>Ok，问题解决.</p>
+        <span itemprop="articleBody"><blockquote>
+<p>����<code>git diff</code> ��������ʾ��û���ݴ������ĸĶ������������ι������ϴ��ύ֮���Ĳ��졣������ʱ����һ�����ݴ������и��¹����ļ��������� <code>git diff</code> ��ȴʲôҲû��<br><code>git diff --cached</code>�鿴�Ѿ��ݴ������ı仯</p>
+</blockquote>
+<p>git �������������� :</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git archive -o <span class="operator"><span class="keyword">update</span>.zip NEW_COMMIT_ID_HERE $(git diff <span class="comment">--name-only OLD_COMMIT_ID_HERE NEW_COMMIT_ID_HERE)</span></span></span><br></pre></td></tr></table></figure>
+<p>git ��������һ��commit id</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">git</span> rev-parse HEAD</span><br></pre></td></tr></table></figure>
+<p>����</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">log</span> -<span class="number">1</span> --pretty=<span class="string">"<span class="variable">%H</span>"</span></span><br></pre></td></tr></table></figure>
+<p>���԰�����1��Ϊ2�����������ε��޸ļ�¼.�����Ϳ���д�ű���XD</p>
 </span>
       
     </div>
@@ -280,9 +285,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/HBase/" rel="tag">#HBase</a>
-          
-            <a href="/tags/Hadoop/" rel="tag">#Hadoop</a>
+            <a href="/tags/Git/" rel="tag">#Git</a>
           
         </div>
       
@@ -291,17 +294,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/13/hbase-introduce/" rel="next" title="HBase简介の备忘">
-                <i class="fa fa-chevron-left"></i> HBase简介の备忘
+              <a href="/2016/01/13/hadoop-configure/" rel="next" title="Hadoop 伪分布式模式配置">
+                <i class="fa fa-chevron-left"></i> Hadoop 伪分布式模式配置
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/13/hadoop-introduce/" rel="prev" title="Hadoop简介の备忘">
-                Hadoop简介の备忘 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -328,8 +327,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/01/13/hbase-problem/"
-           data-title="HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected" data-url="http://evenx86.github.io/2016/01/13/hbase-problem/">
+      <div class="ds-thread" data-thread-key="2016/01/26/git-auto-deploy/"
+           data-title="Git �Զ�����" data-url="http://evenx86.github.io/2016/01/26/git-auto-deploy/">
       </div>
     
   </div>
