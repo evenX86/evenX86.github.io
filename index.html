@@ -213,7 +213,7 @@
               
                 
                 <a class="post-title-link" href="/2016/01/26/git-auto-deploy/" itemprop="url">
-                  Git �Զ�����
+                  Git 自动部署
                 </a>
               
             
@@ -223,7 +223,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-26T15:41:45+08:00" content="2016-01-26">
+            <time itemprop="dateCreated" datetime="2016-01-26T15:44:14+08:00" content="2016-01-26">
               2016-01-26
             </time>
           </span>
@@ -273,15 +273,15 @@
           <span itemprop="articleBody">
             
               <blockquote>
-<p>����<code>git diff</code> ��������ʾ��û���ݴ������ĸĶ������������ι������ϴ��ύ֮���Ĳ��졣������ʱ����һ�����ݴ������и��¹����ļ��������� <code>git diff</code> ��ȴʲôҲû��<br><code>git diff --cached</code>�鿴�Ѿ��ݴ������ı仯</p>
+<p>单单<code>git diff</code> 不过是显示还没有暂存起来的改动，而不是这次工作和上次提交之间的差异。所以有时候你一下子暂存了所有更新过的文件后，运行 <code>git diff</code> 后却什么也没有<br><code>git diff --cached</code>查看已经暂存起来的变化</p>
 </blockquote>
-<p>git �������������� :</p>
+<p>git 增量包打包命令 :</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git archive -o <span class="operator"><span class="keyword">update</span>.zip NEW_COMMIT_ID_HERE $(git diff <span class="comment">--name-only OLD_COMMIT_ID_HERE NEW_COMMIT_ID_HERE)</span></span></span><br></pre></td></tr></table></figure>
-<p>git ��������һ��commit id</p>
+<p>git 获得最近一次commit id</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">git</span> rev-parse HEAD</span><br></pre></td></tr></table></figure>
-<p>����</p>
+<p>或者</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">log</span> -<span class="number">1</span> --pretty=<span class="string">"<span class="variable">%H</span>"</span></span><br></pre></td></tr></table></figure>
-<p>���԰�����1��Ϊ2�����������ε��޸ļ�¼.�����Ϳ���д�ű���XD</p>
+<p>可以把其中1改为2则是最近两次的修改记录.这样就可以写脚本了XD</p>
 
             
           </span>
