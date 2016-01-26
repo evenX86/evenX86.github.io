@@ -212,6 +212,127 @@
             
               
                 
+                <a class="post-title-link" href="/2016/01/26/hive-over-hbase/" itemprop="url">
+                  Hive��װ������HBase
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-26T20:13:45+08:00" content="2016-01-26">
+              2016-01-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/26/hive-over-hbase/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/26/hive-over-hbase/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="����HIVE">����HIVE</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">su - hadoop</span><br><span class="line">wget http:<span class="comment">//apache.fayea.com/hive/hive-1.2.1/apache-hive-1.2.1-bin.tar.gz</span></span><br><span class="line">tar -zxvf apache-hive-<span class="number">1.2</span>.<span class="number">1</span>-bin<span class="class">.tar</span><span class="class">.gz</span></span><br><span class="line">mv apache-hive-<span class="number">1.2</span>.<span class="number">1</span>-bin hive</span><br></pre></td></tr></table></figure>
+<h2 id="��������">��������</h2><p>��/etc/profile��׷��:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> HIVE_HOME=/home/hadoop/hive</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$HIVE_HOME</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+<h2 id="��װMySQL">��װMySQL</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc gcc- c ++ ncurses-devel  -y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">groupadd mysql</span><br><span class="line">useradd -g mysql mysql</span><br><span class="line">wget <span class="string">http:</span><span class="comment">//dev.mysql.com/get/downloads/mysql/mysql-5.6.25.tar.gz</span></span><br><span class="line">tar zxvf mysql-<span class="number">5.6</span><span class="number">.25</span>.tar.gz</span><br><span class="line"></span><br><span class="line">cd mysql-<span class="number">5.6</span><span class="number">.25</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cmake \</span><br><span class="line">-DCMAKE_INSTALL_PREFIX=<span class="regexp">/data/</span>mysql \</span><br><span class="line">-DMYSQL_UNIX_ADDR=<span class="regexp">/data/</span>mysql/mysql.sock \</span><br><span class="line">-DDEFAULT_CHARSET=utf8 \</span><br><span class="line">-DDEFAULT_COLLATION=utf8_general_ci \</span><br><span class="line">-DWITH_INNOBASE_STORAGE_ENGINE=<span class="number">1</span> \</span><br><span class="line">-DWITH_ARCHIVE_STORAGE_ENGINE=<span class="number">1</span> \</span><br><span class="line">-DWITH_BLACKHOLE_STORAGE_ENGINE=<span class="number">1</span> \</span><br><span class="line">-DMYSQL_DATADIR=<span class="regexp">/data/</span>mysql/data \</span><br><span class="line">-DMYSQL_TCP_PORT=<span class="number">3306</span> \</span><br><span class="line">-DENABLE_DOWNLOADS=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">chmod +w <span class="regexp">/data/</span>mysql/</span><br><span class="line">chown -R <span class="string">mysql:</span>mysql <span class="regexp">/data/</span>mysql/</span><br><span class="line">ln -s <span class="regexp">/data/</span>mysql<span class="regexp">/lib/</span>libmysqlclient.so<span class="number">.18</span> <span class="regexp">/usr/</span>lib/libmysqlclient.so<span class="number">.18</span></span><br><span class="line">ln -s <span class="regexp">/data/</span>mysql<span class="regexp">/mysql.sock /</span>tmp/mysql.sock</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cp <span class="regexp">/data/</span>mysql<span class="regexp">/support-files/</span>my-<span class="keyword">default</span>.cnf <span class="regexp">/etc/</span>my.cnf</span><br><span class="line">cp <span class="regexp">/data/</span>mysql<span class="regexp">/support-files/</span>mysql.server <span class="regexp">/etc/</span>init.d/mysqld</span><br><span class="line"><span class="regexp">/data/</span>mysql<span class="regexp">/scripts/</span>mysql_install_db --user=mysql --defaults-file=<span class="regexp">/etc/</span>my.cnf --basedir=<span class="regexp">/data/</span>mysql --datadir=<span class="regexp">/data/</span>mysql/data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#����hive���ݿ�</span><br><span class="line">create database hive ;</span><br></pre></td></tr></table></figure>
+<h2 id="����HIVE-1">����HIVE</h2><p>�½�hive-site.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">value</span>&gt;</span>jdbc:mysql://HADOOP-MASTER-153:3306/hive?createDatabaseIfNotExist=true<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">description</span>&gt;</span>JDBC connect string for a JDBC metastore<span class="tag">&lt;/<span class="title">description</span>&gt;</span>    </span><br><span class="line"><span class="tag">&lt;/<span class="title">property</span>&gt;</span>   </span><br><span class="line"><span class="tag">&lt;<span class="title">property</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="title">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="tag">&lt;/<span class="title">name</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="title">value</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="title">value</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="title">description</span>&gt;</span>Driver class name for a JDBC metastore<span class="tag">&lt;/<span class="title">description</span>&gt;</span>     </span><br><span class="line"><span class="tag">&lt;/<span class="title">property</span>&gt;</span>               </span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="title">property</span>&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="title">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">value</span>&gt;</span>root<span class="tag">&lt;<span class="title">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">description</span>&gt;</span>username to use against metastore database<span class="tag">&lt;/<span class="title">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">property</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="title">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="tag">&lt;/<span class="title">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">value</span>&gt;</span>123456<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">description</span>&gt;</span>password to use against metastore database<span class="tag">&lt;/<span class="title">description</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="title">property</span>&gt;</span>          </span><br><span class="line"><span class="tag">&lt;/<span class="title">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>ʹ����mysql��Ϊmetastore ������Ҫ��libĿ¼������mysql������</p>
+<p>����JDBC��hive/libĿ¼��<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="string">http:</span><span class="comment">//central.maven.org/maven2/mysql/mysql-connector-java/5.1.37/mysql-connector-java-5.1.37.jar</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="�ͻ�������">�ͻ�������</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">scp -r apache-hive-<span class="number">1.2</span><span class="number">.1</span>-bin<span class="regexp">/ hadoop@hadoop-slave:/</span>home/hadoop</span><br><span class="line">[hadoop<span class="annotation">@hadoop</span>-slave conf]$ vi hive-site.xml</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt; </span><br><span class="line">        &lt;name&gt;hive.metastore.uris&lt;/name&gt; </span><br><span class="line">    &lt;value&gt;<span class="string">thrift:</span><span class="comment">//hadoop-master:9083&lt;/value&gt; </span></span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[hadoop<span class="annotation">@hadoop</span>-master ~]$ hive --service metastore &amp;</span><br><span class="line">[hadoop<span class="annotation">@hadoop</span>-master ~]$ jps</span><br><span class="line"><span class="number">10288</span> RunJar  #����һ������</span><br><span class="line"><span class="number">9365</span> NameNode</span><br><span class="line"><span class="number">9670</span> SecondaryNameNode</span><br><span class="line"><span class="number">11096</span> Jps</span><br><span class="line"><span class="number">9944</span> NodeManager</span><br><span class="line"><span class="number">9838</span> ResourceManager</span><br><span class="line"><span class="number">9471</span> DataNode</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#����hive</span><br><span class="line">$ hive</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Logging initialized using configuration <span class="keyword">in</span> <span class="string">jar:</span><span class="string">file:</span><span class="regexp">/home/</span>hadoop<span class="regexp">/hive/</span>lib<span class="regexp">/hive-common-1.2.1.jar!/</span>hive-log4j.properties</span><br><span class="line">hive&gt; </span><br><span class="line">hive&gt; show databases;</span><br><span class="line">OK</span><br><span class="line"><span class="keyword">default</span></span><br><span class="line">Time <span class="string">taken:</span> <span class="number">1.436</span> seconds, <span class="string">Fetched:</span> <span class="number">1</span> row(s)</span><br></pre></td></tr></table></figure>
+<h2 id="����HBase">����HBase</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">CREATE</span>  <span class="keyword">EXTERNAL</span>  <span class="keyword">TABLE</span> hbaseusers(<span class="keyword">key</span> <span class="keyword">string</span>, <span class="keyword">value</span> <span class="keyword">string</span>)</span><br><span class="line">STORED <span class="keyword">BY</span> <span class="string">'org.apache.hadoop.hive.hbase.HBaseStorageHandler'</span> </span><br><span class="line"><span class="keyword">WITH</span> SERDEPROPERTIES (<span class="string">"hbase.columns.mapping"</span> = <span class="string">":key,info:name"</span>) </span><br><span class="line">TBLPROPERTIES (<span class="string">"hbase.table.name"</span> = <span class="string">"users"</span>);</span></span><br></pre></td></tr></table></figure>
+<p>�����ⲿ����Դָ��hbase���ڵ����ݱ�����ʱ�����ܰ����ո�, ��Ȼ�����֡������ڵ����塯��Column Family n is not defined in hbase table nginx��:<br><figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">����:</span><br><span class="line">hive&gt;  CREATE  EXTERNAL  TABLE hbaseusers(<span class="keyword">key</span> <span class="built_in">string</span>, value <span class="built_in">string</span>)</span><br><span class="line">    &gt;  STORED <span class="keyword">BY</span> <span class="comment">'org.apache.hadoop.hive.hbase.HBaseStorageHandler' </span></span><br><span class="line">    &gt;  <span class="keyword">WITH</span> SERDEPROPERTIES (<span class="string">"hbase.columns.mapping"</span> = <span class="string">":key,info:name"</span>) </span><br><span class="line">    &gt;  TBLPROPERTIES (<span class="string">"hbase.table.name"</span> = <span class="string">"users"</span>);</span><br><span class="line">FAILED: Execution <span class="keyword">Error</span>, <span class="keyword">return</span> code <span class="number">1</span> <span class="keyword">from</span> org.apache.hadoop.hive.ql.exec.DDLTask. MetaException(message:<span class="keyword">For</span> direct MetaStore DB connections, we don<span class="comment">'t support retries at the client level.)</span></span><br></pre></td></tr></table></figure></p>
+<p>��debugģʽ�¿���metastore :<br>ִ��<code>hive  --service metastore -hiveconf hive.root.logger=DEBUG,console</code></p>
+<p>����:</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">16</span>/<span class="number">01</span>/<span class="number">24</span> <span class="number">17</span>:<span class="number">00</span>:<span class="number">07</span> [main]: <span class="keyword">ERROR</span> DataNucleus.Datastore: An exception was thrown <span class="keyword">while</span> adding/validating <span class="keyword">class</span>(es) : Specified <span class="keyword">key</span> was too <span class="built_in">long</span>; max <span class="keyword">key</span> length <span class="keyword">is</span> <span class="number">767</span> bytes</span><br><span class="line">com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Specified <span class="keyword">key</span> was too <span class="built_in">long</span>; max <span class="keyword">key</span> length <span class="keyword">is</span> <span class="number">767</span> bytes</span><br></pre></td></tr></table></figure>
+<p>���������ĵ���������Ҫ��mysql���ַ�������Ϊlatin1.<br>��/etc/my.cnf������<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">character-<span class="operator"><span class="keyword">set</span>-<span class="keyword">server</span> = latin1</span><br><span class="line"><span class="keyword">collation</span>-<span class="keyword">server</span> = latin1_general_ci</span></span><br></pre></td></tr></table></figure></p>
+<p>����mysql</p>
+<p>����֮ǰ��hive��database��Ҫdrop�����½�</p>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hive&gt;  CREATE  EXTERNAL  TABLE hbaseusers(<span class="keyword">key</span> <span class="built_in">string</span>, value <span class="built_in">string</span>)</span><br><span class="line">    &gt;  STORED <span class="keyword">BY</span> <span class="comment">'org.apache.hadoop.hive.hbase.HBaseStorageHandler' </span></span><br><span class="line">    &gt;  <span class="keyword">WITH</span> SERDEPROPERTIES (<span class="string">"hbase.columns.mapping"</span> = <span class="string">":key,info:name"</span>) </span><br><span class="line">    &gt;  TBLPROPERTIES (<span class="string">"hbase.table.name"</span> = <span class="string">"users"</span>);</span><br><span class="line">OK</span><br><span class="line">Time taken: <span class="number">1.617</span> seconds</span><br></pre></td></tr></table></figure>
+<p>OK</p>
+<h2 id="�ο��ĵ�">�ο��ĵ�</h2><p><a href="http://my.oschina.net/u/204498/blog/522772" target="_blank" rel="external">http://my.oschina.net/u/204498/blog/522772</a><br><a href="http://yanliu.org/2015/08/13/Hadoop%E9%9B%86%E7%BE%A4%E4%B9%8BHive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/" target="_blank" rel="external">http://yanliu.org/2015/08/13/Hadoop%E9%9B%86%E7%BE%A4%E4%B9%8BHive%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</a></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/01/26/git-auto-deploy/" itemprop="url">
                   Git 自动部署
                 </a>
@@ -1252,117 +1373,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/17/Servlet-gzip-filter/" itemprop="url">
-                  [翻译]Servlet Gzip Filter简介
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-17T09:36:05+08:00" content="2015-08-17">
-              2015-08-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/17/Servlet-gzip-filter/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/Servlet-gzip-filter/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>原文地址:<a href="http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html">http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html</a></p>
-<h2 id="简介">简介</h2><blockquote>
-<p>A GZip Servlet Filter can be used to GZip compress content sent to a browser from a Java web application. This text will explain how that works, and contains a GZip Servlet Filter you can use in your own Java web applications. If you do not know what a Servlet filter is, read my text on Servlet Filters.</p>
-</blockquote>
-<p>gzip servlet filter 可用来压缩网页内容。本文将介绍其如何工作，以及如何使用gzip servlet filter 在你的web服务器中。如果不了解servlet filter是什么可以参考这篇文章:<a href="http://tutorials.jenkov.com/java-servlets/servlet-filters.html">Servlet Filters.</a></p>
-<h2 id="为什么要使用gzip压缩网页内容">为什么要使用gzip压缩网页内容</h2><blockquote>
-<p>GZip compressing HTML, JavaScript, CSS etc. makes the data sent to the browser smaller. This speeds up the download. This is especially beneficial for mobile phones where internet bandwidth may be limited. GZip compressing content adds a CPU overhead on the server and browser, but it is still speeding up the total page load compared to not GZip compressing.</p>
-</blockquote>
-<p>gzip 压缩html、Javascript，css等等文件，目的是为了是发送到浏览器的数据更小，加速下载，这对于限制了带宽的移动端作用特别大。当然gzip增加了server端和浏览器端的cpu的压力，但是总体来说还是加速了页面的载入。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/17/Servlet-gzip-filter/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1409,7 +1419,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1423,7 +1433,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
