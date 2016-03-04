@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="spring," />
+  <meta name="keywords" content="Java,Java问题," />
 
 
 
@@ -53,33 +53,15 @@
 
 
 
-<meta name="description" content="前言本文为实验楼Spring框架入门教程 学习笔记
-Spring中的相互引用
-引用不同配置文件中的Bean，可以使用ref标签，结合bean属性
-引用相同配置文件中的Bean，可以使用ref标签,结合local属性
-
-
-ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以引用不同xml文件中的bean，但是，考虑到项目的可读性，引用相同xml配置文件的bean时，应该尽量使">
+<meta name="description" content="问题某一天增加计算的节点后发现在遍历节点List出现如下问题:12345678910Exception in thread &quot;main&quot; java.util.ConcurrentModificationException	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:859)	at java.util.ArrayL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bean的基本用法备忘">
-<meta property="og:url" content="http://evenx86.github.io/2015/08/17/Spring-bean/index.html">
+<meta property="og:title" content="遍历List出现问题:ConcurrentModificationException.md">
+<meta property="og:url" content="http://evenx86.github.io/2016/03/04/Java-problem-arraylist/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="前言本文为实验楼Spring框架入门教程 学习笔记
-Spring中的相互引用
-引用不同配置文件中的Bean，可以使用ref标签，结合bean属性
-引用相同配置文件中的Bean，可以使用ref标签,结合local属性
-
-
-ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以引用不同xml文件中的bean，但是，考虑到项目的可读性，引用相同xml配置文件的bean时，应该尽量使">
+<meta property="og:description" content="问题某一天增加计算的节点后发现在遍历节点List出现如下问题:12345678910Exception in thread &quot;main&quot; java.util.ConcurrentModificationException	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:859)	at java.util.ArrayL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Bean的基本用法备忘">
-<meta name="twitter:description" content="前言本文为实验楼Spring框架入门教程 学习笔记
-Spring中的相互引用
-引用不同配置文件中的Bean，可以使用ref标签，结合bean属性
-引用相同配置文件中的Bean，可以使用ref标签,结合local属性
-
-
-ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以引用不同xml文件中的bean，但是，考虑到项目的可读性，引用相同xml配置文件的bean时，应该尽量使">
+<meta name="twitter:title" content="遍历List出现问题:ConcurrentModificationException.md">
+<meta name="twitter:description" content="问题某一天增加计算的节点后发现在遍历节点List出现如下问题:12345678910Exception in thread &quot;main&quot; java.util.ConcurrentModificationException	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:859)	at java.util.ArrayL">
 
 
 
@@ -91,7 +73,7 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
   };
 </script>
 
-  <title> Bean的基本用法备忘 | 曲径通幽 </title>
+  <title> 遍历List出现问题:ConcurrentModificationException.md | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -221,7 +203,7 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
             
             
               
-                Bean的基本用法备忘
+                遍历List出现问题:ConcurrentModificationException.md
               
             
           </h1>
@@ -230,8 +212,8 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-08-17T09:35:54+08:00" content="2015-08-17">
-              2015-08-17
+            <time itemprop="dateCreated" datetime="2016-03-04T14:48:57+08:00" content="2016-03-04">
+              2016-03-04
             </time>
           </span>
 
@@ -256,8 +238,8 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/08/17/Spring-bean/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/Spring-bean/" itemprop="commentsCount"></span>
+                <a href="/2016/03/04/Java-problem-arraylist/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/04/Java-problem-arraylist/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -276,45 +258,8 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
       
 
       
-        <span itemprop="articleBody"><h2 id="前言">前言</h2><p>本文为实验楼<a href="https://www.shiyanlou.com/courses/33" target="_blank" rel="external">Spring框架入门教程</a> 学习笔记</p>
-<h2 id="Spring中的相互引用">Spring中的相互引用</h2><ul>
-<li>引用不同配置文件中的Bean，可以使用<code>ref</code>标签，结合<code>bean</code>属性</li>
-<li>引用相同配置文件中的Bean，可以使用<code>ref</code>标签,结合<code>local</code>属性</li>
-</ul>
-<blockquote>
-<p>ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以引用不同xml文件中的bean，但是，考虑到项目的可读性，引用相同xml配置文件的bean时，应该尽量使用 local 属性。<br><a id="more"></a></p>
-<h2 id="Spring给bean属性注入value">Spring给bean属性注入value</h2><p>示例给两个properties注入value<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package com<span class="built_in">.</span>shiyanlou<span class="built_in">.</span>common;</span><br><span class="line"><span class="keyword">public</span> class FileNameGenerator &#123;</span><br><span class="line"><span class="keyword">private</span> <span class="built_in">String</span> name;</span><br><span class="line"><span class="keyword">private</span> <span class="built_in">String</span> <span class="keyword">type</span>;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="built_in">String</span> getName() &#123;</span><br><span class="line">    <span class="keyword">return</span> name;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="literal">void</span> setName(<span class="built_in">String</span> name) &#123;</span><br><span class="line">    this<span class="built_in">.</span>name <span class="subst">=</span> name;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="built_in">String</span> getType() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">type</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="literal">void</span> setType(<span class="built_in">String</span> <span class="keyword">type</span>) &#123;</span><br><span class="line">    this<span class="built_in">.</span><span class="keyword">type</span> <span class="subst">=</span> <span class="keyword">type</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<ul>
-<li><p>一般方法:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"FileNameGenerator"</span> <span class="attribute">class</span>=<span class="value">"com.shiyanlou.common.FileNameGenerator"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"name"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">value</span>&gt;</span>shiyanlou<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"type"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">value</span>&gt;</span>txt<span class="tag">&lt;/<span class="title">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>缩写方法: </p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean <span class="property">id</span>=<span class="string">"FileNameGenerator"</span> <span class="type">class</span>=<span class="string">"com.shiyanlou.common.FileNameGenerator"</span>&gt;</span><br><span class="line">    &lt;<span class="keyword">property</span> <span class="property">name</span>=<span class="string">"name"</span> value=<span class="string">"shiyanlou"</span> /&gt;</span><br><span class="line">    &lt;<span class="keyword">property</span> <span class="property">name</span>=<span class="string">"type"</span> value=<span class="string">"txt"</span> /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>“p”  schema</p>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans <span class="variable">xmlns=</span><span class="string">"http://www.springframework.org/schema/beans"</span></span><br><span class="line">    xmlns:<span class="variable">xsi=</span><span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span><br><span class="line">    xmlns:<span class="variable">p=</span><span class="string">"http://www.springframework.org/schema/p"</span></span><br><span class="line">    xsi:<span class="variable">schemaLocation=</span><span class="string">"http://www.springframework.org/schema/beans</span><br><span class="line">    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"</span>&gt;</span><br><span class="line"> </span><br><span class="line">    &lt;bean <span class="variable">id=</span><span class="string">"FileNameGenerator"</span> <span class="variable">class=</span><span class="string">"com.shiyanlou.common.FileNameGenerator"</span></span><br><span class="line">             p:<span class="variable">name=</span><span class="string">"shiyanlou"</span> p:<span class="variable">type=</span><span class="string">"txt"</span> /&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>注意</strong><br>p语法需要添加<code>xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</code></p>
-<h2 id="Bean的作用域">Bean的作用域</h2><blockquote>
-<ul>
-<li>singleton — 单例模式，由IOC容器返回一个唯一的bean实例。</li>
-<li>prototype — 原型模式，被请求时，每次返回一个新的bean实例。</li>
-<li>request — 每个HTTP Request请求返回一个唯一的Bean实例。</li>
-<li>session — 每个HTTP Session返回一个唯一的Bean实例。</li>
-<li>globalSession — Http Session全局Bean实例。</li>
-</ul>
-</blockquote>
-<p>一般情况下只需要使用单例模式和原型模式，并且默认情况下是单例模式。</p>
-<h2 id="Spring的集合类型Bean">Spring的集合类型Bean</h2><blockquote>
-<ul>
-<li>List</li>
-<li>Set</li>
-<li>Map </li>
-<li>Properties</li>
-</ul>
-</blockquote>
+        <span itemprop="articleBody"><h2 id="问题">问题</h2><p>某一天增加计算的节点后发现在遍历节点List出现如下问题:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java<span class="class">.util</span><span class="class">.ConcurrentModificationException</span></span><br><span class="line">	at java<span class="class">.util</span><span class="class">.ArrayList</span><span class="variable">$Itr</span>.<span class="function"><span class="title">checkForComodification</span><span class="params">(ArrayList.java:<span class="number">859</span>)</span></span></span><br><span class="line">	at java<span class="class">.util</span><span class="class">.ArrayList</span><span class="variable">$Itr</span>.<span class="function"><span class="title">next</span><span class="params">(ArrayList.java:<span class="number">831</span>)</span></span></span><br><span class="line">	at com<span class="class">.sdg</span><span class="class">.mir</span><span class="class">.sync</span><span class="class">.impl</span><span class="class">.SyncThreeDegreeDetail</span><span class="class">.exec</span>(SyncThreeDegreeDetail<span class="class">.java</span>:<span class="number">70</span>)</span><br><span class="line">	at com<span class="class">.sdg</span><span class="class">.mir</span><span class="class">.sync</span><span class="class">.impl</span><span class="class">.SyncThreeDegreeDetail</span><span class="class">.main</span>(SyncThreeDegreeDetail<span class="class">.java</span>:<span class="number">199</span>)</span><br><span class="line">	at sun<span class="class">.reflect</span><span class="class">.NativeMethodAccessorImpl</span><span class="class">.invoke0</span>(Native Method)</span><br><span class="line">	at sun<span class="class">.reflect</span><span class="class">.NativeMethodAccessorImpl</span><span class="class">.invoke</span>(NativeMethodAccessorImpl<span class="class">.java</span>:<span class="number">57</span>)</span><br><span class="line">	at sun<span class="class">.reflect</span><span class="class">.DelegatingMethodAccessorImpl</span><span class="class">.invoke</span>(DelegatingMethodAccessorImpl<span class="class">.java</span>:<span class="number">43</span>)</span><br><span class="line">	at java<span class="class">.lang</span><span class="class">.reflect</span><span class="class">.Method</span><span class="class">.invoke</span>(Method<span class="class">.java</span>:<span class="number">606</span>)</span><br><span class="line">	at com<span class="class">.intellij</span><span class="class">.rt</span><span class="class">.execution</span><span class="class">.application</span><span class="class">.AppMain</span><span class="class">.main</span>(AppMain<span class="class">.java</span>:<span class="number">144</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="原因">原因</h2><p>原来ArrayList只有一个元素不会出现这种问题。当增加节点后，ArrayList中的元素增加，由于ArrayList是线程不安全的。<br>foreach遍历arraylist是使用Iterator迭代器的。<br>一般是不允许一个线程在用迭代器遍历的同时，另一个线程在修改的。<br>后来在发现代码里在循环的最后居然清空了list，o(╯□╰)o.所以报了错。及时修正代码解决了问题<br>不过之前眼瞎没有看到这个时候把ArrayList换成了CopyOnWriteArrayList也是解决了问题。<br>CopyOnWriteArrayList创建迭代器时使用了对数组状态的引用。此数组在迭代器的生存期内不会更改，因此不可能发生冲突，<br>并且迭代器保证不会抛出 ConcurrentModificationException。创建迭代器以后，迭代器就不会反映列表的添加、移除或者更改。<br>在迭代器上进行的元素更改操作（remove、set 和 add）不受支持。这些方法将抛出 UnsupportedOperationException。</p>
 </span>
       
     </div>
@@ -323,7 +268,9 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
       
         <div class="post-tags">
           
-            <a href="/tags/spring/" rel="tag">#spring</a>
+            <a href="/tags/Java/" rel="tag">#Java</a>
+          
+            <a href="/tags/Java问题/" rel="tag">#Java问题</a>
           
         </div>
       
@@ -332,17 +279,13 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/17/tomcat-architecture/" rel="next" title="Tomcat源码结构分析">
-                <i class="fa fa-chevron-left"></i> Tomcat源码结构分析
+              <a href="/2016/01/26/hive-over-hbase/" rel="next" title="Hive安装及整合HBase">
+                <i class="fa fa-chevron-left"></i> Hive安装及整合HBase
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/08/17/Servlet-gzip-filter/" rel="prev" title="[翻译]Servlet Gzip Filter简介">
-                [翻译]Servlet Gzip Filter简介 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -369,8 +312,8 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/08/17/Spring-bean/"
-           data-title="Bean的基本用法备忘" data-url="http://evenx86.github.io/2015/08/17/Spring-bean/">
+      <div class="ds-thread" data-thread-key="2016/03/04/Java-problem-arraylist/"
+           data-title="遍历List出现问题:ConcurrentModificationException.md" data-url="http://evenx86.github.io/2016/03/04/Java-problem-arraylist/">
       </div>
     
   </div>
@@ -460,7 +403,7 @@ ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring中的相互引用"><span class="nav-number">2.</span> <span class="nav-text">Spring中的相互引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring给bean属性注入value"><span class="nav-number">3.</span> <span class="nav-text">Spring给bean属性注入value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean的作用域"><span class="nav-number">4.</span> <span class="nav-text">Bean的作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring的集合类型Bean"><span class="nav-number">5.</span> <span class="nav-text">Spring的集合类型Bean</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原因"><span class="nav-number">2.</span> <span class="nav-text">原因</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
