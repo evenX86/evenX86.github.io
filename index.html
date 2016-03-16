@@ -212,6 +212,367 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/16/Intern-interview/" itemprop="url">
+                  Hello World
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-16T16:32:55+08:00" content="2016-03-16">
+              2016-03-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java实习生面试题/" itemprop="url" rel="index">
+                    <span itemprop="name">Java实习生面试题</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/16/Intern-interview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/16/Intern-interview/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>最近公司面试实习生搞了几个面试题，前面都是基础考察，后面两个是自己想的。</p>
+<ul>
+<li><h3 id="使用_final_关键字修饰一个变量时，是引用不能变，还是引用的对象不能变？">使用 final 关键字修饰一个变量时，是引用不能变，还是引用的对象不能变？</h3><br></li>
+</ul>
+<ul>
+<li><h3 id="简述Java中堆与栈的区别">简述Java中堆与栈的区别</h3></li>
+</ul>
+<p><br></p>
+<ul>
+<li><h3 id="简述Java实现线程的几种方式">简述Java实现线程的几种方式</h3></li>
+</ul>
+<p><br></p>
+<ul>
+<li><h3 id="阅读如下代码段,并指出其中存在的问题">阅读如下代码段,并指出其中存在的问题</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MySQLConnection</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Connection mySQLConnection;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getMySQLConnection</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Calendar today = Calendar.getInstance();</span><br><span class="line">        <span class="keyword">int</span> hour =today.<span class="keyword">get</span>( Calendar.HOUR_OF_DAY);      </span><br><span class="line">        <span class="keyword">if</span>(hour &gt; <span class="number">8</span> &amp;&amp; hour &lt;<span class="number">23</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>(mySQLConnection != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> mySQLConnection;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">                    Connection conn = DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost:3306/funnystudy"</span>,<span class="string">"root"</span>,<span class="string">"123456"</span>);</span><br><span class="line">                    mySQLConnection = conn;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> mySQLConnection;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><br><br><br></p>
+<ul>
+<li><h3 id="使用Java处理如下问题。">使用Java处理如下问题。</h3><blockquote>
+<p>现有一张游戏玩家登陆数据表，表结构为 : ‘id’,’name’,’login_date’,现在表中有最近三十天的玩家登陆数据，求出，连续15天的登陆玩家数以及累计15天登陆的玩家数。<br>注：连续登录是指，某个玩家在一段时间内，每天都登录游戏，比如1号到15号每天都登录，没错过任何一天，那他连续登录时间是15.一般我们习惯取最大连续登录时间。累计登录是指，某个玩家在一段时间内，登录天数的总和，比如1号 4号 5号登录了，其他时间都没登录，那他这段时间的累计登录天数是3天。</p>
+</blockquote>
+</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/03/16/asynchbase-introduce/" itemprop="url">
+                  HBase AsyncHBase客户端
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-16T16:30:30+08:00" content="2016-03-16">
+              2016-03-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/16/asynchbase-introduce/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/16/asynchbase-introduce/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="引入">引入</h2><p>HBase原生的Java客户端是完全同步的，在HBase响应请求的每个动作的时候都会短时间阻塞你的应用线程。<br>所以我们引入了asynchbase ，其也是由Java编写，并且是完全异步的，线程安全的。<br>asynchbase是在async的异步库上创建的。<br>不同于原生的HBase client，asynchbase 只能被实例化一次，只有在对不同的集群操作的时候才有可能生成多个实例。</p>
+<p>使用asynchbase客户端<br>asynchbase的主入口是HBaseClient</p>
+<blockquote>
+<ul>
+<li>asynchbase和HTable的性能对比 <a href="http://www.tsunanet.net/~tsuna/asynchbase/benchmark/viz.html" target="_blank" rel="external">http://www.tsunanet.net/~tsuna/asynchbase/benchmark/viz.html</a></li>
+<li><a href="http://dirlt.com/opentsdb.html" target="_blank" rel="external">OpenTSDB</a> is a distributed, scalable Time Series Database (TSDB) <a href="http://opentsdb.net/index.html" target="_blank" rel="external">http://opentsdb.net/index.html</a><br>从看asynchbase介绍来看，我猜想asynchbase用在MR范围还是有限的。</li>
+<li>asynchbase就是一个异步client，能够很好地解决一个app里面对于hbase有很多个连接的场景。</li>
+<li>但是在MR里面，拿我们现在的HourlyProcedure来说，每次get都是一个同步过程，一定要取回结果才能够进行下一步的操作。整个MR框架就限制了异步client的作用。</li>
+<li>asynchbase现在使用的场景应该是OpenTSDB，因为没有MR框架限制，所以异步client可以工作很好。<br>note@2012-12-10: code/java/asynchbase下面有一些使用的示例代码，并且在自己的fast-hbase-rest里面也使用了asynchbase. 使用还是比较方便的。 实现上asynchbase没有使用任何org.apache.hbase的代码，从头完成了自己的协议访问，这个可以从HBaseClient的构造参数可以看到，在里面没有使用configuration, 而是直接传入quorumSpec就是zookeeper的地址。</li>
+</ul>
+</blockquote>
+<h2 id="Sample">Sample</h2><p>HBase Table准备<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hbase(<span class="keyword">main</span>):<span class="number">023</span>:<span class="number">0</span>&gt; create <span class="string">'users'</span>,<span class="keyword">&#123;</span><span class="function">NAME =&gt;</span> <span class="string">'info'</span>,<span class="function">VERSIONS =&gt;</span> <span class="number">1</span>,<span class="function">TTL =&gt;</span> <span class="number">5184000</span>,<span class="function">BLOCKCACHE =&gt;</span> <span class="keyword">true</span><span class="keyword">&#125;</span></span><br><span class="line"><span class="number">0</span> row(s) <span class="keyword">in</span> <span class="number">2.3090</span> <span class="function">seconds</span><br><span class="line"></span><br><span class="line">=&gt;</span> <span class="constant">Hbase::Table</span> - users</span><br><span class="line">hbase(<span class="keyword">main</span>):<span class="number">024</span>:<span class="number">0</span>&gt; put <span class="string">'users'</span>,<span class="string">'1111'</span>,<span class="string">'info:password'</span>,<span class="string">'123456'</span></span><br><span class="line"><span class="number">0</span> row(s) <span class="keyword">in</span> <span class="number">0</span>.<span class="number">1140</span> seconds</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考资料">参考资料</h2><ul>
+<li><a href="http://tsunanet.net/~tsuna/asynchbase/api/org/hbase/async/HBaseClient.html" target="_blank" rel="external">http://tsunanet.net/~tsuna/asynchbase/api/org/hbase/async/HBaseClient.html</a></li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/03/16/hbase-connection-refused/" itemprop="url">
+                  HBase 只能内网连接问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-16T16:26:41+08:00" content="2016-03-16">
+              2016-03-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/16/hbase-connection-refused/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/16/hbase-connection-refused/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="问题描述">问题描述</h2><p>HBase操作只能在内网进行，在本地IDE里操作HBase则会报错。<br>这里我使用了asynchbase客户端:<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13</span>:<span class="number">47</span>:<span class="number">38</span>,<span class="number">201</span>  WARN HBaseClient:<span class="number">3217</span> - Couldn't connect <span class="keyword">to</span> <span class="keyword">the</span> RegionServer @ xx.xx.xx<span class="number">.148</span>:<span class="number">16020</span></span><br><span class="line"><span class="number">13</span>:<span class="number">47</span>:<span class="number">38</span>,<span class="number">208</span> ERROR RegionClient:<span class="number">1219</span> - Unexpected exception <span class="keyword">from</span> downstream <span class="function_start"><span class="keyword">on</span></span> [<span class="property">id</span>: <span class="number">0xa853c05b</span>]</span><br><span class="line">java.net.ConnectException: Connection refused: no further information: /xx.xx.xx<span class="number">.148</span>:<span class="number">16020</span></span><br><span class="line">    <span class="keyword">at</span> sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)</span><br><span class="line">    <span class="keyword">at</span> sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:<span class="number">739</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.channel.socket.nio.NioClientBoss.connect(NioClientBoss.java:<span class="number">152</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.channel.socket.nio.NioClientBoss.processSelectedKeys(NioClientBoss.java:<span class="number">105</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:<span class="number">79</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.channel.socket.nio.AbstractNioSelector.<span class="command">run</span>(AbstractNioSelector.java:<span class="number">337</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.channel.socket.nio.NioClientBoss.<span class="command">run</span>(NioClientBoss.java:<span class="number">42</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.util.ThreadRenamingRunnable.<span class="command">run</span>(ThreadRenamingRunnable.java:<span class="number">108</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.util.internal.DeadLockProofWorker$<span class="number">1.</span><span class="command">run</span>(DeadLockProofWorker.java:<span class="number">42</span>)</span><br><span class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1145</span>)</span><br><span class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor$Worker.<span class="command">run</span>(ThreadPoolExecutor.java:<span class="number">615</span>)</span><br><span class="line">    <span class="keyword">at</span> java.lang.Thread.<span class="command">run</span>(Thread.java:<span class="number">745</span>)</span><br></pre></td></tr></table></figure></p>
+<p>查看该机器上16020的端口情况:</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[root@HADOOP-SLAVE-148 ~]</span># <span class="tag">netstat</span> <span class="tag">-anp</span>|<span class="tag">grep</span> <span class="tag">16020</span></span><br><span class="line"><span class="tag">Proto</span>   <span class="tag">Recv-Q</span> <span class="tag">Send-Q</span>     <span class="tag">Local</span> <span class="tag">Address</span>           <span class="tag">Foreign</span> <span class="tag">Address</span>                <span class="tag">State</span>  </span><br><span class="line"><span class="tag">tcp</span>        <span class="tag">0</span>      <span class="tag">0</span>    <span class="pseudo">::ffff</span><span class="pseudo">:10</span><span class="class">.1</span><span class="class">.6</span><span class="class">.148</span><span class="pseudo">:16020</span>      :::*                         <span class="tag">LISTEN</span>      <span class="tag">14684</span>/<span class="tag">java</span>         </span><br><span class="line"><span class="tag">tcp</span>        <span class="tag">0</span>      <span class="tag">0</span>    <span class="pseudo">::ffff</span><span class="pseudo">:10</span><span class="class">.1</span><span class="class">.6</span><span class="class">.148</span><span class="pseudo">:16020</span>      <span class="pseudo">::ffff</span><span class="pseudo">:10</span><span class="class">.128</span><span class="class">.122</span><span class="class">.153</span><span class="pseudo">:39679</span>  <span class="tag">ESTABLISHED</span> <span class="tag">14684</span>/<span class="tag">java</span></span><br></pre></td></tr></table></figure>
+<p>解读:</p>
+<blockquote>
+<p>::ffff is the IPv6 prefix for an IPv4 address mapped into IPv6 space<br>(something along those lines).<br> And it means that it is an IPv6 socket that is used for IPv4<br>communication. Application and socket-wise, it is IPv6 but network and<br>packet-wise it is IPv4. This is allowed as a transition mechanism if<br>net.ipv6.bindv6only=0 and the application didn’t set the socket option<br>IPV6_V6ONLY.<br> It seems that some recent OSes disable this option by default so that<br>IPv6 sockets can handle only real IPv6 communications.</p>
+</blockquote>
+<p>后来询问了下Hadoop群里的大神，</p>
+<blockquote>
+<p>要想让外网访问的话配置hostname为外网，或者通过nginx指向。</p>
+</blockquote>
+<p>之前配置的hostname确实是内网的。怪不得外网无法访问，在开发机开通了内网权限后就能访问了。</p>
+<h2 id="无法连接的问题集锦">无法连接的问题集锦</h2><p>问题描述:</p>
+<blockquote>
+<p>我现在用１０多台物理服务器组建了一个hadoop集群，这１０多台服务器组建成一个局域网，其中只有namenode服务器连接到外网<br>遇到的问题：我在外网无法访问到datanode节点数据<br>各位大哥，谁有好的解决方案？</p>
+</blockquote>
+<p>外网为什么要访问datanode数据?访问namenode 就是不对的做法，为何不拿出来一台做service</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/04/Java-problem-arraylist/" itemprop="url">
                   遍历List出现问题:ConcurrentModificationException.md
                 </a>
@@ -1017,354 +1378,12 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/16/A-Programmer's-Rantings-note/" itemprop="url">
-                  《程序员的呐喊》读书笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-11-16T23:50:52+08:00" content="2015-11-16">
-              2015-11-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/11/16/A-Programmer's-Rantings-note/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/16/A-Programmer's-Rantings-note/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>对这本书没什么很大的期待，但是看完之后感觉对我的职业观产生了冲击了。而且很多观点其实我一直在想的，但是经验和觉悟太低一直都没能写出来，看到文中写的就深有同感。</p>
-<h2 id="编程语言里的宗教">编程语言里的宗教</h2><blockquote>
-<p>语言本身不给力，类库再牛也是有限的</p>
-</blockquote>
-<p>额这不是在吐槽Java吗，但是至少现在看来Java还是挺牛逼的呀。还是自己接触的语言太少了。作者在后面提到语言就是程序员的宗教。此言不差。</p>
-<blockquote>
-<p>Java 在语言层面上和C++也就打个平手，其实Java 要好的多，至少他有了字符串，连字符串都支持不好的语言哪是人用的。</p>
-</blockquote>
-<p>这个把C++喷的，其实还是赞同的哈哈哈，不过貌似作者对字符串有执念，所以对perl也非常喜欢。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/11/16/A-Programmer's-Rantings-note/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/17/java-web-xml/" itemprop="url">
-                  Java Web部署描述文件:web.xml [部分翻译]
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-17T09:37:50+08:00" content="2015-08-17">
-              2015-08-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/17/java-web-xml/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/java-web-xml/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="前言">前言</h2><p>Java web应用使用部署描述文件来绝对URL映射到Servlets的规则,哪些URL需要验证，以及一些其他的信息，这个文件就是<code>web.xml</code>，在servlet标准中这个文件位于应用war包的<code>WEB-INF/</code>目录下。<br>更多<code>web.xml</code>标准的信息，可以访问:<a href="http://wiki.metawerx.net/wiki/Web.xml"> the Metawerx web.xml reference wiki</a>和<a href="http://jcp.org/aboutJava/communityprocess/final/jsr154/index.html"> the Metawerx web.xml reference wiki</a></p>
-<h2 id="About_Deployment_Descriptors">About Deployment Descriptors</h2><p>web应用部署描述文件可以反映class文件,资源，配置，以及Java web server 使用它们来应对web请求。当web应用接收到请求时，通过应用部署描述文件把url映射到处理请求的代码上。<br>部署描述文件是一个名为<code>web.xml</code>的文件，它存在于war包下面的<code>WEB-INF/</code>目录下，是一个以<code>&lt;web-app&gt;</code>为根的XML文件。<br>以下是一个简单的<code>web.xml</code>示例，其将所有的URL路径映射到<code>mysite.server.ComingSoonServlet</code>:<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/17/java-web-xml/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/17/jvm-startup/" itemprop="url">
-                  Java内存与垃圾回收总结备忘
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-17T09:36:36+08:00" content="2015-08-17">
-              2015-08-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/17/jvm-startup/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/jvm-startup/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="引入">引入</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# free -m</span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line">Mem:         32094      29292       2802          0        274       1647</span><br><span class="line">-/+ buffers/cache:      27370       4724</span><br><span class="line">Swap:            0          0          0</span><br><span class="line"><span class="comment">&lt;!-- more --&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这是一台Java同步服务器的内存占用情况，使用jmap查看堆上信息:<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# jmap -histo 7840</span><br><span class="line"></span><br><span class="line"><span class="header"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span></span><br><span class="line"><span class="code">   1:      77399077     5156382528  [C</span></span><br><span class="line"><span class="code">   2:      41662587     3924901448  [I</span></span><br><span class="line"><span class="code">   3:      33678441     2424847752  java.util.LinkedHashMap$Entry</span></span><br><span class="line"><span class="code">   4:      64361432     2059565824  java.lang.String</span></span><br><span class="line"><span class="code">   5:      18967113     1669105944  java.util.regex.Matcher</span></span><br><span class="line"><span class="code">   6:       9996594     1534988024  [Ljava.lang.Object;</span></span><br><span class="line"><span class="code">   7:       7225435     1235477264  [Ljava.util.HashMap$Entry;</span></span><br><span class="line"><span class="code">   8:      11458421     1074750168  [B</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line">Total     332044853    22585874416</span><br></pre></td></tr></table></figure></p>
-<p>上面这个输出中有好几个问题，暂时先不管。<br>看下Java的配置：<code>Xms26g -Xmx26g -Xmn12g -XX:PermSize=1024M -Xss2M</code><br>实际占用的29G内存中Java heap占了22G，<br>再看下PS的结果：<code>ps -aux|sort -k 1 -r |less</code></p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USER       PID <span class="preprocessor">%</span>CPU <span class="preprocessor">%</span>MEM    <span class="title">VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root         7840</span> <span class="number">22.3</span>     <span class="number">82.5</span>  <span class="number">45956536</span> <span class="number">27124588</span> ?   Sl   May<span class="number">19</span> <span class="number">380</span>:<span class="number">04</span> java</span><br></pre></td></tr></table></figure>
-<p>可以看到Java 进程占了27G。<br>一般来说同步程序并需要这么多的内存，查看GC情况:</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@localhost</span> sync]<span class="comment"># jstat  -gc 7840</span></span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       PC     PU    YGC     YGCT    FGC    FGCT     GCT   </span><br><span class="line"> <span class="number">0.0</span>   <span class="number">65536.0</span>  <span class="number">0.0</span>   <span class="number">65536.0</span> <span class="number">13148160.0</span> <span class="number">9207808.0</span> <span class="number">14049280.0</span> <span class="number">10819203.6</span> <span class="number">1048576.0</span> <span class="number">18093.7</span>    <span class="number">125</span>   <span class="number">25.202</span>   <span class="number">0</span>      <span class="number">0.000</span>   <span class="number">25.202</span></span><br></pre></td></tr></table></figure>
-<h3 id="问题1:">问题1:</h3><p>OLD区已经快满了(10/14),<br>回顾下对象是如何进入old区的：</p>
-<ul>
-<li>长期存活的对象将进入老年代，对象在Eden区中经过第一次MinorGC之后进入Survivor区中，每经过一次minorgc如果没有被回收，默认经过15次gc还未被回收就会进入old区</li>
-<li>大对象直接进入老年代，虚拟机提供了一个<code>-XX:PretenureSize</code>参数,大于这个值的对象直接在老年代中分配。避免了再Eden区和Survivor区中发生大量的内存复制（该参数只对几个收集器起作用）。<br>JVM内存回收过程<blockquote>
-<p>1、对象在Eden区完成内存分配<br>2、当Eden区满了，再创建对象，会因为申请不到空间，触发minorGC，进行young(eden+1survivor)区的垃圾回收<br>3、minorGC时，Eden不能被回收的对象被放入到空的survivor（Eden肯定会被清空），另一个survivor里不能被GC回收的对象也会被放入这个survivor，始终保证一个survivor是空的<br>4、当做第3步的时候，如果发现survivor满了，则这些对象被copy到old区，或者survivor并没有满，但是有些对象已经足够Old，也被放入Old区 XX:MaxTenuringThreshold<br>5、当Old区被放满的之后，进行fullGC</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="问题2">问题2</h3><p>heap中char数组占用内存过多，但是程序并有显示生成char对象。<br><a href="http://stackoverflow.com/questions/20388081/why-my-java-heap-is-with-so-many-char" target="_blank" rel="external">Why my Java heap is with so many char</a></p>
-<blockquote>
-<p>811k of char[] correspond to 800k of Strings, so yes, you have too many Strings.<br>If you’re having a memory leak (judging by the tag), then it’s most probably are strings in a HashMap. You have 800k instances of strings, 200k instances of hash entries, 30k of maps. This probably means that your strings are kept in this cache and are not removed. Global map is a frequent cause of memory leaks, one needs to make sure that they are evicted from this cache.</p>
-</blockquote>
-<p>Since all these values are not being GC-ed, you could try analyzing an object graph to see what’s holding them with a tool like JProfiler.</p>
-<p><a href="http://stackoverflow.com/questions/1985480/why-does-the-profiler-show-large-numbers-of-char-instances-when-i-am-not-creat" target="_blank" rel="external">Why does the profiler show large numbers of char[] instances when I am not creating any?</a></p>
-<blockquote>
-<p>Take a look at the String source code. The String object itself contains a cached hash code, a count of the number of characters (again, for optimisation purposes), an offset (since a String.substr()points to the original string data) and the character array, which contains the actual string data. Hence your metrics showing that String consumes relatively little, but the majority of memory is taken by the underlying character arrays.</p>
-<p>String is the perfect example. It contains a handful of primitive fields, plus the char[]. The char[]accounts for the vast majority of the memory usage. The shallow size of String is very small, but it’s retained size is much larger, since that includes the char[].<br>大概就是说尽管没有直接使用char数组，但是对String的频繁使用也会造成这个问题。</p>
-</blockquote>
-<h2 id="参考链接:">参考链接:</h2><p><a href="http://www.importnew.com/14086.html" target="_blank" rel="external">Java内存与垃圾回收调优</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1405,21 +1424,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
