@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hadoop," />
+  <meta name="keywords" content="Spark," />
 
 
 
@@ -53,110 +53,18 @@
 
 
 
-<meta name="description" content="简介本文以Hadoop实战为主，另外参考hadoop权威指南，hadoop技术内幕还有网上的资料给出的一个hadoop生态圈的一个简介，主要以要点为主。
-Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性。
-
-
-
-特性
-1.x
-0.22
-2.x
-
-
-
-
-安全认证
-是
-否
-是
-
-
-旧的配置名称
-是
-弃用
-弃用
-
-
-新的配置名称
-否
-是
-是
-
-
-旧的MapRed">
+<meta name="description" content="Scala安装(不是必要的步骤)下载合适的scala版本1wget http://scala-lang.org/files/archive/scala-2.11.8.tgz
+解压安装，设置环境变量1234tar -zxvf scala-2.11.8.tgz -C /usr/local/vim /etc/profileexport SCALA_HOME=/usr/local/scalaexport">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hadoop简介の备忘">
-<meta property="og:url" content="http://evenx86.github.io/2016/01/13/hadoop-introduce/index.html">
+<meta property="og:title" content="Spark on yarn 集群安装">
+<meta property="og:url" content="http://evenx86.github.io/2016/03/29/Spark-Install-On-Yarn/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="简介本文以Hadoop实战为主，另外参考hadoop权威指南，hadoop技术内幕还有网上的资料给出的一个hadoop生态圈的一个简介，主要以要点为主。
-Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性。
-
-
-
-特性
-1.x
-0.22
-2.x
-
-
-
-
-安全认证
-是
-否
-是
-
-
-旧的配置名称
-是
-弃用
-弃用
-
-
-新的配置名称
-否
-是
-是
-
-
-旧的MapRed">
-<meta property="og:image" content="https://dn-anything-about-doc.qbox.me/userid29778labid764time1427637657385">
-<meta property="og:image" content="https://camo.githubusercontent.com/4a373927162da0f36fa41c0eda5b7c914fea8cbc/687474703a2f2f68696a69616e6774616f2e6769746875622e696f2f6173736574732f323031342d30322d32362d6861646f6f70737472756374706963747572652e6a7067">
+<meta property="og:description" content="Scala安装(不是必要的步骤)下载合适的scala版本1wget http://scala-lang.org/files/archive/scala-2.11.8.tgz
+解压安装，设置环境变量1234tar -zxvf scala-2.11.8.tgz -C /usr/local/vim /etc/profileexport SCALA_HOME=/usr/local/scalaexport">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hadoop简介の备忘">
-<meta name="twitter:description" content="简介本文以Hadoop实战为主，另外参考hadoop权威指南，hadoop技术内幕还有网上的资料给出的一个hadoop生态圈的一个简介，主要以要点为主。
-Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性。
-
-
-
-特性
-1.x
-0.22
-2.x
-
-
-
-
-安全认证
-是
-否
-是
-
-
-旧的配置名称
-是
-弃用
-弃用
-
-
-新的配置名称
-否
-是
-是
-
-
-旧的MapRed">
+<meta name="twitter:title" content="Spark on yarn 集群安装">
+<meta name="twitter:description" content="Scala安装(不是必要的步骤)下载合适的scala版本1wget http://scala-lang.org/files/archive/scala-2.11.8.tgz
+解压安装，设置环境变量1234tar -zxvf scala-2.11.8.tgz -C /usr/local/vim /etc/profileexport SCALA_HOME=/usr/local/scalaexport">
 
 
 
@@ -168,7 +76,7 @@ Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性�
   };
 </script>
 
-  <title> Hadoop简介の备忘 | 曲径通幽 </title>
+  <title> Spark on yarn 集群安装 | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -298,7 +206,7 @@ Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性�
             
             
               
-                Hadoop简介の备忘
+                Spark on yarn 集群安装
               
             
           </h1>
@@ -307,8 +215,8 @@ Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性�
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-13T15:25:11+08:00" content="2016-01-13">
-              2016-01-13
+            <time itemprop="dateCreated" datetime="2016-03-29T18:01:33+08:00" content="2016-03-29">
+              2016-03-29
             </time>
           </span>
 
@@ -317,8 +225,8 @@ Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性�
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop</span>
+                  <a href="/categories/Spark/" itemprop="url" rel="index">
+                    <span itemprop="name">Spark</span>
                   </a>
                 </span>
 
@@ -333,8 +241,8 @@ Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/01/13/hadoop-introduce/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/13/hadoop-introduce/" itemprop="commentsCount"></span>
+                <a href="/2016/03/29/Spark-Install-On-Yarn/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/29/Spark-Install-On-Yarn/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -353,101 +261,32 @@ Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性�
       
 
       
-        <span itemprop="articleBody"><h2 id="简介">简介</h2><p>本文以Hadoop实战为主，另外参考hadoop权威指南，hadoop技术内幕还有网上的资料给出的一个hadoop生态圈的一个简介，<br>主要以要点为主。</p>
-<h2 id="Hadoop历史">Hadoop历史</h2><p>hadoop的历史blablabla….<br>主要记下hadoop不同版本的特性。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">特性</th>
-<th style="text-align:center">1.x</th>
-<th style="text-align:center">0.22</th>
-<th style="text-align:center">2.x</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">安全认证</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">旧的配置名称</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">弃用</td>
-<td style="text-align:center">弃用</td>
-</tr>
-<tr>
-<td style="text-align:center">新的配置名称</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">旧的MapReduce API</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">新的MapReduce API</td>
-<td style="text-align:center">是（加入部分缺失类库）</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">MR1运行环境（经典）</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">否</td>
-</tr>
-<tr>
-<td style="text-align:center">MR2 运行环境（YARN）</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">HDFS联邦管理</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">HDFS高可用</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-</tr>
-</tbody>
-</table>
-<a id="more"></a>
-<p>Apache Hadoop版本分为两代，我们将第一代Hadoop称为Hadoop 1.0，第二代Hadoop称为Hadoop2.0。第一代Hadoop包含三个大版本，分别是0.20.x，0.21.x和0.22.x，其中，0.20.x最后演化成1.0.x，变成了稳定版，而0.21.x和0.22.x则NameNode HA等新的重大特性。第二代Hadoop包含两个版本，分别是0.23.x和2.x，它们完全不同于Hadoop 1.0，是一套全新的架构，均包含HDFS Federation和YARN两个系统，相比于0.23.x，2.x增加了NameNode HA和Wire-compatibility两个重大特性。</p>
-<p><img src="https://dn-anything-about-doc.qbox.me/userid29778labid764time1427637657385" alt="1"></p>
-<h2 id="Hadoop项目及其结构">Hadoop项目及其结构</h2><p><img src="https://camo.githubusercontent.com/4a373927162da0f36fa41c0eda5b7c914fea8cbc/687474703a2f2f68696a69616e6774616f2e6769746875622e696f2f6173736574732f323031342d30322d32362d6861646f6f70737472756374706963747572652e6a7067" alt="1"></p>
+        <span itemprop="articleBody"><h2 id="Scala安装(不是必要的步骤)">Scala安装(不是必要的步骤)</h2><p>下载合适的<a href="http://scala-lang.org/files/archive/" target="_blank" rel="external">scala版本</a><br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="symbol">http:</span>/<span class="regexp">/scala-lang.org/files</span><span class="regexp">/archive/scala</span>-<span class="number">2.11</span>.<span class="number">8</span>.tgz</span><br></pre></td></tr></table></figure></p>
+<p>解压安装，设置环境变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf scala-<span class="number">2.11</span>.<span class="number">8</span>.tgz -C /usr/<span class="built_in">local</span>/</span><br><span class="line">vim /etc/profile</span><br><span class="line"><span class="built_in">export</span> SCALA_HOME=/usr/<span class="built_in">local</span>/scala</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$SCALA_HOME</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></p>
+<p>测试<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@dev-<span class="keyword">test</span> ~]# <span class="keyword">scala</span> -<span class="keyword">version</span></span><br><span class="line"><span class="keyword">Scala</span> code runner <span class="keyword">version</span> 2.11.8 -- <span class="keyword">Copyright</span> 2002-2016, LAMP/EPFL</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a> 
+<h2 id="Spark_安装">Spark 安装</h2><p>这里因为之前已经安装好了hadoop，所以直接在hadoop集群上安装spark<br>下载合适的<a href="http://spark.apache.org/downloads.html" target="_blank" rel="external">spark版本</a></p>
 <ul>
-<li>Common 主要包括你FileSystem，RPC和串行化库。</li>
-<li>Avro Avro是用户数据序列化的系统.提供了丰富的数据结构类型，快速可压缩的二进制数据格式，存储持久性数据的文件集，远程调用RPC的功能和简单的动态语言集成功能。</li>
-<li>MapReduce: 用于大规模数据集（大于1TB）</li>
-<li>HDFS: 分布式文件系统，</li>
-<li>Hive : 数据仓库</li>
-<li>HBase : 按列存储的数据库，使用HDFS作为底层存储</li>
-<li>ZooKeeper : 分布式协调任务</li>
+<li><h3 id="解压安装，修改配置文件">解压安装，修改配置文件</h3><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[hadoop@dev-test ~]$ tar -zxvf spark-<span class="number">1</span>.<span class="number">6</span>.<span class="number">1</span>-bin-hadoop2.<span class="number">6</span>.tgz</span><br><span class="line">[hadoop@dev-test ~]$ mv spark-<span class="number">1</span>.<span class="number">6</span>.<span class="number">1</span>-bin-hadoop2.<span class="number">6</span> spark</span><br><span class="line">[hadoop@dev-test spark]$ cd conf/</span><br><span class="line">[hadoop@dev-test conf]$ cp spark-env.sh.<span class="keyword">template</span> spark-env.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="修改spark-env-sh">修改spark-env.sh</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">JAVA_HOME=</span>/usr/local/java</span><br><span class="line"><span class="variable">HADOOP_HOME=</span>/home/hadoop/hadoop</span><br><span class="line"><span class="variable">SPARK_JAVA_OPTS=</span>-Dspark.driver.<span class="variable">port=</span><span class="number">53411</span></span><br><span class="line"><span class="variable">HADOOP_CONF_DIR=</span>$HADOOP_HOME/etc/hadoop</span><br><span class="line"><span class="variable">YARN_CONF_DIR=</span>$HADOOP_HOME/etc/hadoop</span><br><span class="line"><span class="variable">SPARK_MASTER_IP=</span>HADOOP-MASTER-<span class="number">153</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="复制spark-defaults-conf-template_为_spark-defaults-conf，并修改:">复制spark-defaults.conf.template 为 spark-defaults.conf，并修改:</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark<span class="class">.master</span>            spark:<span class="comment">//&lt;HOSTNAME OF YOUR MASTER NODE&gt;:7077</span></span><br><span class="line">spark<span class="class">.serializer</span>        org<span class="class">.apache</span><span class="class">.spark</span><span class="class">.serializer</span><span class="class">.KryoSerializer</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="修改slaves文件。">修改slaves文件。</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;HOSTNAME OF YOUR MASTER NODE&gt;</span><br><span class="line">&lt;HOSTNAME OF YOUR SLAVE NODE <span class="number">1</span>&gt;</span><br><span class="line"><span class="keyword">...</span></span><br><span class="line"><span class="keyword">...</span></span><br><span class="line">&lt;HOSTNAME OF YOUR SLAVE NODE n&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="分发Spark安装包到各个节点上">分发Spark安装包到各个节点上</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scp -r  ./spark <span class="constant">HADOOP-SLAVE-</span><span class="number">154</span><span class="symbol">:/home/hadoop</span></span><br><span class="line">scp -r  ./spark <span class="constant">HADOOP-SLAVE-</span><span class="number">146</span><span class="symbol">:/home/hadoop</span></span><br><span class="line">scp -r  ./spark <span class="constant">HADOOP-SLAVE-</span><span class="number">147</span><span class="symbol">:/home/hadoop</span></span><br><span class="line">scp -r  ./spark <span class="constant">HADOOP-SLAVE-</span><span class="number">148</span><span class="symbol">:/home/hadoop</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="启动关停Spark">启动关停Spark</h3><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">sh</span> /home/hadoop/spark/sbin/start-<span class="keyword">all</span>.<span class="keyword">sh</span></span><br><span class="line">$ <span class="keyword">sh</span> /home/hadoop/spark/sbin/<span class="keyword">stop</span>-<span class="keyword">all</span>.shstop-<span class="keyword">all</span>.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<h2 id="Hadoop与分布式开发">Hadoop与分布式开发</h2><ul>
-<li>数据分布存储</li>
-<li>分布式并行计算</li>
-<li>本地计算</li>
-<li>任务粒度</li>
-<li>数据分割</li>
-<li>数据合并</li>
-<li>Reduce</li>
-<li>任务管道</li>
+<h2 id="Spark_测试">Spark 测试</h2><p>访问 <a href="http://hadoop-master-153:8080/" target="_blank" rel="external">http://hadoop-master-153:8080/</a></p>
+<p>在yarn上测试<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[hadoop<span class="variable">@HADOOP</span>-<span class="constant">MASTER-</span><span class="number">153</span> ~]<span class="variable">$ </span>spark/bin/spark-shell --master yarn-client</span><br></pre></td></tr></table></figure></p>
+<p>本地:<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[hadoop<span class="variable">@HADOOP</span>-<span class="constant">MASTER-</span><span class="number">153</span> ~]<span class="variable">$ </span>spark/bin/spark-shell --master local[<span class="number">2</span>]</span><br><span class="line"><span class="comment">#2代表两个线程</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="参考链接">参考链接</h2><ul>
+<li><a href="https://www.quora.com/How-do-I-install-Apache-Spark-on-Yarn-Cluster" target="_blank" rel="external">https://www.quora.com/How-do-I-install-Apache-Spark-on-Yarn-Cluster</a></li>
 </ul>
-<h2 id="Hadoop计算模型-MapReuduce">Hadoop计算模型-MapReuduce</h2><h2 id="Hadoop_数据管理">Hadoop 数据管理</h2><h3 id="HBase的数据管理">HBase的数据管理</h3><h3 id="Hive的数据管理">Hive的数据管理</h3><p>含*的查询不会生成MR任务</p>
-<p>每个table在hive中都有一个相应的目录来存储数据。<br>比如一个表pvs: /wh/pvs/,其中wh是hive-site.xml中指定的数据仓库的目录。</p>
-<p>Hive将元数据存储在RDBMS中，如Mysql中，hive中的元数据包括表的名字，表的列，表的分区，表分区的属性，表的属性，表的数据所在的目录等。</p>
-<h2 id="Hadoop集群安全策略">Hadoop集群安全策略</h2></span>
+</span>
       
     </div>
 
@@ -455,7 +294,7 @@ Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性�
       
         <div class="post-tags">
           
-            <a href="/tags/Hadoop/" rel="tag">#Hadoop</a>
+            <a href="/tags/Spark/" rel="tag">#Spark</a>
           
         </div>
       
@@ -464,17 +303,13 @@ Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/13/hbase-problem/" rel="next" title="HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected">
-                <i class="fa fa-chevron-left"></i> HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected
+              <a href="/2016/03/29/Spark-Op-Into/" rel="next" title="Spark 变换与动作备忘与例子">
+                <i class="fa fa-chevron-left"></i> Spark 变换与动作备忘与例子
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/13/hadoop-configure/" rel="prev" title="Hadoop 伪分布式模式配置">
-                Hadoop 伪分布式模式配置 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -501,8 +336,8 @@ Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性�
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/01/13/hadoop-introduce/"
-           data-title="Hadoop简介の备忘" data-url="http://evenx86.github.io/2016/01/13/hadoop-introduce/">
+      <div class="ds-thread" data-thread-key="2016/03/29/Spark-Install-On-Yarn/"
+           data-title="Spark on yarn 集群安装" data-url="http://evenx86.github.io/2016/03/29/Spark-Install-On-Yarn/">
       </div>
     
   </div>
@@ -592,7 +427,7 @@ Hadoop历史hadoop的历史blablabla….主要记下hadoop不同版本的特性�
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop历史"><span class="nav-number">2.</span> <span class="nav-text">Hadoop历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop项目及其结构"><span class="nav-number">3.</span> <span class="nav-text">Hadoop项目及其结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop与分布式开发"><span class="nav-number">4.</span> <span class="nav-text">Hadoop与分布式开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop计算模型-MapReuduce"><span class="nav-number">5.</span> <span class="nav-text">Hadoop计算模型-MapReuduce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop_数据管理"><span class="nav-number">6.</span> <span class="nav-text">Hadoop 数据管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HBase的数据管理"><span class="nav-number">6.1.</span> <span class="nav-text">HBase的数据管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hive的数据管理"><span class="nav-number">6.2.</span> <span class="nav-text">Hive的数据管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop集群安全策略"><span class="nav-number">7.</span> <span class="nav-text">Hadoop集群安全策略</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scala安装(不是必要的步骤)"><span class="nav-number">1.</span> <span class="nav-text">Scala安装(不是必要的步骤)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark_安装"><span class="nav-number">2.</span> <span class="nav-text">Spark 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解压安装，修改配置文件"><span class="nav-number">2.1.</span> <span class="nav-text">解压安装，修改配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改spark-env-sh"><span class="nav-number">2.2.</span> <span class="nav-text">修改spark-env.sh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制spark-defaults-conf-template_为_spark-defaults-conf，并修改:"><span class="nav-number">2.3.</span> <span class="nav-text">复制spark-defaults.conf.template 为 spark-defaults.conf，并修改:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改slaves文件。"><span class="nav-number">2.4.</span> <span class="nav-text">修改slaves文件。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分发Spark安装包到各个节点上"><span class="nav-number">2.5.</span> <span class="nav-text">分发Spark安装包到各个节点上</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动关停Spark"><span class="nav-number">2.6.</span> <span class="nav-text">启动关停Spark</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark_测试"><span class="nav-number">3.</span> <span class="nav-text">Spark 测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">4.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

@@ -212,6 +212,111 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/29/Spark-Install-On-Yarn/" itemprop="url">
+                  Spark on yarn 集群安装
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-29T18:01:33+08:00" content="2016-03-29">
+              2016-03-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spark/" itemprop="url" rel="index">
+                    <span itemprop="name">Spark</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/29/Spark-Install-On-Yarn/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/29/Spark-Install-On-Yarn/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Scala安装(不是必要的步骤)">Scala安装(不是必要的步骤)</h2><p>下载合适的<a href="http://scala-lang.org/files/archive/">scala版本</a><br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="symbol">http:</span>/<span class="regexp">/scala-lang.org/files</span><span class="regexp">/archive/scala</span>-<span class="number">2.11</span>.<span class="number">8</span>.tgz</span><br></pre></td></tr></table></figure></p>
+<p>解压安装，设置环境变量<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf scala-<span class="number">2.11</span>.<span class="number">8</span>.tgz -C /usr/<span class="built_in">local</span>/</span><br><span class="line">vim /etc/profile</span><br><span class="line"><span class="built_in">export</span> SCALA_HOME=/usr/<span class="built_in">local</span>/scala</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$SCALA_HOME</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></p>
+<p>测试<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@dev-<span class="keyword">test</span> ~]# <span class="keyword">scala</span> -<span class="keyword">version</span></span><br><span class="line"><span class="keyword">Scala</span> code runner <span class="keyword">version</span> 2.11.8 -- <span class="keyword">Copyright</span> 2002-2016, LAMP/EPFL</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/03/29/Spark-Install-On-Yarn/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/29/Spark-Op-Into/" itemprop="url">
                   Spark 变换与动作备忘与例子
                 </a>
@@ -223,7 +328,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-03-29T14:40:48+08:00" content="2016-03-29">
+            <time itemprop="dateCreated" datetime="2016-03-29T18:01:12+08:00" content="2016-03-29">
               2016-03-29
             </time>
           </span>
@@ -270,44 +375,13 @@
 
       
         
-          <span itemprop="articleBody">
-            
-              <p>首先安利一个学习网站:<a href="http://www.hubwiz.com/" target="_blank" rel="external">http://www.hubwiz.com/</a></p>
+          <p>首先安利一个学习网站:<a href="http://www.hubwiz.com/">http://www.hubwiz.com/</a></p>
 <h2 id="组合">组合</h2><p>例子:<br>将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.<span class="function"><span class="title">map</span><span class="params">(line =&gt; line.split(<span class="string">" "</span>)</span></span>.size).<span class="function"><span class="title">reduce</span><span class="params">((a, b)</span></span> =&gt; <span class="keyword">if</span> (<span class="tag">a</span> &gt; b) <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">res4: Long = <span class="number">15</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="动作">动作</h2><p>首先获得textFile后面的变量，后面的例子都会用到。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">var</span> tf = sc.<span class="function"><span class="title">textFile</span><span class="params">(<span class="string">"README.md"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p>count：计数<br>返回文件的总行数：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; tf.<span class="function"><span class="title">count</span><span class="params">()</span></span></span><br><span class="line">res9: Long = <span class="number">95</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>top：前N个记录<br>可以指定一个排序函数来进行排序比较，不指定的话使用默认的ascii码进行记录排序<br>示例：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="tag">var</span> top2 = tf.<span class="function"><span class="title">top</span><span class="params">(<span class="number">2</span>)</span></span></span><br><span class="line">top2: Array[String] = <span class="function"><span class="title">Array</span><span class="params">(will run the Pi example locally., supports general computation graphs for data analysis. It also supports a)</span></span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>使用排序函数的例子:<br>暂无</p>
-<ul>
-<li>max : 取值最大的记录<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">scala</span>&gt; tf.<span class="literal">max</span>()</span><br><span class="line">res14: String = will <span class="keyword">run</span> the Pi example locally.</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>使用排序函数的例子:<br>暂无</p>
-<ul>
-<li>reduce : 归约RDD<br>例子：使用匿名函数将所有记录连接起来构成一个字符串<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b)</span><br><span class="line">res60:String = <span class="id">#Apache</span> SparkSpake is <span class="tag">a</span> fast...</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>例子:请使用你创建的textFile变量，返回最长的单词。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a.size&gt;b.size)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">&lt;console&gt;:<span class="number">30</span>: error: value size is not <span class="tag">a</span> member of Char</span><br><span class="line">              tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a.size&gt;b.size)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">                                                         ^</span><br><span class="line"> </span><br><span class="line">scala&gt; tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a&gt;b)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">res35: Char = z</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>collect : 去全部记录</li>
-</ul>
-<h1 id="变换">变换</h1><ul>
-<li>map 映射</li>
-<li>filter 过滤</li>
-<li>sample 采样</li>
-<li>union 合并</li>
-<li>intersection  相交</li>
-<li>distinct  去重</li>
-</ul>
-
-            
-          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/03/29/Spark-Op-Into/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1221,176 +1295,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/13/hadoop-introduce/" itemprop="url">
-                  Hadoop简介の备忘
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-01-13T15:25:11+08:00" content="2016-01-13">
-              2016-01-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/01/13/hadoop-introduce/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/13/hadoop-introduce/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="简介">简介</h2><p>本文以Hadoop实战为主，另外参考hadoop权威指南，hadoop技术内幕还有网上的资料给出的一个hadoop生态圈的一个简介，<br>主要以要点为主。</p>
-<h2 id="Hadoop历史">Hadoop历史</h2><p>hadoop的历史blablabla….<br>主要记下hadoop不同版本的特性。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">特性</th>
-<th style="text-align:center">1.x</th>
-<th style="text-align:center">0.22</th>
-<th style="text-align:center">2.x</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">安全认证</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">旧的配置名称</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">弃用</td>
-<td style="text-align:center">弃用</td>
-</tr>
-<tr>
-<td style="text-align:center">新的配置名称</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">旧的MapReduce API</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">新的MapReduce API</td>
-<td style="text-align:center">是（加入部分缺失类库）</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">MR1运行环境（经典）</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">是</td>
-<td style="text-align:center">否</td>
-</tr>
-<tr>
-<td style="text-align:center">MR2 运行环境（YARN）</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">HDFS联邦管理</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-</tr>
-<tr>
-<td style="text-align:center">HDFS高可用</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">否</td>
-<td style="text-align:center">是</td>
-</tr>
-</tbody>
-</table>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/01/13/hadoop-introduce/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1437,7 +1341,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
