@@ -212,6 +212,141 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/29/Spark-Op-Into/" itemprop="url">
+                  Spark 变换与动作备忘与例子
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-29T14:40:48+08:00" content="2016-03-29">
+              2016-03-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spark/" itemprop="url" rel="index">
+                    <span itemprop="name">Spark</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/29/Spark-Op-Into/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/29/Spark-Op-Into/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>首先安利一个学习网站:<a href="http://www.hubwiz.com/" target="_blank" rel="external">http://www.hubwiz.com/</a></p>
+<h2 id="组合">组合</h2><p>例子:<br>将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.<span class="function"><span class="title">map</span><span class="params">(line =&gt; line.split(<span class="string">" "</span>)</span></span>.size).<span class="function"><span class="title">reduce</span><span class="params">((a, b)</span></span> =&gt; <span class="keyword">if</span> (<span class="tag">a</span> &gt; b) <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">res4: Long = <span class="number">15</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="动作">动作</h2><p>首先获得textFile后面的变量，后面的例子都会用到。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">var</span> tf = sc.<span class="function"><span class="title">textFile</span><span class="params">(<span class="string">"README.md"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>count：计数<br>返回文件的总行数：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; tf.<span class="function"><span class="title">count</span><span class="params">()</span></span></span><br><span class="line">res9: Long = <span class="number">95</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>top：前N个记录<br>可以指定一个排序函数来进行排序比较，不指定的话使用默认的ascii码进行记录排序<br>示例：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="tag">var</span> top2 = tf.<span class="function"><span class="title">top</span><span class="params">(<span class="number">2</span>)</span></span></span><br><span class="line">top2: Array[String] = <span class="function"><span class="title">Array</span><span class="params">(will run the Pi example locally., supports general computation graphs for data analysis. It also supports a)</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>使用排序函数的例子:<br>暂无</p>
+<ul>
+<li>max : 取值最大的记录<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">scala</span>&gt; tf.<span class="literal">max</span>()</span><br><span class="line">res14: String = will <span class="keyword">run</span> the Pi example locally.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>使用排序函数的例子:<br>暂无</p>
+<ul>
+<li>reduce : 归约RDD<br>例子：使用匿名函数将所有记录连接起来构成一个字符串<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b)</span><br><span class="line">res60:String = <span class="id">#Apache</span> SparkSpake is <span class="tag">a</span> fast...</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>例子:请使用你创建的textFile变量，返回最长的单词。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a.size&gt;b.size)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">&lt;console&gt;:<span class="number">30</span>: error: value size is not <span class="tag">a</span> member of Char</span><br><span class="line">              tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a.size&gt;b.size)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">                                                         ^</span><br><span class="line"> </span><br><span class="line">scala&gt; tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a&gt;b)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">res35: Char = z</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>collect : 去全部记录</li>
+</ul>
+<h1 id="变换">变换</h1><ul>
+<li>map 映射</li>
+<li>filter 过滤</li>
+<li>sample 采样</li>
+<li>union 合并</li>
+<li>intersection  相交</li>
+<li>distinct  去重</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/24/Spring-mybatis-cant-inject-case/" itemprop="url">
                   Spring+MyBatis 注入为NULL的一个case.md
                 </a>
@@ -1256,116 +1391,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/13/hbase-problem/" itemprop="url">
-                  HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-01-13T15:21:43+08:00" content="2016-01-13">
-              2016-01-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/01/13/hbase-problem/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/13/hbase-problem/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>出现这种问题一般来说是Hadoop1.x和2.x冲突了。</p>
-<p>之前一直使用</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>hadoop-core<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>1.2.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这个依赖包, hadoop-core 1.2.1是最新的，但是还是1.x的client。</p>
-<p>Counter是class</p>
-<p>解决这个问题需要把这个依赖包换成:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>hadoop-mapreduce-client-core<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">version</span>&gt;</span>2.7.1<span class="tag">&lt;/<span class="title">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>Ok，问题解决.</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1412,21 +1437,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
