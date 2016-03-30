@@ -53,18 +53,15 @@
 
 
 
-<meta name="description" content="首先安利一个学习网站:http://www.hubwiz.com/
-组合例子:将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。12scala&amp;gt; textFile.map(line =&amp;gt; line.split(&quot; &quot;).size).reduce((a, b) =&amp;gt; if (a &amp;gt">
+<meta name="description" content="Java源码:123456789101112public class RowCounter &amp;#123;    public static void main(String[] args) &amp;#123;        SparkConf conf = new SparkConf();        conf.setMaster(&quot;spark://HADOOP-MASTER-153:7077&quot;);">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spark 变换与动作备忘与例子">
-<meta property="og:url" content="http://evenx86.github.io/2016/03/29/Spark-Op-Into/index.html">
+<meta property="og:title" content="远程操作Spark集群">
+<meta property="og:url" content="http://evenx86.github.io/2016/03/30/Spark-Op-Remote/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="首先安利一个学习网站:http://www.hubwiz.com/
-组合例子:将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。12scala&amp;gt; textFile.map(line =&amp;gt; line.split(&quot; &quot;).size).reduce((a, b) =&amp;gt; if (a &amp;gt">
+<meta property="og:description" content="Java源码:123456789101112public class RowCounter &amp;#123;    public static void main(String[] args) &amp;#123;        SparkConf conf = new SparkConf();        conf.setMaster(&quot;spark://HADOOP-MASTER-153:7077&quot;);">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spark 变换与动作备忘与例子">
-<meta name="twitter:description" content="首先安利一个学习网站:http://www.hubwiz.com/
-组合例子:将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。12scala&amp;gt; textFile.map(line =&amp;gt; line.split(&quot; &quot;).size).reduce((a, b) =&amp;gt; if (a &amp;gt">
+<meta name="twitter:title" content="远程操作Spark集群">
+<meta name="twitter:description" content="Java源码:123456789101112public class RowCounter &amp;#123;    public static void main(String[] args) &amp;#123;        SparkConf conf = new SparkConf();        conf.setMaster(&quot;spark://HADOOP-MASTER-153:7077&quot;);">
 
 
 
@@ -76,7 +73,7 @@
   };
 </script>
 
-  <title> Spark 变换与动作备忘与例子 | 曲径通幽 </title>
+  <title> 远程操作Spark集群 | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -206,7 +203,7 @@
             
             
               
-                Spark 变换与动作备忘与例子
+                远程操作Spark集群
               
             
           </h1>
@@ -215,8 +212,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-03-29T18:01:12+08:00" content="2016-03-29">
-              2016-03-29
+            <time itemprop="dateCreated" datetime="2016-03-30T17:48:46+08:00" content="2016-03-30">
+              2016-03-30
             </time>
           </span>
 
@@ -241,8 +238,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/29/Spark-Op-Into/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/29/Spark-Op-Into/" itemprop="commentsCount"></span>
+                <a href="/2016/03/30/Spark-Op-Remote/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/30/Spark-Op-Remote/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -261,39 +258,35 @@
       
 
       
-        <span itemprop="articleBody"><p>首先安利一个学习网站:<a href="http://www.hubwiz.com/" target="_blank" rel="external">http://www.hubwiz.com/</a></p>
-<h2 id="组合">组合</h2><p>例子:<br>将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.<span class="function"><span class="title">map</span><span class="params">(line =&gt; line.split(<span class="string">" "</span>)</span></span>.size).<span class="function"><span class="title">reduce</span><span class="params">((a, b)</span></span> =&gt; <span class="keyword">if</span> (<span class="tag">a</span> &gt; b) <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">res4: Long = <span class="number">15</span></span><br></pre></td></tr></table></figure></p>
+        <span itemprop="articleBody"><h3 id="Java">Java</h3><p>源码:<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RowCounter</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SparkConf conf = <span class="keyword">new</span> SparkConf();</span><br><span class="line">        conf.setMaster(<span class="string">"spark://HADOOP-MASTER-153:7077"</span>);</span><br><span class="line">        JavaSparkContext sc = <span class="keyword">new</span> JavaSparkContext(<span class="string">"local[2]"</span>,<span class="string">"first spark app"</span>,conf);</span><br><span class="line">        JavaRDD&lt;String&gt; lines = sc.textFile(<span class="string">"C:\\data.txt"</span>);</span><br><span class="line">        JavaRDD&lt;Integer&gt; lineLengths = lines.map(s -&gt; s.length());</span><br><span class="line">        <span class="keyword">int</span> totalLength = lineLengths.reduce((a, b) -&gt; a + b);</span><br><span class="line">        System.<span class="keyword">out</span>.println(totalLength);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><h4 id="报错:">报错:</h4><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Error</span>:(16, 13) java: 无法访问<span class="keyword">scala</span>.Cloneable</span><br><span class="line">  找不到<span class="keyword">scala</span>.Cloneable的类文件</span><br><span class="line"><span class="keyword">Error</span>:(19, 45) java: 无法访问<span class="keyword">scala</span>.Serializable</span><br><span class="line">  找不到<span class="keyword">scala</span>.Serializable的类文件</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <a id="more"></a>
-<h2 id="动作">动作</h2><p>首先获得textFile后面的变量，后面的例子都会用到。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">var</span> tf = sc.<span class="function"><span class="title">textFile</span><span class="params">(<span class="string">"README.md"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
 <ul>
-<li><p>count：计数<br>返回文件的总行数：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; tf.<span class="function"><span class="title">count</span><span class="params">()</span></span></span><br><span class="line">res9: Long = <span class="number">95</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>top：前N个记录<br>可以指定一个排序函数来进行排序比较，不指定的话使用默认的ascii码进行记录排序<br>示例：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="tag">var</span> top2 = tf.<span class="function"><span class="title">top</span><span class="params">(<span class="number">2</span>)</span></span></span><br><span class="line">top2: Array[String] = <span class="function"><span class="title">Array</span><span class="params">(will run the Pi example locally., supports general computation graphs for data analysis. It also supports a)</span></span></span><br></pre></td></tr></table></figure>
-</li>
+<li><h4 id="解决:">解决:</h4>增加依赖包:<code>spark-assembly-1.6.1-hadoop2.6.0</code></li>
 </ul>
-<p>使用排序函数的例子:<br>暂无</p>
+<p>最终Java代码:<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">RowCounter</span> &#123;</span></span><br><span class="line">    public static <span class="literal">void</span> main(String[] args) &#123;</span><br><span class="line">        SparkConf conf = <span class="keyword">new</span> SparkConf().setMaster(<span class="string">"spark://HADOOP-MASTER-153:7077"</span>).setAppName(<span class="string">"统计行数"</span>);</span><br><span class="line">        conf.setJars(<span class="keyword">new</span> String[]&#123;<span class="string">"F:\\wftsync-hbase\\out\\artifacts\\wftsync_jar\\wftsync.jar"</span>&#125;);</span><br><span class="line">        System.setProperty(<span class="string">"HADOOP_USER_NAME"</span>,<span class="string">"hadoop"</span>);</span><br><span class="line">        System.setProperty(<span class="string">"user.name"</span>,<span class="string">"hadoop"</span>);</span><br><span class="line">        JavaSparkContext sc = <span class="keyword">new</span> JavaSparkContext(conf);</span><br><span class="line">        JavaRDD&lt;String&gt; lines = sc.textFile(<span class="string">"input/access.log"</span>);</span><br><span class="line">        int totalLength = lines.map<span class="function"><span class="params">(s -&gt; s.length())</span>.<span class="title">reduce</span><span class="params">((a, b) -&gt; a + b)</span>;</span><br><span class="line">        <span class="title">System</span>.<span class="title">out</span>.<span class="title">println</span><span class="params">(totalLength)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Scala">Scala</h3><p>IDEA需要安装Scala插件。<br>scala代码:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">RowCounter</span> &#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span>(</span>args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span><br><span class="line">    <span class="function"><span class="keyword">val</span> <span class="title">conf</span> =</span> <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"统计行数"</span>)</span><br><span class="line">      .setMaster(<span class="string">"spark://HADOOP-MASTER-153:7077"</span>)</span><br><span class="line">      .setJars(<span class="type">List</span>(<span class="string">"F:\\wftsync-spark\\out\\artifacts\\wftsync_spark_jar\\wftsync-spark.jar"</span>))</span><br><span class="line">    <span class="type">System</span>.setProperty(<span class="string">"HADOOP_USER_NAME"</span>,<span class="string">"hadoop"</span>) <span class="comment">//模拟设置用户防止权限问题</span></span><br><span class="line">    <span class="type">System</span>.setProperty(<span class="string">"user.name"</span>,<span class="string">"hadoop"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">val</span> <span class="title">spark</span> =</span> <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</span><br><span class="line">    <span class="function"><span class="keyword">val</span> <span class="title">rdd=</span> <span class="title">spark</span>.<span class="title">textFile</span>(</span><span class="string">"C:\\data.txt"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">val</span> <span class="title">count</span> =</span> rdd.map(line =&gt; line.length).reduce((a,b)=&gt;a+b)</span><br><span class="line">    println(<span class="string">"lines  "</span> + count )</span><br><span class="line">    spark.stop()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>max : 取值最大的记录<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">scala</span>&gt; tf.<span class="literal">max</span>()</span><br><span class="line">res14: String = will <span class="keyword">run</span> the Pi example locally.</span><br></pre></td></tr></table></figure>
+<li><h4 id="报错:-1">报错:</h4><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java.lang.NoSuchMethodError: scala.collection.<span class="keyword">immutable</span>.HashSet$.empty()Lscala/collection/<span class="keyword">immutable</span>/HashSet;</span><br></pre></td></tr></table></figure>
 </li>
-</ul>
-<p>使用排序函数的例子:<br>暂无</p>
-<ul>
-<li>reduce : 归约RDD<br>例子：使用匿名函数将所有记录连接起来构成一个字符串<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b)</span><br><span class="line">res60:String = <span class="id">#Apache</span> SparkSpake is <span class="tag">a</span> fast...</span><br></pre></td></tr></table></figure>
+<li><h4 id="解决">解决</h4><p>差了下错误，应该是scala版本造成的，将scala版本会退到2.10.6问题解决。</p>
+</li>
+<li><h4 id="warn:">warn:</h4><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARN TaskSchedulerImpl: Initial job has<span class="instruction"> not </span>accepted any resources;<span class="instruction"> check </span>your cluster UI to ensure that workers are registered<span class="instruction"> and </span>have sufficient resources</span><br></pre></td></tr></table></figure>
+</li>
+<li><h4 id="解决:-1">解决:</h4><p>spark内存要求比较高，应该是运行的时候资源不足了。</p>
 </li>
 </ul>
-<p>例子:请使用你创建的textFile变量，返回最长的单词。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a.size&gt;b.size)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">&lt;console&gt;:<span class="number">30</span>: error: value size is not <span class="tag">a</span> member of Char</span><br><span class="line">              tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a.size&gt;b.size)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">                                                         ^</span><br><span class="line"> </span><br><span class="line">scala&gt; tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a&gt;b)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">res35: Char = z</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>collect : 取出全部记录</li>
-</ul>
-<h1 id="变换">变换</h1><ul>
-<li>map 映射</li>
-<li>filter 过滤</li>
-<li>sample 采样</li>
-<li>union 合并</li>
-<li>intersection  相交</li>
-<li>distinct  去重</li>
+<p>报错:<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">16</span>/<span class="number">03</span>/<span class="number">30</span> <span class="number">15</span>:<span class="number">59</span>:<span class="number">31</span> WARN NativeCodeLoader: Unable <span class="keyword">to</span> load native-hadoop <span class="keyword">library</span> <span class="keyword">for</span> your <span class="keyword">platform</span>... <span class="keyword">using</span> builtin-java classes <span class="keyword">where</span> applicable</span><br></pre></td></tr></table></figure></p>
+<h4 id="解决:-2">解决:</h4><blockquote>
+<p>这个问题主要是jre目录下缺少了libhadoop.so和libsnappy.so两个文件。具体是，spark-shell依赖的是scala，scala依赖的是JAVA_HOME下的jdk，libhadoop.so和libsnappy.so两个文件应该放到JAVA_HOME/jre/lib/amd64下面。要注意的是要知道真正依赖到的JAVA_HOME是哪一个，把两个.so放对地方。这两个so：libhadoop.so和libsnappy.so。前一个so可以在HADOOP_HOME下找到，比如hadoop\lib\native\Linux-amd64-64。第二个libsnappy.so需要下载一个snappy-1.1.0.tar.gz，然后./configure，make编译出来。snappy是google的一个压缩算法，在hadoop jira下<a href="https://issues.apache.org/jira/browse/HADOOP-7206记录了这次集成。" target="_blank" rel="external">https://issues.apache.org/jira/browse/HADOOP-7206记录了这次集成。</a><br>单替换了hadoop的core包后，可能还会出一些WARN或者ERROR的提示，主要牵扯到的是hadoop别的包的一些兼容啊，版本提升的问题。具体问题具体再解决吧。</p>
+</blockquote>
+<h2 id="参考链接">参考链接</h2><ul>
+<li><a href="http://qindongliang.iteye.com/blog/2233102" target="_blank" rel="external">http://qindongliang.iteye.com/blog/2233102</a></li>
+<li><a href="http://blog.csdn.net/camu7s/article/details/45530295" target="_blank" rel="external">http://blog.csdn.net/camu7s/article/details/45530295</a></li>
+<li><a href="http://blog.csdn.net/lovehuangjiaju/article/details/48577281" target="_blank" rel="external">http://blog.csdn.net/lovehuangjiaju/article/details/48577281</a></li>
 </ul>
 </span>
       
@@ -312,17 +305,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/24/Spring-mybatis-cant-inject-case/" rel="next" title="Spring+MyBatis 注入为NULL的一个case.md">
-                <i class="fa fa-chevron-left"></i> Spring+MyBatis 注入为NULL的一个case.md
+              <a href="/2016/03/29/Spark-Install-On-Yarn/" rel="next" title="Spark on yarn 集群安装">
+                <i class="fa fa-chevron-left"></i> Spark on yarn 集群安装
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/29/Spark-Install-On-Yarn/" rel="prev" title="Spark on yarn 集群安装">
-                Spark on yarn 集群安装 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -349,8 +338,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/29/Spark-Op-Into/"
-           data-title="Spark 变换与动作备忘与例子" data-url="http://evenx86.github.io/2016/03/29/Spark-Op-Into/">
+      <div class="ds-thread" data-thread-key="2016/03/30/Spark-Op-Remote/"
+           data-title="远程操作Spark集群" data-url="http://evenx86.github.io/2016/03/30/Spark-Op-Remote/">
       </div>
     
   </div>
@@ -440,7 +429,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#组合"><span class="nav-number">1.</span> <span class="nav-text">组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动作"><span class="nav-number">2.</span> <span class="nav-text">动作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变换"><span class="nav-number"></span> <span class="nav-text">变换</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java"><span class="nav-number">1.</span> <span class="nav-text">Java</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#报错:"><span class="nav-number">1.1.</span> <span class="nav-text">报错:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决:"><span class="nav-number">1.2.</span> <span class="nav-text">解决:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scala"><span class="nav-number">2.</span> <span class="nav-text">Scala</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#报错:-1"><span class="nav-number">2.1.</span> <span class="nav-text">报错:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决"><span class="nav-number">2.2.</span> <span class="nav-text">解决</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#warn:"><span class="nav-number">2.3.</span> <span class="nav-text">warn:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决:-1"><span class="nav-number">2.4.</span> <span class="nav-text">解决:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决:-2"><span class="nav-number">2.5.</span> <span class="nav-text">解决:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number"></span> <span class="nav-text">参考链接</span></a></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
