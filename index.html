@@ -212,6 +212,115 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/31/Why-Java-ThreadPool/" itemprop="url">
+                  Java线程池解惑
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-31T17:04:33+08:00" content="2016-03-31">
+              2016-03-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/31/Why-Java-ThreadPool/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/31/Why-Java-ThreadPool/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>首先本文还是为实习生同学解惑用的。某天有个实习生表示对线程池不理解为何要用线程池代替每次产生线程的方式，简单说了几句后，想想干脆整理篇文章好了。</p>
+<p>首先按照实习生的想法，来看一段代码<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> ThreadPerTaskWebServer &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">80</span>);</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">final</span> Socket socket = ss.accept();</span><br><span class="line">            Runnable <span class="keyword">task</span> = ()-&gt; &#123;</span><br><span class="line">                handlRequest(socket);</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">new</span> Thread(<span class="keyword">task</span>).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码为每个连接创建一个线程来处理请求，线程在run方法执行完后终止。在正常负载的情况下，为每个任务创建一个线程能提升串行执行的性能。<br>但是是否存在问题，当需要创建大量线程的时候：</p>
+<ul>
+<li>线程生命周期的开销非常高</li>
+<li>资源消耗，活跃线程会消耗系统资源尤其是内存，当线程多于可用处理器的数量，空闲线程会占用许多线程，所以如果CPU已经处于忙碌状态，再创建线程反而会降低性能。</li>
+<li>稳定性，在一个平台上创建的线程数是有限的，如果无限创建会突破这些限制则会抛出异常。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/03/31/Why-Java-ThreadPool/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/30/Spark-Op-Remote/" itemprop="url">
                   远程操作Spark集群
                 </a>
@@ -1181,118 +1290,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/26/git-auto-deploy/" itemprop="url">
-                  Git 自动部署
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-01-26T15:44:14+08:00" content="2016-01-26">
-              2016-01-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/01/26/git-auto-deploy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/26/git-auto-deploy/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <blockquote>
-<p>单单<code>git diff</code> 不过是显示还没有暂存起来的改动，而不是这次工作和上次提交之间的差异。所以有时候你一下子暂存了所有更新过的文件后，运行 <code>git diff</code> 后却什么也没有<br><code>git diff --cached</code>查看已经暂存起来的变化</p>
-</blockquote>
-<p>git 增量包打包命令 :</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git archive -o <span class="operator"><span class="keyword">update</span>.zip NEW_COMMIT_ID_HERE $(git diff <span class="comment">--name-only OLD_COMMIT_ID_HERE NEW_COMMIT_ID_HERE)</span></span></span><br></pre></td></tr></table></figure>
-<p>git 获得最近一次commit id</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">git</span> rev-parse HEAD</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">log</span> -<span class="number">1</span> --pretty=<span class="string">"<span class="variable">%H</span>"</span></span><br></pre></td></tr></table></figure>
-<p>可以把其中1改为2则是最近两次的修改记录.这样就可以写脚本了XD</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1339,7 +1336,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

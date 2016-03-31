@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="程序员,读书笔记," />
+  <meta name="keywords" content="Java," />
 
 
 
@@ -53,33 +53,18 @@
 
 
 
-<meta name="description" content="对这本书没什么很大的期待，但是看完之后感觉对我的职业观产生了冲击了。而且很多观点其实我一直在想的，但是经验和觉悟太低一直都没能写出来，看到文中写的就深有同感。
-编程语言里的宗教
-语言本身不给力，类库再牛也是有限的
-
-额这不是在吐槽Java吗，但是至少现在看来Java还是挺牛逼的呀。还是自己接触的语言太少了。作者在后面提到语言就是程序员的宗教。此言不差。
-
-Java 在语言层面上和C++也就打个平手">
+<meta name="description" content="首先本文还是为实习生同学解惑用的。某天有个实习生表示对线程池不理解为何要用线程池代替每次产生线程的方式，简单说了几句后，想想干脆整理篇文章好了。
+首先按照实习生的想法，来看一段代码123456789101112public class ThreadPerTaskWebServer &amp;#123;    public static void main(String[] args) throws IOE">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《程序员的呐喊》读书笔记">
-<meta property="og:url" content="http://evenx86.github.io/2015/11/16/A-Programmer's-Rantings-note/index.html">
+<meta property="og:title" content="Java线程池解惑">
+<meta property="og:url" content="http://evenx86.github.io/2016/03/31/Why-Java-ThreadPool/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="对这本书没什么很大的期待，但是看完之后感觉对我的职业观产生了冲击了。而且很多观点其实我一直在想的，但是经验和觉悟太低一直都没能写出来，看到文中写的就深有同感。
-编程语言里的宗教
-语言本身不给力，类库再牛也是有限的
-
-额这不是在吐槽Java吗，但是至少现在看来Java还是挺牛逼的呀。还是自己接触的语言太少了。作者在后面提到语言就是程序员的宗教。此言不差。
-
-Java 在语言层面上和C++也就打个平手">
+<meta property="og:description" content="首先本文还是为实习生同学解惑用的。某天有个实习生表示对线程池不理解为何要用线程池代替每次产生线程的方式，简单说了几句后，想想干脆整理篇文章好了。
+首先按照实习生的想法，来看一段代码123456789101112public class ThreadPerTaskWebServer &amp;#123;    public static void main(String[] args) throws IOE">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《程序员的呐喊》读书笔记">
-<meta name="twitter:description" content="对这本书没什么很大的期待，但是看完之后感觉对我的职业观产生了冲击了。而且很多观点其实我一直在想的，但是经验和觉悟太低一直都没能写出来，看到文中写的就深有同感。
-编程语言里的宗教
-语言本身不给力，类库再牛也是有限的
-
-额这不是在吐槽Java吗，但是至少现在看来Java还是挺牛逼的呀。还是自己接触的语言太少了。作者在后面提到语言就是程序员的宗教。此言不差。
-
-Java 在语言层面上和C++也就打个平手">
+<meta name="twitter:title" content="Java线程池解惑">
+<meta name="twitter:description" content="首先本文还是为实习生同学解惑用的。某天有个实习生表示对线程池不理解为何要用线程池代替每次产生线程的方式，简单说了几句后，想想干脆整理篇文章好了。
+首先按照实习生的想法，来看一段代码123456789101112public class ThreadPerTaskWebServer &amp;#123;    public static void main(String[] args) throws IOE">
 
 
 
@@ -91,7 +76,7 @@ Java 在语言层面上和C++也就打个平手">
   };
 </script>
 
-  <title> 《程序员的呐喊》读书笔记 | 曲径通幽 </title>
+  <title> Java线程池解惑 | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -221,7 +206,7 @@ Java 在语言层面上和C++也就打个平手">
             
             
               
-                《程序员的呐喊》读书笔记
+                Java线程池解惑
               
             
           </h1>
@@ -230,8 +215,8 @@ Java 在语言层面上和C++也就打个平手">
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-11-16T23:50:52+08:00" content="2015-11-16">
-              2015-11-16
+            <time itemprop="dateCreated" datetime="2016-03-31T17:04:33+08:00" content="2016-03-31">
+              2016-03-31
             </time>
           </span>
 
@@ -240,8 +225,8 @@ Java 在语言层面上和C++也就打个平手">
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -256,8 +241,8 @@ Java 在语言层面上和C++也就打个平手">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/16/A-Programmer's-Rantings-note/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/16/A-Programmer's-Rantings-note/" itemprop="commentsCount"></span>
+                <a href="/2016/03/31/Why-Java-ThreadPool/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/31/Why-Java-ThreadPool/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -276,85 +261,39 @@ Java 在语言层面上和C++也就打个平手">
       
 
       
-        <span itemprop="articleBody"><p>对这本书没什么很大的期待，但是看完之后感觉对我的职业观产生了冲击了。而且很多观点其实我一直在想的，但是经验和觉悟太低一直都没能写出来，看到文中写的就深有同感。</p>
-<h2 id="编程语言里的宗教">编程语言里的宗教</h2><blockquote>
-<p>语言本身不给力，类库再牛也是有限的</p>
-</blockquote>
-<p>额这不是在吐槽Java吗，但是至少现在看来Java还是挺牛逼的呀。还是自己接触的语言太少了。作者在后面提到语言就是程序员的宗教。此言不差。</p>
-<blockquote>
-<p>Java 在语言层面上和C++也就打个平手，其实Java 要好的多，至少他有了字符串，连字符串都支持不好的语言哪是人用的。</p>
-</blockquote>
-<p>这个把C++喷的，其实还是赞同的哈哈哈，不过貌似作者对字符串有执念，所以对perl也非常喜欢。</p>
-<a id="more"></a>
-<blockquote>
-<p>高斯林自己也承认，要是有机会重来的话，绝对不会考虑接口。</p>
-</blockquote>
-<p>这里又开始怀念C++的多重继承了XD</p>
-<blockquote>
-<p>软件工程有自己的政治轴心。一端是保守派，另一端是自由派。</p>
-</blockquote>
-<p>本质上，保守主义就是风险管理。</p>
-<p>软件自由主义者在保守派眼里就是一帮邋里邋遢，缺乏纪律，天真无邪，没有原则，彻头彻尾的坏工程师，而保守主义者，在自由派眼里就是偏执狂，只会散播恐惧，自欺欺人的官僚主义者。</p>
-<p>我有时候觉得自己是个保守派，更多时候觉得自己是个自由派。大概算什么混乱中立阵营吧2333</p>
-<blockquote>
-<p>无关政治的有算法，数据结构，具体数学，复杂度分析，信息理论，类型理论等计算机科学理论。</p>
-<p>Google这几年越来越擅长用更多的机器和更少的代码来工作</p>
-</blockquote>
-<p>好黑。</p>
-<blockquote>
-<p>学习是一件很困难的事情，要是你觉得很简单，那你肯定是在摸鱼，不去挑战一些过去做不到的事情。要么是你觉得很简单，那你是不可能提高自己的。</p>
-</blockquote>
-<p>啊，这么一说感觉自己最近一年一直在做简单的事情o(╯□╰)o</p>
-<blockquote>
-<p>学习是一件很痛苦的事情，但是荒废时间会让人更痛苦,</p>
-</blockquote>
-<p>更让我生气的是安于现状，不思进取。</p>
-<p>虽然很有道理的样子，但是怎么开始贩卖鸡汤了。</p>
-<blockquote>
-<p>身为程序员不沉迷于性能的话，还叫什么程序员呢。</p>
-</blockquote>
-<p>程序员非常在意性能，他们愿意为此花费无数时间，去摆弄算法和数据结构，压榨程序里的每个指令周期和字节，但却不愿意用这些时间去学习在新硬件上新语言。</p>
-<p>对语言的执念啊。。。</p>
-<blockquote>
-<p>如果你想上进的话，唯一要做的就是持之以恒，不管你是想要提高自己的编程水平，还是数学水平，或者是想要健身，玩风筝，甚至克服人类比害怕死亡更甚的第一恐惧：公开演讲。只要脚踏实地，就能循序渐进。</p>
-</blockquote>
-<p>有舍就有得，这就是零和博弈。</p>
-<p>好好享受生活吧，其他的顺气自然就好。</p>
-<h2 id="代码里的哲学">代码里的哲学</h2><p>软件需要哲学家</p>
-<blockquote>
-<p>一般大家都觉得自己生在启蒙时代，其实并非如此，人类压根就没怎么变过，我们依旧互相折磨。杀伐不断。</p>
-<p>代码的最大的敌人就是体格。</p>
-</blockquote>
-<p>任何聪明的团队都会尽一切努力避免代码成山。</p>
-<p>10年以来把代码拆成小函数的做法一直都被标榜为“良好的设计”，这完全要归功于马丁福勒的《重构》</p>
-<blockquote>
-<p>假如你下定决定要精简代码量，那最终的结果就是要被迫放弃Java</p>
-<p>要激起语言之争，一般有两个要素，意识绝大多数程序员都不喜欢学习新语言，其次是经济因素，最终一切还是向钱看。</p>
-</blockquote>
-<p>程序员的数学</p>
-<blockquote>
-<p>程序员觉得数学没用，我经常听到这种观点。说难听点，只要你活下去，什么都不懂又怎么样。所以我才会同意他们的观点，就算不懂数学，你的生活也会好好的。</p>
-</blockquote>
-<p>这段比较讽刺。</p>
-<blockquote>
-<p>学习数学的正确方法</p>
-</blockquote>
-<p>广度优先才是学习数学的正确方法，深度优先不行的。先打开眼界，搞清楚什么是什么。</p>
-<p>学习数学的正确方法应该是忘记那些算法和证明，去了解那些技术的方方面面，名称和作用，大概是怎么计算的，历史有多悠久，是谁发明的，局限性在哪里，相互之剑的关联是什么。大概这就是所谓的数学里的素质教育。</p>
-<blockquote>
-<p>我觉得学习数学的最佳方式是每天花上15—30分钟浏览下维基百科。</p>
-</blockquote>
-<p>不要被习题抹杀了你对数学的兴趣，要是对某个题目章节让你觉得无聊，不妨大胆跳过去，在频繁也没关系，跟着感觉走这样你的学习速度会快很多，也有助于培养自信。</p>
-<p>这段学习数学的方法全部摘抄下来还是挺有价值的。</p>
-<p>关于编译器</p>
-<blockquote>
-<p>对于编译器一无所知的人往往在计算机科学教育和系统架构的整体把握上有缺陷。</p>
-</blockquote>
-<p>编译原理和面试变现之间的线性关系。</p>
-<p>不懂编译器原理的人也不懂计算机的原理，如果你吃不准自己是不是真的懂，那么你就是不懂。</p>
-<p>编译原理是计算机科学里第二重要的课程。</p>
-<p>编译原理之所以是一门重要的计算机科学课程的原因就是它非常切实的将以前学过几乎所有东西都捏合在了一起。</p>
-<p>如果你不选修编译原理，那就要冒着永远混迹与二流程序员行列的风险:就是那种从热情的青年架构师最后混成阴郁的古董架构师，终其一生都在构建某种大型系统，还引以为傲。</p>
+        <span itemprop="articleBody"><p>首先本文还是为实习生同学解惑用的。某天有个实习生表示对线程池不理解为何要用线程池代替每次产生线程的方式，简单说了几句后，想想干脆整理篇文章好了。</p>
+<p>首先按照实习生的想法，来看一段代码<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> ThreadPerTaskWebServer &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">80</span>);</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">final</span> Socket socket = ss.accept();</span><br><span class="line">            Runnable <span class="keyword">task</span> = ()-&gt; &#123;</span><br><span class="line">                handlRequest(socket);</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">new</span> Thread(<span class="keyword">task</span>).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码为每个连接创建一个线程来处理请求，线程在run方法执行完后终止。在正常负载的情况下，为每个任务创建一个线程能提升串行执行的性能。<br>但是是否存在问题，当需要创建大量线程的时候：</p>
+<ul>
+<li>线程生命周期的开销非常高</li>
+<li>资源消耗，活跃线程会消耗系统资源尤其是内存，当线程多于可用处理器的数量，空闲线程会占用许多线程，所以如果CPU已经处于忙碌状态，再创建线程反而会降低性能。</li>
+<li>稳定性，在一个平台上创建的线程数是有限的，如果无限创建会突破这些限制则会抛出异常。<a id="more"></a>
+</li>
+</ul>
+<p>这个时候我们的线程池就应运而生了。<br>先官方定义下线程池:处理一组同构工作线程的资源池。<br>那什么叫同构工作呢，因为只有任务是相同类型，并且相互独立的时线程池的性能才能达到最佳，如果不同运行时长的任务放一起可能会造成拥塞，<br>如果互相之间有依赖的任务放一起则有可能造成死锁。<br>线程池与工作队列<code>work queue</code>(后面会讲到)密切相关，线程池中线程的任务是从工作队列中取出任务，执行任务，然后然会线程池。<br>现在参照上面那个例子的几个缺点，列出线程池到底有什么好处:</p>
+<ul>
+<li>通过重用线程，减少线程创建和销毁过程中产生的开销</li>
+<li>减少创建线程而造成的延时</li>
+<li>防止过多线程相互竞争资源<br>当然线程池的大小设置也是门技术活。<br>过大了线程会竞争cpu和内存资源，还有线程切换的开销<br>过小了浪费处理器，吞吐率变低。<br>那么线程池应该怎么设置，参考资料里第二条的沈剑老师的文章可以看看。<br>Java中为我们提供四种静态工厂方法来创建一个线程池</li>
+<li>newFixedThreadPool</li>
+<li>newCachedThreadPool</li>
+<li>newScheduledThreadPool</li>
+<li>newSingleThreadExecuPool</li>
+</ul>
+<p>如果觉得上述的线程池不适合还可以自己配置ThreadPoolExecutor来定制一个线程池。<br>ThreadPoolExecutor的构造函数如下:<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span><br><span class="line">                          <span class="keyword">int</span> maximumPoolSize,</span><br><span class="line">                          <span class="keyword">long</span> keepAliveTime,</span><br><span class="line">                          TimeUnit unit,</span><br><span class="line">                          BlockingQueue&lt;Runnable&gt; workQueue,</span><br><span class="line">                          ThreadFactory threadFactory,</span><br><span class="line">                          RejectedExecutionHandler <span class="keyword">handler</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (corePoolSize &lt; <span class="number">0</span> ||</span><br><span class="line">        maximumPoolSize &lt;= <span class="number">0</span> ||</span><br><span class="line">        maximumPoolSize &lt; corePoolSize ||</span><br><span class="line">        keepAliveTime &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">if</span> (workQueue == <span class="keyword">null</span> || threadFactory == <span class="keyword">null</span> || <span class="keyword">handler</span> == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="keyword">this</span>.corePoolSize = corePoolSize;</span><br><span class="line">    <span class="keyword">this</span>.maximumPoolSize = maximumPoolSize;</span><br><span class="line">    <span class="keyword">this</span>.workQueue = workQueue;</span><br><span class="line">    <span class="keyword">this</span>.keepAliveTime = unit.toNanos(keepAliveTime);</span><br><span class="line">    <span class="keyword">this</span>.threadFactory = threadFactory;</span><br><span class="line">    <span class="keyword">this</span>.<span class="keyword">handler</span> = <span class="keyword">handler</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中参数一次为线程池基本大小，最大大小，线程存活时间，，工作队列，RejectedExecutionHandler 表示当执行被阻塞之后要做的操作。<br>线程存活时间的作用是:如果某个线程的空闲时间超过了存活时间，那么它将会被标记为可回收的，并且当线程池的当前大小超过基本大小后，将会被终止。<br>ThreadFactory，线程工厂，线程池创建线程都是通过这个方法进行的。<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public interface ThreadFactory &#123;</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * Constructs a<span class="instruction"> new </span>&#123;@code Thread&#125;.  Implementations may also initialize</span><br><span class="line">     * priority, name, daemon status, &#123;@code ThreadGroup&#125;, etc.</span><br><span class="line">     *</span><br><span class="line">     * @param r a runnable to be executed by<span class="instruction"> new </span>thread<span class="instruction"> instance</span><br><span class="line"></span>     * @return constructed thread,<span class="instruction"> or </span>&#123;@code null&#125;<span class="instruction"> if </span>the request to</span><br><span class="line">     *         create a thread is rejected</span><br><span class="line">     */</span><br><span class="line">    Thread<span class="function"> newThread(</span>Runnable r<span class="function">)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是线程池也并非是万能的，如果客户提交给服务器请求的速率超过了服务器的处理速率，仍然可能会资源耗尽。<br>ThreadPoolExecutor提供了工作队列（workqueue）来保存等待执行的任务，任务排列方法有</p>
+<ul>
+<li>无界队列</li>
+<li>有界队列</li>
+<li>同步移交</li>
+</ul>
+<p>newFixedThreadPool和newSingleThreadPool默认使用一个无界的LinkedBlockingQueue。<br>无界队列如果任务处理一直跟不上任务到达的速度将会造成资源耗尽的情况，采用有界队列将会避免这一情况的发生。<br>如果线程池较小而队列较大，那么有助于减少内存使用量，降低CPU使用率，同事还可以减少上下文切换，但是付出的代价就是限制吞吐量。<br>如果任务之间存在依赖，那么使用有界队列将有可能出现死锁的的问题，这个时候才应该使用无界队列。</p>
+<p>好了文章就讲到这里，为何需要线程池，如何使用线程池。</p>
+<h2 id="参考资料">参考资料</h2><ul>
+<li>《Java并发编程实战》第八章</li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=404369373&amp;idx=1&amp;sn=cab2ac9ec0edf92e744a2329662b16cd&amp;scene=1&amp;srcid=0330qJL7fAT3g8Se4S6o6YhO#wechat_redirect" target="_blank" rel="external">线程数究竟多少合理</a></li>
+</ul>
 </span>
       
     </div>
@@ -363,9 +302,7 @@ Java 在语言层面上和C++也就打个平手">
       
         <div class="post-tags">
           
-            <a href="/tags/程序员/" rel="tag">#程序员</a>
-          
-            <a href="/tags/读书笔记/" rel="tag">#读书笔记</a>
+            <a href="/tags/Java/" rel="tag">#Java</a>
           
         </div>
       
@@ -374,17 +311,13 @@ Java 在语言层面上和C++也就打个平手">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/17/java-web-xml/" rel="next" title="Java Web部署描述文件:web.xml [部分翻译]">
-                <i class="fa fa-chevron-left"></i> Java Web部署描述文件:web.xml [部分翻译]
+              <a href="/2016/03/30/Spark-Op-Remote/" rel="next" title="远程操作Spark集群">
+                <i class="fa fa-chevron-left"></i> 远程操作Spark集群
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/13/hbase-introduce/" rel="prev" title="HBase简介の备忘">
-                HBase简介の备忘 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -411,8 +344,8 @@ Java 在语言层面上和C++也就打个平手">
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/16/A-Programmer's-Rantings-note/"
-           data-title="《程序员的呐喊》读书笔记" data-url="http://evenx86.github.io/2015/11/16/A-Programmer's-Rantings-note/">
+      <div class="ds-thread" data-thread-key="2016/03/31/Why-Java-ThreadPool/"
+           data-title="Java线程池解惑" data-url="http://evenx86.github.io/2016/03/31/Why-Java-ThreadPool/">
       </div>
     
   </div>
@@ -502,7 +435,7 @@ Java 在语言层面上和C++也就打个平手">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编程语言里的宗教"><span class="nav-number">1.</span> <span class="nav-text">编程语言里的宗教</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码里的哲学"><span class="nav-number">2.</span> <span class="nav-text">代码里的哲学</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
