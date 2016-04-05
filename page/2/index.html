@@ -212,6 +212,216 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/04/Java-problem-arraylist/" itemprop="url">
+                  遍历List出现问题:ConcurrentModificationException.md
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-04T14:48:57+08:00" content="2016-03-04">
+              2016-03-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/04/Java-problem-arraylist/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/04/Java-problem-arraylist/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="问题">问题</h2><p>某一天增加计算的节点后发现在遍历节点List出现如下问题:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java<span class="class">.util</span><span class="class">.ConcurrentModificationException</span></span><br><span class="line">	at java<span class="class">.util</span><span class="class">.ArrayList</span><span class="variable">$Itr</span>.<span class="function"><span class="title">checkForComodification</span><span class="params">(ArrayList.java:<span class="number">859</span>)</span></span></span><br><span class="line">	at java<span class="class">.util</span><span class="class">.ArrayList</span><span class="variable">$Itr</span>.<span class="function"><span class="title">next</span><span class="params">(ArrayList.java:<span class="number">831</span>)</span></span></span><br><span class="line">	at com<span class="class">.sdg</span><span class="class">.mir</span><span class="class">.sync</span><span class="class">.impl</span><span class="class">.SyncThreeDegreeDetail</span><span class="class">.exec</span>(SyncThreeDegreeDetail<span class="class">.java</span>:<span class="number">70</span>)</span><br><span class="line">	at com<span class="class">.sdg</span><span class="class">.mir</span><span class="class">.sync</span><span class="class">.impl</span><span class="class">.SyncThreeDegreeDetail</span><span class="class">.main</span>(SyncThreeDegreeDetail<span class="class">.java</span>:<span class="number">199</span>)</span><br><span class="line">	at sun<span class="class">.reflect</span><span class="class">.NativeMethodAccessorImpl</span><span class="class">.invoke0</span>(Native Method)</span><br><span class="line">	at sun<span class="class">.reflect</span><span class="class">.NativeMethodAccessorImpl</span><span class="class">.invoke</span>(NativeMethodAccessorImpl<span class="class">.java</span>:<span class="number">57</span>)</span><br><span class="line">	at sun<span class="class">.reflect</span><span class="class">.DelegatingMethodAccessorImpl</span><span class="class">.invoke</span>(DelegatingMethodAccessorImpl<span class="class">.java</span>:<span class="number">43</span>)</span><br><span class="line">	at java<span class="class">.lang</span><span class="class">.reflect</span><span class="class">.Method</span><span class="class">.invoke</span>(Method<span class="class">.java</span>:<span class="number">606</span>)</span><br><span class="line">	at com<span class="class">.intellij</span><span class="class">.rt</span><span class="class">.execution</span><span class="class">.application</span><span class="class">.AppMain</span><span class="class">.main</span>(AppMain<span class="class">.java</span>:<span class="number">144</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="原因">原因</h2><p>原来ArrayList只有一个元素不会出现这种问题。当增加节点后，ArrayList中的元素增加，由于ArrayList是线程不安全的。<br>foreach遍历arraylist是使用Iterator迭代器的。<br>一般是不允许一个线程在用迭代器遍历的同时，另一个线程在修改的。<br>后来在发现代码里在循环的最后居然清空了list，o(╯□╰)o.所以报了错。及时修正代码解决了问题<br>不过之前眼瞎没有看到这个时候把ArrayList换成了CopyOnWriteArrayList也是解决了问题。<br>CopyOnWriteArrayList创建迭代器时使用了对数组状态的引用。此数组在迭代器的生存期内不会更改，因此不可能发生冲突，<br>并且迭代器保证不会抛出 ConcurrentModificationException。创建迭代器以后，迭代器就不会反映列表的添加、移除或者更改。<br>在迭代器上进行的元素更改操作（remove、set 和 add）不受支持。这些方法将抛出 UnsupportedOperationException。</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/01/26/hive-over-hbase/" itemprop="url">
+                  Hive安装及整合HBase
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-26T21:13:13+08:00" content="2016-01-26">
+              2016-01-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/26/hive-over-hbase/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/26/hive-over-hbase/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="下载HIVE">下载HIVE</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">su - hadoop</span><br><span class="line">wget http:<span class="comment">//apache.fayea.com/hive/hive-1.2.1/apache-hive-1.2.1-bin.tar.gz</span></span><br><span class="line">tar -zxvf apache-hive-<span class="number">1.2</span>.<span class="number">1</span>-bin<span class="class">.tar</span><span class="class">.gz</span></span><br><span class="line">mv apache-hive-<span class="number">1.2</span>.<span class="number">1</span>-bin hive</span><br></pre></td></tr></table></figure>
+<h2 id="环境配置">环境配置</h2><p>在/etc/profile中追加:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> HIVE_HOME=/home/hadoop/hive</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$HIVE_HOME</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+<h2 id="安装MySQL">安装MySQL</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc gcc- c ++ ncurses-devel  -y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">groupadd mysql</span><br><span class="line">useradd -g mysql mysql</span><br><span class="line">wget <span class="string">http:</span><span class="comment">//dev.mysql.com/get/downloads/mysql/mysql-5.6.25.tar.gz</span></span><br><span class="line">tar zxvf mysql-<span class="number">5.6</span><span class="number">.25</span>.tar.gz</span><br><span class="line">cd mysql-<span class="number">5.6</span><span class="number">.25</span></span><br><span class="line">cmake \</span><br><span class="line">-DCMAKE_INSTALL_PREFIX=<span class="regexp">/data/</span>mysql \</span><br><span class="line">-DMYSQL_UNIX_ADDR=<span class="regexp">/data/</span>mysql/mysql.sock \</span><br><span class="line">-DDEFAULT_CHARSET=utf8 \</span><br><span class="line">-DDEFAULT_COLLATION=utf8_general_ci \</span><br><span class="line">-DWITH_INNOBASE_STORAGE_ENGINE=<span class="number">1</span> \</span><br><span class="line">-DWITH_ARCHIVE_STORAGE_ENGINE=<span class="number">1</span> \</span><br><span class="line">-DWITH_BLACKHOLE_STORAGE_ENGINE=<span class="number">1</span> \</span><br><span class="line">-DMYSQL_DATADIR=<span class="regexp">/data/</span>mysql/data \</span><br><span class="line">-DMYSQL_TCP_PORT=<span class="number">3306</span> \</span><br><span class="line">-DENABLE_DOWNLOADS=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line">chmod +w <span class="regexp">/data/</span>mysql/</span><br><span class="line">chown -R <span class="string">mysql:</span>mysql <span class="regexp">/data/</span>mysql/</span><br><span class="line">ln -s <span class="regexp">/data/</span>mysql<span class="regexp">/lib/</span>libmysqlclient.so<span class="number">.18</span> <span class="regexp">/usr/</span>lib/libmysqlclient.so<span class="number">.18</span></span><br><span class="line">ln -s <span class="regexp">/data/</span>mysql<span class="regexp">/mysql.sock /</span>tmp/mysql.sock</span><br><span class="line"></span><br><span class="line">cp <span class="regexp">/data/</span>mysql<span class="regexp">/support-files/</span>my-<span class="keyword">default</span>.cnf <span class="regexp">/etc/</span>my.cnf</span><br><span class="line">cp <span class="regexp">/data/</span>mysql<span class="regexp">/support-files/</span>mysql.server <span class="regexp">/etc/</span>init.d/mysqld</span><br><span class="line"><span class="regexp">/data/</span>mysql<span class="regexp">/scripts/</span>mysql_install_db --user=mysql --defaults-file=<span class="regexp">/etc/</span>my.cnf --basedir=<span class="regexp">/data/</span>mysql --datadir=<span class="regexp">/data/</span>mysql/data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#创建hive数据库</span><br><span class="line">create database hive ;</span><br></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/01/26/hive-over-hbase/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/01/26/git-auto-deploy/" itemprop="url">
                   Git 自动部署
                 </a>
@@ -1149,220 +1359,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/17/pipeline-sync-problem/" itemprop="url">
-                  pipline sync
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-17T09:36:24+08:00" content="2015-08-17">
-              2015-08-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/17/pipeline-sync-problem/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/pipeline-sync-problem/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>之前因为项目需要先从redis中取出key的列表，再循环这些列表操作后写入到redis中，因为使用pipline，中间出现了一些问题记录学习下。<br>最初の源代码:<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/17/pipeline-sync-problem/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/17/Servlet-gzip-filter/" itemprop="url">
-                  [翻译]Servlet Gzip Filter简介
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-17T09:36:05+08:00" content="2015-08-17">
-              2015-08-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/17/Servlet-gzip-filter/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/Servlet-gzip-filter/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>原文地址:<a href="http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html">http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html</a></p>
-<h2 id="简介">简介</h2><blockquote>
-<p>A GZip Servlet Filter can be used to GZip compress content sent to a browser from a Java web application. This text will explain how that works, and contains a GZip Servlet Filter you can use in your own Java web applications. If you do not know what a Servlet filter is, read my text on Servlet Filters.</p>
-</blockquote>
-<p>gzip servlet filter 可用来压缩网页内容。本文将介绍其如何工作，以及如何使用gzip servlet filter 在你的web服务器中。如果不了解servlet filter是什么可以参考这篇文章:<a href="http://tutorials.jenkov.com/java-servlets/servlet-filters.html">Servlet Filters.</a></p>
-<h2 id="为什么要使用gzip压缩网页内容">为什么要使用gzip压缩网页内容</h2><blockquote>
-<p>GZip compressing HTML, JavaScript, CSS etc. makes the data sent to the browser smaller. This speeds up the download. This is especially beneficial for mobile phones where internet bandwidth may be limited. GZip compressing content adds a CPU overhead on the server and browser, but it is still speeding up the total page load compared to not GZip compressing.</p>
-</blockquote>
-<p>gzip 压缩html、Javascript，css等等文件，目的是为了是发送到浏览器的数据更小，加速下载，这对于限制了带宽的移动端作用特别大。当然gzip增加了server端和浏览器端的cpu的压力，但是总体来说还是加速了页面的载入。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/17/Servlet-gzip-filter/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1409,7 +1405,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
