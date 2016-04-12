@@ -212,6 +212,131 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/16/Intern-interview/" itemprop="url">
+                  Java实习生面试题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-16T17:16:41+08:00" content="2016-03-16">
+              2016-03-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/16/Intern-interview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/16/Intern-interview/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>最近公司面试实习生搞了几个面试题，前面都是基础考察，后面两个是自己想的。</p>
+<ul>
+<li><h3 id="使用_final_关键字修饰一个变量时，是引用不能变，还是引用的对象不能变？">使用 final 关键字修饰一个变量时，是引用不能变，还是引用的对象不能变？</h3><br></li>
+</ul>
+<ul>
+<li><h3 id="简述Java中堆与栈的区别">简述Java中堆与栈的区别</h3></li>
+</ul>
+<p><br></p>
+<ul>
+<li><h3 id="简述Java实现线程的几种方式">简述Java实现线程的几种方式</h3></li>
+</ul>
+<p><br></p>
+<ul>
+<li><h3 id="阅读如下代码段,并指出其中存在的问题">阅读如下代码段,并指出其中存在的问题</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MySQLConnection</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Connection mySQLConnection;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getMySQLConnection</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Calendar today = Calendar.getInstance();</span><br><span class="line">        <span class="keyword">int</span> hour =today.<span class="keyword">get</span>( Calendar.HOUR_OF_DAY);      </span><br><span class="line">        <span class="keyword">if</span>(hour &gt; <span class="number">8</span> &amp;&amp; hour &lt;<span class="number">23</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>(mySQLConnection != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> mySQLConnection;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">                    Connection conn = DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost:3306/funnystudy"</span>,<span class="string">"root"</span>,<span class="string">"123456"</span>);</span><br><span class="line">                    mySQLConnection = conn;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> mySQLConnection;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><br><br><br></p>
+<ul>
+<li><h3 id="使用Java处理如下问题。">使用Java处理如下问题。</h3><blockquote>
+<p>现有一张游戏玩家登陆数据表，表结构为 : ‘id’,’name’,’login_date’,现在表中有最近三十天的玩家登陆数据，求出，连续15天的登陆玩家数以及累计15天登陆的玩家数。<br>注：连续登录是指，某个玩家在一段时间内，每天都登录游戏，比如1号到15号每天都登录，没错过任何一天，那他连续登录时间是15.一般我们习惯取最大连续登录时间。累计登录是指，某个玩家在一段时间内，登录天数的总和，比如1号 4号 5号登录了，其他时间都没登录，那他这段时间的累计登录天数是3天。</p>
+</blockquote>
+</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/16/asynchbase-introduce/" itemprop="url">
                   HBase AsyncHBase客户端
                 </a>
@@ -1253,117 +1378,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/16/A-Programmer's-Rantings-note/" itemprop="url">
-                  《程序员的呐喊》读书笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-11-16T23:50:52+08:00" content="2015-11-16">
-              2015-11-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/11/16/A-Programmer's-Rantings-note/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/16/A-Programmer's-Rantings-note/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>对这本书没什么很大的期待，但是看完之后感觉对我的职业观产生了冲击了。而且很多观点其实我一直在想的，但是经验和觉悟太低一直都没能写出来，看到文中写的就深有同感。</p>
-<h2 id="编程语言里的宗教">编程语言里的宗教</h2><blockquote>
-<p>语言本身不给力，类库再牛也是有限的</p>
-</blockquote>
-<p>额这不是在吐槽Java吗，但是至少现在看来Java还是挺牛逼的呀。还是自己接触的语言太少了。作者在后面提到语言就是程序员的宗教。此言不差。</p>
-<blockquote>
-<p>Java 在语言层面上和C++也就打个平手，其实Java 要好的多，至少他有了字符串，连字符串都支持不好的语言哪是人用的。</p>
-</blockquote>
-<p>这个把C++喷的，其实还是赞同的哈哈哈，不过貌似作者对字符串有执念，所以对perl也非常喜欢。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/11/16/A-Programmer's-Rantings-note/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1410,7 +1424,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1424,7 +1438,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

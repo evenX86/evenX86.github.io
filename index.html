@@ -212,6 +212,112 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/12/dbutils源码阅读/" itemprop="url">
+                  dbutils源码阅读
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-12T16:02:14+08:00" content="2016-04-12">
+              2016-04-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/12/dbutils源码阅读/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/dbutils源码阅读/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>在查询或者更新数据的时候我们都容易犯忘记关闭JDBC的错误,spring之类的框架又非常笨重，DbUtils 是一个非常轻量的操作JDBC的工具。</p>
+<h3 id="使用示例">使用示例</h3><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span></span><br><span class="line"><span class="keyword">*</span> <span class="comment">@param dataNode 相应的数据节点的信息</span></span><br><span class="line"><span class="keyword">*</span> <span class="comment">@return 返回QueryRunner实例</span></span><br><span class="line"><span class="keyword">*</span> <span class="comment">@throws java.lang.NullPointerException 如果连接池并没有初始化，则抛出此异常</span></span><br><span class="line"><span class="keyword">*</span> <span class="keyword">*</span>/</span><br><span class="line">public static QueryRunner getQueryRunner(final String dataNode) &#123;</span><br><span class="line">    return new QueryRunner(MySQLHelper._DATASOURCEMAP.get(dataNode));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中_DATASOURCEMAP数组存放的是线程池,初始化_DATASOURCEMAP:<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private <span class="literal">static</span> <span class="keyword">final</span> <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, DataSource&gt; _DATASOURCEMAP = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line">...</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">final</span> <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">Object</span>&gt; row : (<span class="built_in">List</span>&lt;<span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">Object</span>&gt;&gt;) config.<span class="literal">get</span>(<span class="string">"node"</span>)) &#123;</span><br><span class="line">    <span class="comment">//System.out.println(row.get("aliasName"));</span></span><br><span class="line">    _CONFIG.put(row.<span class="literal">get</span>(<span class="string">"aliasName"</span>).toString(), row);  <span class="comment">/*把节点缓存*/</span></span><br><span class="line">    _DATASOURCEMAP.put(row.<span class="literal">get</span>(<span class="string">"aliasName"</span>).toString(), DruidDataSourceFactory.createDataSource(row));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这部分有个druid的线程池的部分，关于druid的可以参考博客中的druid源码阅读。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/12/dbutils源码阅读/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/12/JDBC-DataSource-DriverManager/" itemprop="url">
                   为什么要用DataSource代替DriverManager
                 </a>
@@ -1167,131 +1273,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/16/Intern-interview/" itemprop="url">
-                  Java实习生面试题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-16T17:16:41+08:00" content="2016-03-16">
-              2016-03-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/16/Intern-interview/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/16/Intern-interview/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>最近公司面试实习生搞了几个面试题，前面都是基础考察，后面两个是自己想的。</p>
-<ul>
-<li><h3 id="使用_final_关键字修饰一个变量时，是引用不能变，还是引用的对象不能变？">使用 final 关键字修饰一个变量时，是引用不能变，还是引用的对象不能变？</h3><br></li>
-</ul>
-<ul>
-<li><h3 id="简述Java中堆与栈的区别">简述Java中堆与栈的区别</h3></li>
-</ul>
-<p><br></p>
-<ul>
-<li><h3 id="简述Java实现线程的几种方式">简述Java实现线程的几种方式</h3></li>
-</ul>
-<p><br></p>
-<ul>
-<li><h3 id="阅读如下代码段,并指出其中存在的问题">阅读如下代码段,并指出其中存在的问题</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MySQLConnection</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Connection mySQLConnection;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getMySQLConnection</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Calendar today = Calendar.getInstance();</span><br><span class="line">        <span class="keyword">int</span> hour =today.<span class="keyword">get</span>( Calendar.HOUR_OF_DAY);      </span><br><span class="line">        <span class="keyword">if</span>(hour &gt; <span class="number">8</span> &amp;&amp; hour &lt;<span class="number">23</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>(mySQLConnection != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> mySQLConnection;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">                    Connection conn = DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost:3306/funnystudy"</span>,<span class="string">"root"</span>,<span class="string">"123456"</span>);</span><br><span class="line">                    mySQLConnection = conn;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> mySQLConnection;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><br><br><br></p>
-<ul>
-<li><h3 id="使用Java处理如下问题。">使用Java处理如下问题。</h3><blockquote>
-<p>现有一张游戏玩家登陆数据表，表结构为 : ‘id’,’name’,’login_date’,现在表中有最近三十天的玩家登陆数据，求出，连续15天的登陆玩家数以及累计15天登陆的玩家数。<br>注：连续登录是指，某个玩家在一段时间内，每天都登录游戏，比如1号到15号每天都登录，没错过任何一天，那他连续登录时间是15.一般我们习惯取最大连续登录时间。累计登录是指，某个玩家在一段时间内，登录天数的总和，比如1号 4号 5号登录了，其他时间都没登录，那他这段时间的累计登录天数是3天。</p>
-</blockquote>
-</li>
-</ul>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1338,7 +1319,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1352,7 +1333,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
