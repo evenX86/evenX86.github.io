@@ -53,18 +53,18 @@
 
 
 
-<meta name="description" content="在查询或者更新数据的时候我们都容易犯忘记关闭JDBC的错误,spring之类的框架又非常笨重，DbUtils 是一个非常轻量的操作JDBC的工具。
-使用示例12345678/** @param dataNode 相应的数据节点的信息* @return 返回QueryRunner实例* @throws java.lang.NullPointerException 如果连接池并没有初始化，则抛出此异常">
+<meta name="description" content="在查询或者更新数据的时候我们都容易犯忘记关闭JDBC的错误,spring之类的框架又非常笨重，DbUtils 是一个非常轻量的操作JDBC的工具。除了操作简便之外，dbutils还可以将ResultSet转换成不同的对象。
+使用示例12345678/** @param dataNode 相应的数据节点的信息* @return 返回QueryRunner实例* @throws java.lang.N">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dbutils源码阅读">
-<meta property="og:url" content="http://evenx86.github.io/2016/04/12/dbutils源码阅读/index.html">
+<meta property="og:url" content="http://evenx86.github.io/2016/04/12/dbutils-source-code/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="在查询或者更新数据的时候我们都容易犯忘记关闭JDBC的错误,spring之类的框架又非常笨重，DbUtils 是一个非常轻量的操作JDBC的工具。
-使用示例12345678/** @param dataNode 相应的数据节点的信息* @return 返回QueryRunner实例* @throws java.lang.NullPointerException 如果连接池并没有初始化，则抛出此异常">
+<meta property="og:description" content="在查询或者更新数据的时候我们都容易犯忘记关闭JDBC的错误,spring之类的框架又非常笨重，DbUtils 是一个非常轻量的操作JDBC的工具。除了操作简便之外，dbutils还可以将ResultSet转换成不同的对象。
+使用示例12345678/** @param dataNode 相应的数据节点的信息* @return 返回QueryRunner实例* @throws java.lang.N">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dbutils源码阅读">
-<meta name="twitter:description" content="在查询或者更新数据的时候我们都容易犯忘记关闭JDBC的错误,spring之类的框架又非常笨重，DbUtils 是一个非常轻量的操作JDBC的工具。
-使用示例12345678/** @param dataNode 相应的数据节点的信息* @return 返回QueryRunner实例* @throws java.lang.NullPointerException 如果连接池并没有初始化，则抛出此异常">
+<meta name="twitter:description" content="在查询或者更新数据的时候我们都容易犯忘记关闭JDBC的错误,spring之类的框架又非常笨重，DbUtils 是一个非常轻量的操作JDBC的工具。除了操作简便之外，dbutils还可以将ResultSet转换成不同的对象。
+使用示例12345678/** @param dataNode 相应的数据节点的信息* @return 返回QueryRunner实例* @throws java.lang.N">
 
 
 
@@ -215,7 +215,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-04-12T16:02:14+08:00" content="2016-04-12">
+            <time itemprop="dateCreated" datetime="2016-04-12T16:19:20+08:00" content="2016-04-12">
               2016-04-12
             </time>
           </span>
@@ -241,8 +241,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/12/dbutils源码阅读/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/dbutils源码阅读/" itemprop="commentsCount"></span>
+                <a href="/2016/04/12/dbutils-source-code/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/dbutils-source-code/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -261,7 +261,7 @@
       
 
       
-        <span itemprop="articleBody"><p>在查询或者更新数据的时候我们都容易犯忘记关闭JDBC的错误,spring之类的框架又非常笨重，DbUtils 是一个非常轻量的操作JDBC的工具。</p>
+        <span itemprop="articleBody"><p>在查询或者更新数据的时候我们都容易犯忘记关闭JDBC的错误,spring之类的框架又非常笨重，DbUtils 是一个非常轻量的操作JDBC的工具。<br>除了操作简便之外，dbutils还可以将ResultSet转换成不同的对象。</p>
 <h3 id="使用示例">使用示例</h3><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span></span><br><span class="line"><span class="keyword">*</span> <span class="comment">@param dataNode 相应的数据节点的信息</span></span><br><span class="line"><span class="keyword">*</span> <span class="comment">@return 返回QueryRunner实例</span></span><br><span class="line"><span class="keyword">*</span> <span class="comment">@throws java.lang.NullPointerException 如果连接池并没有初始化，则抛出此异常</span></span><br><span class="line"><span class="keyword">*</span> <span class="keyword">*</span>/</span><br><span class="line">public static QueryRunner getQueryRunner(final String dataNode) &#123;</span><br><span class="line">    return new QueryRunner(MySQLHelper._DATASOURCEMAP.get(dataNode));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>其中_DATASOURCEMAP数组存放的是线程池,初始化_DATASOURCEMAP:<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private <span class="literal">static</span> <span class="keyword">final</span> <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, DataSource&gt; _DATASOURCEMAP = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line">...</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">final</span> <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">Object</span>&gt; row : (<span class="built_in">List</span>&lt;<span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">Object</span>&gt;&gt;) config.<span class="literal">get</span>(<span class="string">"node"</span>)) &#123;</span><br><span class="line">    <span class="comment">//System.out.println(row.get("aliasName"));</span></span><br><span class="line">    _CONFIG.put(row.<span class="literal">get</span>(<span class="string">"aliasName"</span>).toString(), row);  <span class="comment">/*把节点缓存*/</span></span><br><span class="line">    _DATASOURCEMAP.put(row.<span class="literal">get</span>(<span class="string">"aliasName"</span>).toString(), DruidDataSourceFactory.createDataSource(row));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这部分有个druid的线程池的部分，关于druid的可以参考博客中的druid源码阅读。<br><a id="more"></a><br>其中调用queryrunner实例的部分:<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">final <span class="type">QueryRunner</span> qr = <span class="type">MySQLHelper</span>.getQueryRunner();</span><br><span class="line">final <span class="type">List</span>&lt;<span class="type">Map</span>&lt;<span class="type">String</span>, <span class="type">Object</span>&gt;&gt; <span class="literal">result</span> = qr.query(sql, new <span class="type">MapListHandler</span>());</span><br></pre></td></tr></table></figure></p>
@@ -359,8 +359,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/04/12/dbutils源码阅读/"
-           data-title="dbutils源码阅读" data-url="http://evenx86.github.io/2016/04/12/dbutils源码阅读/">
+      <div class="ds-thread" data-thread-key="2016/04/12/dbutils-source-code/"
+           data-title="dbutils源码阅读" data-url="http://evenx86.github.io/2016/04/12/dbutils-source-code/">
       </div>
     
   </div>
