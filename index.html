@@ -223,7 +223,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-04-12T13:47:00+08:00" content="2016-04-12">
+            <time itemprop="dateCreated" datetime="2016-04-12T13:50:37+08:00" content="2016-04-12">
               2016-04-12
             </time>
           </span>
@@ -271,7 +271,7 @@
       
         
           <p>这个问题本来是SO上的一个问答:<a href="http://stackoverflow.com/questions/15198319/why-do-we-use-a-datasource-instead-of-a-drivermanager">http://stackoverflow.com/questions/15198319/why-do-we-use-a-datasource-instead-of-a-drivermanager</a></p>
-<p>大致意思是使用DataSource有更好的可扩展性并且更易于维护。<br>使用DataSource你不需要每次连接都要配置一大段的用户名密码端口，然后才能获得连接去使用数据库。DS方式的话只需要初始化的时候配置一次，每次使用<br>直接拿出连接用就好了。<br>关于可扩展性，就是DataSource提供连接池，而DM不提供。</p>
+<p>大致意思是使用DataSource有更好的可扩展性并且更易于维护。<br>使用DataSource你不需要每次连接都要配置一大段的用户名密码端口，然后才能获得连接去使用数据库。DS方式的话只需要初始化的时候配置一次，每次使用直接拿出连接用就好了。<br>关于可扩展性，就是DataSource提供连接池，而DM不提供。</p>
 <p>JDK8里的描述:</p>
 <blockquote>
 <p>A factory for connections to the physical data source that this DataSource object represents. An alternative to the DriverManager facility, a DataSource object is the preferred means of getting a connection. An object that implements the DataSource interface will typically be registered with a naming service based on the Java™ Naming and Directory (JNDI) API.</p>
