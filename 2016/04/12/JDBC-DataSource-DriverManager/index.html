@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="随笔," />
+  <meta name="keywords" content="JDBC,Java," />
 
 
 
@@ -53,18 +53,18 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="description" content="这个问题本来是SO上的一个问答:http://stackoverflow.com/questions/15198319/why-do-we-use-a-datasource-instead-of-a-drivermanager
+大致意思是使用DataSource有更好的可扩展性并且更易于维护。使用DataSource你不需要每次连接都要配置一大段的用户名密码端口，然后才能获得连接去使用数据库。DS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://evenx86.github.io/2015/03/25/hello-world/index.html">
+<meta property="og:title" content="为什么要用DataSource代替DriverManager">
+<meta property="og:url" content="http://evenx86.github.io/2016/04/12/JDBC-DataSource-DriverManager/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta property="og:description" content="这个问题本来是SO上的一个问答:http://stackoverflow.com/questions/15198319/why-do-we-use-a-datasource-instead-of-a-drivermanager
+大致意思是使用DataSource有更好的可扩展性并且更易于维护。使用DataSource你不需要每次连接都要配置一大段的用户名密码端口，然后才能获得连接去使用数据库。DS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="为什么要用DataSource代替DriverManager">
+<meta name="twitter:description" content="这个问题本来是SO上的一个问答:http://stackoverflow.com/questions/15198319/why-do-we-use-a-datasource-instead-of-a-drivermanager
+大致意思是使用DataSource有更好的可扩展性并且更易于维护。使用DataSource你不需要每次连接都要配置一大段的用户名密码端口，然后才能获得连接去使用数据库。DS">
 
 
 
@@ -76,7 +76,7 @@ Quick">
   };
 </script>
 
-  <title> Hello World | 曲径通幽 </title>
+  <title> 为什么要用DataSource代替DriverManager | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -206,7 +206,7 @@ Quick">
             
             
               
-                Hello World
+                为什么要用DataSource代替DriverManager
               
             
           </h1>
@@ -215,8 +215,8 @@ Quick">
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-03-25T20:15:06+08:00" content="2015-03-25">
-              2015-03-25
+            <time itemprop="dateCreated" datetime="2016-04-12T13:47:00+08:00" content="2016-04-12">
+              2016-04-12
             </time>
           </span>
 
@@ -225,8 +225,8 @@ Quick">
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -241,8 +241,8 @@ Quick">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/03/25/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/25/hello-world/" itemprop="commentsCount"></span>
+                <a href="/2016/04/12/JDBC-DataSource-DriverManager/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/JDBC-DataSource-DriverManager/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -261,15 +261,15 @@ Quick">
       
 
       
-        <span itemprop="articleBody"><p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <span itemprop="articleBody"><p>这个问题本来是SO上的一个问答:<a href="http://stackoverflow.com/questions/15198319/why-do-we-use-a-datasource-instead-of-a-drivermanager" target="_blank" rel="external">http://stackoverflow.com/questions/15198319/why-do-we-use-a-datasource-instead-of-a-drivermanager</a></p>
+<p>大致意思是使用DataSource有更好的可扩展性并且更易于维护。<br>使用DataSource你不需要每次连接都要配置一大段的用户名密码端口，然后才能获得连接去使用数据库。DS方式的话只需要初始化的时候配置一次，每次使用<br>直接拿出连接用就好了。<br>关于可扩展性，就是DataSource提供连接池，而DM不提供。</p>
+<p>JDK8里的描述:</p>
+<blockquote>
+<p>A factory for connections to the physical data source that this DataSource object represents. An alternative to the DriverManager facility, a DataSource object is the preferred means of getting a connection. An object that implements the DataSource interface will typically be registered with a naming service based on the Java™ Naming and Directory (JNDI) API.</p>
+</blockquote>
+<p>先看下原来DM的用法(找了个实习生写的代码，顺便帮他review):<br><a id="more"></a><br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public void addMonitorLog(MonitorLog <span class="keyword">ml</span>) throws IOException, ClassNotFoundException, SQLException&#123;</span><br><span class="line">    Connection conn;</span><br><span class="line">    Statement <span class="keyword">st</span>;</span><br><span class="line">    ManipuData md = new ManipuData();</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">Class</span>.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">    conn = DriverManager.getConnection(md.readProp());</span><br><span class="line">    String sql =</span><br><span class="line">            <span class="string">"insert into MSM_MonitorLog"</span></span><br><span class="line">            + <span class="string">"(db_id,msg,check_time,need_warn)values("</span></span><br><span class="line">            + <span class="keyword">ml</span>.getDb_id()+<span class="string">",'"+ml.getMsg()+"',NOW(),"</span></span><br><span class="line">            +<span class="keyword">ml</span>.getNeed_warn()+<span class="string">")"</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">st</span> = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);</span><br><span class="line">    <span class="keyword">st</span>.executeUpdate(sql);</span><br><span class="line">    <span class="keyword">st</span>.<span class="keyword">close</span>();</span><br><span class="line">    conn.<span class="keyword">close</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用DataSource的版本:<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addMonitorLog</span><span class="params">(MonitorLog ml)</span> throws IOException, ClassNotFoundException, SQLException</span>&#123;</span><br><span class="line">    PreparedStatement stmt = <span class="keyword">null</span>;</span><br><span class="line">    DataSource ds = <span class="keyword">null</span>; <span class="comment">//fake ds</span></span><br><span class="line">    Connection conn = ds.getConnection();</span><br><span class="line">    final String sql = <span class="string">"insert into MSM_MonitorLog(db_id,msg,check_time,need_warn) values(?,?,?,?)"</span>;</span><br><span class="line">    String[] <span class="keyword">params</span> = &#123;ml.getDb_id(),ml.getMsg(),NOW(),ml.getNeed_warn()&#125;;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);</span><br><span class="line">        <span class="keyword">this</span>.fillStatement(stmt, <span class="keyword">params</span>);</span><br><span class="line">        stmt.executeUpdate();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">        <span class="keyword">this</span>.rethrow(e, sql, <span class="keyword">params</span>);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        close(stmt);</span><br><span class="line">        <span class="keyword">if</span> (closeConn) &#123;</span><br><span class="line">            close(conn);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后推荐使用dbutil封装jdbc的用法:<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> addMonitorLog(MonitorLog ml) <span class="keyword">throws</span> IOException, ClassNotFoundException, SQLException&#123;</span><br><span class="line">    <span class="keyword">final</span> QueryRunner qr = MySQLHelper.getQueryRunner();</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">String</span> sql = <span class="string">"insert into MSM_MonitorLog(db_id,msg,check_time,need_warn) values(?,?,?,?)"</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">String</span>[] params = &#123;ml.getDb_id(),ml.getMsg(),NOW(),ml.getNeed_warn()&#125;;</span><br><span class="line">    qr.batch(sql,params);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 </span>
       
     </div>
@@ -278,7 +278,9 @@ Quick">
       
         <div class="post-tags">
           
-            <a href="/tags/随笔/" rel="tag">#随笔</a>
+            <a href="/tags/JDBC/" rel="tag">#JDBC</a>
+          
+            <a href="/tags/Java/" rel="tag">#Java</a>
           
         </div>
       
@@ -287,17 +289,13 @@ Quick">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/03/25/hexo/" rel="next" title="hexo">
-                <i class="fa fa-chevron-left"></i> hexo
+              <a href="/2016/04/09/JDK-HashMap-HashSet/" rel="next" title="HashMap与HashSet实现">
+                <i class="fa fa-chevron-left"></i> HashMap与HashSet实现
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/04/14/jedis-pipline-test/" rel="prev" title="jedis pipline 性能测试">
-                jedis pipline 性能测试 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -324,8 +322,8 @@ Quick">
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/03/25/hello-world/"
-           data-title="Hello World" data-url="http://evenx86.github.io/2015/03/25/hello-world/">
+      <div class="ds-thread" data-thread-key="2016/04/12/JDBC-DataSource-DriverManager/"
+           data-title="为什么要用DataSource代替DriverManager" data-url="http://evenx86.github.io/2016/04/12/JDBC-DataSource-DriverManager/">
       </div>
     
   </div>
@@ -415,7 +413,7 @@ Quick">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick_Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create_a_new_post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run_server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate_static_files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy_to_remote_sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
