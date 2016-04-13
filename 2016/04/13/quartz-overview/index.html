@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="quartz," />
 
 
 
@@ -53,18 +53,22 @@
 
 
 
-<meta name="description" content="首先本文还是为实习生同学解惑用的。某天有个实习生表示对线程池不理解为何要用线程池代替每次产生线程的方式，简单说了几句后，想想干脆整理篇文章好了。
-首先按照实习生的想法，来看一段代码123456789101112public class ThreadPerTaskWebServer &amp;#123;    public static void main(String[] args) throws IOE">
+<meta name="description" content="quartz是由Java编写的一款调度程序,github的地址:https://github.com/quartz-scheduler/quartz
+Quartz使用Schedulers是由工厂方法生成的。Scheduler Job会在调用start()之后才会开始执行。
+使用Scheduling API扩展接口Job，在里面的execute()方法里即可编写被调度程序的逻辑代码.12345678">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java线程池解惑">
-<meta property="og:url" content="http://evenx86.github.io/2016/03/31/Why-Java-ThreadPool/index.html">
+<meta property="og:title" content="quartz 概述">
+<meta property="og:url" content="http://evenx86.github.io/2016/04/13/quartz-overview/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="首先本文还是为实习生同学解惑用的。某天有个实习生表示对线程池不理解为何要用线程池代替每次产生线程的方式，简单说了几句后，想想干脆整理篇文章好了。
-首先按照实习生的想法，来看一段代码123456789101112public class ThreadPerTaskWebServer &amp;#123;    public static void main(String[] args) throws IOE">
+<meta property="og:description" content="quartz是由Java编写的一款调度程序,github的地址:https://github.com/quartz-scheduler/quartz
+Quartz使用Schedulers是由工厂方法生成的。Scheduler Job会在调用start()之后才会开始执行。
+使用Scheduling API扩展接口Job，在里面的execute()方法里即可编写被调度程序的逻辑代码.12345678">
+<meta property="og:image" content="http://40.media.tumblr.com/e0dbe72ed3a82f73f02fd5f6fc6d4c15/tumblr_o5k5a7IvUm1vryu4so1_1280.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java线程池解惑">
-<meta name="twitter:description" content="首先本文还是为实习生同学解惑用的。某天有个实习生表示对线程池不理解为何要用线程池代替每次产生线程的方式，简单说了几句后，想想干脆整理篇文章好了。
-首先按照实习生的想法，来看一段代码123456789101112public class ThreadPerTaskWebServer &amp;#123;    public static void main(String[] args) throws IOE">
+<meta name="twitter:title" content="quartz 概述">
+<meta name="twitter:description" content="quartz是由Java编写的一款调度程序,github的地址:https://github.com/quartz-scheduler/quartz
+Quartz使用Schedulers是由工厂方法生成的。Scheduler Job会在调用start()之后才会开始执行。
+使用Scheduling API扩展接口Job，在里面的execute()方法里即可编写被调度程序的逻辑代码.12345678">
 
 
 
@@ -76,7 +80,7 @@
   };
 </script>
 
-  <title> Java线程池解惑 | 曲径通幽 </title>
+  <title> quartz 概述 | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -206,7 +210,7 @@
             
             
               
-                Java线程池解惑
+                quartz 概述
               
             
           </h1>
@@ -215,8 +219,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-03-31T17:12:09+08:00" content="2016-03-31">
-              2016-03-31
+            <time itemprop="dateCreated" datetime="2016-04-13T13:55:04+08:00" content="2016-04-13">
+              2016-04-13
             </time>
           </span>
 
@@ -241,8 +245,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/31/Why-Java-ThreadPool/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/31/Why-Java-ThreadPool/" itemprop="commentsCount"></span>
+                <a href="/2016/04/13/quartz-overview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/13/quartz-overview/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -261,41 +265,14 @@
       
 
       
-        <span itemprop="articleBody"><p>首先本文还是为实习生同学解惑用的。某天有个实习生表示对线程池不理解为何要用线程池代替每次产生线程的方式，简单说了几句后，想想干脆整理篇文章好了。</p>
-<p>首先按照实习生的想法，来看一段代码<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> ThreadPerTaskWebServer &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">80</span>);</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">final</span> Socket socket = ss.accept();</span><br><span class="line">            Runnable <span class="keyword">task</span> = ()-&gt; &#123;</span><br><span class="line">                handlRequest(socket);</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">new</span> Thread(<span class="keyword">task</span>).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这段代码为每个连接创建一个线程来处理请求，线程在run方法执行完后终止。在正常负载的情况下，为每个任务创建一个线程能提升串行执行的性能。<br>但是是否存在问题，当需要创建大量线程的时候：</p>
-<ul>
-<li>线程生命周期的开销非常高</li>
-<li>资源消耗，活跃线程会消耗系统资源尤其是内存，当线程多于可用处理器的数量，空闲线程会占用许多线程，所以如果CPU已经处于忙碌状态，再创建线程反而会降低性能。</li>
-<li>稳定性，在一个平台上创建的线程数是有限的，如果无限创建会突破这些限制则会抛出异常。<a id="more"></a>
-</li>
-</ul>
-<p>这个时候我们的线程池就应运而生了。<br>先官方定义下线程池:处理一组同构工作线程的资源池。<br>那什么叫同构工作呢，因为只有任务是相同类型，并且相互独立的时线程池的性能才能达到最佳，如果不同运行时长的任务放一起可能会造成拥塞，<br>如果互相之间有依赖的任务放一起则有可能造成死锁。<br>线程池与工作队列<code>work queue</code>(后面会讲到)密切相关，线程池中线程的任务是从工作队列中取出任务，执行任务，然后然会线程池。<br>现在参照上面那个例子的几个缺点，列出线程池到底有什么好处:</p>
-<ul>
-<li>通过重用线程，减少线程创建和销毁过程中产生的开销</li>
-<li>减少创建线程而造成的延时</li>
-<li>防止过多线程相互竞争资源</li>
-</ul>
-<p>当然线程池的大小设置也是门技术活。<br>过大了线程会竞争cpu和内存资源，还有线程切换的开销<br>过小了浪费处理器，吞吐率变低。<br>那么线程池应该怎么设置，参考资料里第二条的沈剑老师的文章可以看看。<br>Java中为我们提供四种静态工厂方法来创建一个线程池</p>
-<ul>
-<li>newFixedThreadPool</li>
-<li>newCachedThreadPool</li>
-<li>newScheduledThreadPool</li>
-<li>newSingleThreadExecuPool</li>
-</ul>
-<p>如果觉得上述的线程池不适合还可以自己配置ThreadPoolExecutor来定制一个线程池。<br>ThreadPoolExecutor的构造函数如下:<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span><br><span class="line">                          <span class="keyword">int</span> maximumPoolSize,</span><br><span class="line">                          <span class="keyword">long</span> keepAliveTime,</span><br><span class="line">                          TimeUnit unit,</span><br><span class="line">                          BlockingQueue&lt;Runnable&gt; workQueue,</span><br><span class="line">                          ThreadFactory threadFactory,</span><br><span class="line">                          RejectedExecutionHandler <span class="keyword">handler</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (corePoolSize &lt; <span class="number">0</span> ||</span><br><span class="line">        maximumPoolSize &lt;= <span class="number">0</span> ||</span><br><span class="line">        maximumPoolSize &lt; corePoolSize ||</span><br><span class="line">        keepAliveTime &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">if</span> (workQueue == <span class="keyword">null</span> || threadFactory == <span class="keyword">null</span> || <span class="keyword">handler</span> == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="keyword">this</span>.corePoolSize = corePoolSize;</span><br><span class="line">    <span class="keyword">this</span>.maximumPoolSize = maximumPoolSize;</span><br><span class="line">    <span class="keyword">this</span>.workQueue = workQueue;</span><br><span class="line">    <span class="keyword">this</span>.keepAliveTime = unit.toNanos(keepAliveTime);</span><br><span class="line">    <span class="keyword">this</span>.threadFactory = threadFactory;</span><br><span class="line">    <span class="keyword">this</span>.<span class="keyword">handler</span> = <span class="keyword">handler</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>其中参数一次为线程池基本大小，最大大小，线程存活时间，，工作队列，RejectedExecutionHandler 表示当执行被阻塞之后要做的操作。<br>线程存活时间的作用是:如果某个线程的空闲时间超过了存活时间，那么它将会被标记为可回收的，并且当线程池的当前大小超过基本大小后，将会被终止。<br>ThreadFactory，线程工厂，线程池创建线程都是通过这个方法进行的。<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public interface ThreadFactory &#123;</span><br><span class="line"> </span><br><span class="line">    /**</span><br><span class="line">     * Constructs a<span class="instruction"> new </span>&#123;@code Thread&#125;.  Implementations may also initialize</span><br><span class="line">     * priority, name, daemon status, &#123;@code ThreadGroup&#125;, etc.</span><br><span class="line">     *</span><br><span class="line">     * @param r a runnable to be executed by<span class="instruction"> new </span>thread<span class="instruction"> instance</span><br><span class="line"></span>     * @return constructed thread,<span class="instruction"> or </span>&#123;@code null&#125;<span class="instruction"> if </span>the request to</span><br><span class="line">     *         create a thread is rejected</span><br><span class="line">     */</span><br><span class="line">    Thread<span class="function"> newThread(</span>Runnable r<span class="function">)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>但是线程池也并非是万能的，如果客户提交给服务器请求的速率超过了服务器的处理速率，仍然可能会资源耗尽。<br>ThreadPoolExecutor提供了工作队列（workqueue）来保存等待执行的任务，任务排列方法有</p>
-<ul>
-<li>无界队列</li>
-<li>有界队列</li>
-<li>同步移交</li>
-</ul>
-<p>newFixedThreadPool和newSingleThreadPool默认使用一个无界的LinkedBlockingQueue。<br>无界队列如果任务处理一直跟不上任务到达的速度将会造成资源耗尽的情况，采用有界队列将会避免这一情况的发生。<br>如果线程池较小而队列较大，那么有助于减少内存使用量，降低CPU使用率，同事还可以减少上下文切换，但是付出的代价就是限制吞吐量。<br>如果任务之间存在依赖，那么使用有界队列将有可能出现死锁的的问题，这个时候才应该使用无界队列。</p>
-<p>好了文章就讲到这里，为何需要线程池，如何使用线程池。</p>
-<h2 id="参考资料">参考资料</h2><ul>
-<li>《Java并发编程实战》第八章</li>
-<li><a href="http://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=404369373&amp;idx=1&amp;sn=cab2ac9ec0edf92e744a2329662b16cd&amp;scene=1&amp;srcid=0330qJL7fAT3g8Se4S6o6YhO#wechat_redirect" target="_blank" rel="external">线程数究竟多少合理</a></li>
+        <span itemprop="articleBody"><p>quartz是由Java编写的一款调度程序,github的地址:<a href="https://github.com/quartz-scheduler/quartz" target="_blank" rel="external">https://github.com/quartz-scheduler/quartz</a></p>
+<h2 id="Quartz使用">Quartz使用</h2><p>Schedulers是由工厂方法生成的。<br>Scheduler Job会在调用<code>start()</code>之后才会开始执行。</p>
+<h3 id="使用Scheduling_API">使用Scheduling API</h3><p>扩展接口<code>Job</code>，在里面的<code>execute()</code>方法里即可编写被调度程序的逻辑代码.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyJob</span> <span class="keyword">implements</span> <span class="title">org</span>.<span class="title">quartz</span>.<span class="title">Job</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyJob</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(JobExecutionContext context)</span> <span class="keyword">throws</span> JobExecutionException </span>&#123;</span><br><span class="line">        System.err.println(<span class="string">"Hello World!  MyJob is executing."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>然后将<code>Job</code>与触发<code>Trigger</code>加入到调度周期里就可以运行了。<br><figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// define the job <span class="literal">and</span> tie it <span class="keyword">to</span> our MyJob <span class="class"><span class="keyword">class</span></span></span><br><span class="line">JobDetail job = newJob(MyJob.class)</span><br><span class="line">    .withIdentity(<span class="string">"job1"</span>, <span class="string">"group1"</span>)</span><br><span class="line">    .build();</span><br><span class="line"> </span><br><span class="line">// Trigger the job <span class="keyword">to</span> run now, <span class="literal">and</span> <span class="keyword">then</span> <span class="keyword">repeat</span> every <span class="number">40</span> seconds</span><br><span class="line">Trigger trigger = newTrigger()</span><br><span class="line">    .withIdentity(<span class="string">"trigger1"</span>, <span class="string">"group1"</span>)</span><br><span class="line">    .startNow()</span><br><span class="line">    .withSchedule(simpleSchedule()</span><br><span class="line">            .withIntervalInSeconds(<span class="number">40</span>)</span><br><span class="line">            .repeatForever())</span><br><span class="line">    .build();</span><br><span class="line"> </span><br><span class="line">// Tell quartz <span class="keyword">to</span> schedule the job using our trigger</span><br><span class="line">scheduler.scheduleJob(job, trigger);</span><br></pre></td></tr></table></figure></p>
+<h2 id="quartz各个组件之间的关系图">quartz各个组件之间的关系图</h2><p><img src="http://40.media.tumblr.com/e0dbe72ed3a82f73f02fd5f6fc6d4c15/tumblr_o5k5a7IvUm1vryu4so1_1280.png" alt=""></p>
+<h2 id="参考链接">参考链接</h2><ul>
+<li><a href="http://nkcoder.github.io/tags/quartz/page/2/" target="_blank" rel="external">http://nkcoder.github.io/tags/quartz/page/2/</a></li>
 </ul>
 </span>
       
@@ -305,7 +282,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag">#Java</a>
+            <a href="/tags/quartz/" rel="tag">#quartz</a>
           
         </div>
       
@@ -314,17 +291,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/30/Spark-Op-Remote/" rel="next" title="远程操作Spark集群">
-                <i class="fa fa-chevron-left"></i> 远程操作Spark集群
+              <a href="/2016/04/12/dbutils-source-code/" rel="next" title="dbutils源码阅读">
+                <i class="fa fa-chevron-left"></i> dbutils源码阅读
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/05/Spark-Or-MR/" rel="prev" title="spark 真比 mr on hadoop 快吗">
-                spark 真比 mr on hadoop 快吗 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -351,8 +324,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/31/Why-Java-ThreadPool/"
-           data-title="Java线程池解惑" data-url="http://evenx86.github.io/2016/03/31/Why-Java-ThreadPool/">
+      <div class="ds-thread" data-thread-key="2016/04/13/quartz-overview/"
+           data-title="quartz 概述" data-url="http://evenx86.github.io/2016/04/13/quartz-overview/">
       </div>
     
   </div>
@@ -442,7 +415,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quartz使用"><span class="nav-number">1.</span> <span class="nav-text">Quartz使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Scheduling_API"><span class="nav-number">1.1.</span> <span class="nav-text">使用Scheduling API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#quartz各个组件之间的关系图"><span class="nav-number">2.</span> <span class="nav-text">quartz各个组件之间的关系图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

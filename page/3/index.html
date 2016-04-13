@@ -189,11 +189,121 @@
 
     
     
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/01/13/hbase-introduce/" itemprop="url">
+                  HBase简介の备忘
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-13T15:21:26+08:00" content="2016-01-13">
+              2016-01-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/13/hbase-introduce/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/13/hbase-introduce/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
       
       
 
       
-    
+        
+          <h2 id="前言">前言</h2><p>现在hadoop生态发展的这么完善，实际这些书讲的也已经非常好了，还有一些大神的博客，废话不多说。</p>
+<p>本书建了一个以hbase为数据库的twitter作为实例用来介绍hbase。</p>
+<h2 id="连接管理">连接管理</h2><h3 id="创建表">创建表</h3><p><code>create &#39;user&#39;,&#39;info&#39;</code><br>其中表名是<code>user</code>,<code>info</code>是列族(column family)</p>
+<blockquote>
+<p>HBase中的的列组成列族.</p>
+<h4 id="列族">列族</h4></blockquote>
+<h3 id="检查表模式">检查表模式</h3><blockquote>
+<p>HBase创建表时没提到任何列或者数据类型，除了列族HBase什么也不需要。</p>
+</blockquote>
+<p>HBase：无模式数据库</p>
+<blockquote>
+<p>HBase使用JRuby实现。</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/01/13/hbase-introduce/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
 
     
       
@@ -307,6 +417,883 @@
 
 
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/08/17/java-web-xml/" itemprop="url">
+                  Java Web部署描述文件:web.xml [部分翻译]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-17T09:37:50+08:00" content="2015-08-17">
+              2015-08-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/17/java-web-xml/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/java-web-xml/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="前言">前言</h2><p>Java web应用使用部署描述文件来绝对URL映射到Servlets的规则,哪些URL需要验证，以及一些其他的信息，这个文件就是<code>web.xml</code>，在servlet标准中这个文件位于应用war包的<code>WEB-INF/</code>目录下。<br>更多<code>web.xml</code>标准的信息，可以访问:<a href="http://wiki.metawerx.net/wiki/Web.xml"> the Metawerx web.xml reference wiki</a>和<a href="http://jcp.org/aboutJava/communityprocess/final/jsr154/index.html"> the Metawerx web.xml reference wiki</a></p>
+<h2 id="About_Deployment_Descriptors">About Deployment Descriptors</h2><p>web应用部署描述文件可以反映class文件,资源，配置，以及Java web server 使用它们来应对web请求。当web应用接收到请求时，通过应用部署描述文件把url映射到处理请求的代码上。<br>部署描述文件是一个名为<code>web.xml</code>的文件，它存在于war包下面的<code>WEB-INF/</code>目录下，是一个以<code>&lt;web-app&gt;</code>为根的XML文件。<br>以下是一个简单的<code>web.xml</code>示例，其将所有的URL路径映射到<code>mysite.server.ComingSoonServlet</code>:<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/17/java-web-xml/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/08/17/jvm-startup/" itemprop="url">
+                  Java内存与垃圾回收总结备忘
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-17T09:36:36+08:00" content="2015-08-17">
+              2015-08-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/17/jvm-startup/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/jvm-startup/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="引入">引入</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# free -m</span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line">Mem:         32094      29292       2802          0        274       1647</span><br><span class="line">-/+ buffers/cache:      27370       4724</span><br><span class="line">Swap:            0          0          0</span><br><span class="line"><span class="comment">&lt;!-- more --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这是一台Java同步服务器的内存占用情况，使用jmap查看堆上信息:<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# jmap -histo 7840</span><br><span class="line"></span><br><span class="line"><span class="header"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span></span><br><span class="line"><span class="code">   1:      77399077     5156382528  [C</span></span><br><span class="line"><span class="code">   2:      41662587     3924901448  [I</span></span><br><span class="line"><span class="code">   3:      33678441     2424847752  java.util.LinkedHashMap$Entry</span></span><br><span class="line"><span class="code">   4:      64361432     2059565824  java.lang.String</span></span><br><span class="line"><span class="code">   5:      18967113     1669105944  java.util.regex.Matcher</span></span><br><span class="line"><span class="code">   6:       9996594     1534988024  [Ljava.lang.Object;</span></span><br><span class="line"><span class="code">   7:       7225435     1235477264  [Ljava.util.HashMap$Entry;</span></span><br><span class="line"><span class="code">   8:      11458421     1074750168  [B</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line">Total     332044853    22585874416</span><br></pre></td></tr></table></figure></p>
+<p>上面这个输出中有好几个问题，暂时先不管。<br>看下Java的配置：<code>Xms26g -Xmx26g -Xmn12g -XX:PermSize=1024M -Xss2M</code><br>实际占用的29G内存中Java heap占了22G，<br>再看下PS的结果：<code>ps -aux|sort -k 1 -r |less</code></p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USER       PID <span class="preprocessor">%</span>CPU <span class="preprocessor">%</span>MEM    <span class="title">VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root         7840</span> <span class="number">22.3</span>     <span class="number">82.5</span>  <span class="number">45956536</span> <span class="number">27124588</span> ?   Sl   May<span class="number">19</span> <span class="number">380</span>:<span class="number">04</span> java</span><br></pre></td></tr></table></figure>
+<p>可以看到Java 进程占了27G。<br>一般来说同步程序并需要这么多的内存，查看GC情况:</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@localhost</span> sync]<span class="comment"># jstat  -gc 7840</span></span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       PC     PU    YGC     YGCT    FGC    FGCT     GCT   </span><br><span class="line"> <span class="number">0.0</span>   <span class="number">65536.0</span>  <span class="number">0.0</span>   <span class="number">65536.0</span> <span class="number">13148160.0</span> <span class="number">9207808.0</span> <span class="number">14049280.0</span> <span class="number">10819203.6</span> <span class="number">1048576.0</span> <span class="number">18093.7</span>    <span class="number">125</span>   <span class="number">25.202</span>   <span class="number">0</span>      <span class="number">0.000</span>   <span class="number">25.202</span></span><br></pre></td></tr></table></figure>
+<h3 id="问题1:">问题1:</h3><p>OLD区已经快满了(10/14),<br>回顾下对象是如何进入old区的：</p>
+<ul>
+<li>长期存活的对象将进入老年代，对象在Eden区中经过第一次MinorGC之后进入Survivor区中，每经过一次minorgc如果没有被回收，默认经过15次gc还未被回收就会进入old区</li>
+<li>大对象直接进入老年代，虚拟机提供了一个<code>-XX:PretenureSize</code>参数,大于这个值的对象直接在老年代中分配。避免了再Eden区和Survivor区中发生大量的内存复制（该参数只对几个收集器起作用）。<br>JVM内存回收过程<blockquote>
+<p>1、对象在Eden区完成内存分配<br>2、当Eden区满了，再创建对象，会因为申请不到空间，触发minorGC，进行young(eden+1survivor)区的垃圾回收<br>3、minorGC时，Eden不能被回收的对象被放入到空的survivor（Eden肯定会被清空），另一个survivor里不能被GC回收的对象也会被放入这个survivor，始终保证一个survivor是空的<br>4、当做第3步的时候，如果发现survivor满了，则这些对象被copy到old区，或者survivor并没有满，但是有些对象已经足够Old，也被放入Old区 XX:MaxTenuringThreshold<br>5、当Old区被放满的之后，进行fullGC</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="问题2">问题2</h3><p>heap中char数组占用内存过多，但是程序并有显示生成char对象。<br><a href="http://stackoverflow.com/questions/20388081/why-my-java-heap-is-with-so-many-char" target="_blank" rel="external">Why my Java heap is with so many char</a></p>
+<blockquote>
+<p>811k of char[] correspond to 800k of Strings, so yes, you have too many Strings.<br>If you’re having a memory leak (judging by the tag), then it’s most probably are strings in a HashMap. You have 800k instances of strings, 200k instances of hash entries, 30k of maps. This probably means that your strings are kept in this cache and are not removed. Global map is a frequent cause of memory leaks, one needs to make sure that they are evicted from this cache.</p>
+</blockquote>
+<p>Since all these values are not being GC-ed, you could try analyzing an object graph to see what’s holding them with a tool like JProfiler.</p>
+<p><a href="http://stackoverflow.com/questions/1985480/why-does-the-profiler-show-large-numbers-of-char-instances-when-i-am-not-creat" target="_blank" rel="external">Why does the profiler show large numbers of char[] instances when I am not creating any?</a></p>
+<blockquote>
+<p>Take a look at the String source code. The String object itself contains a cached hash code, a count of the number of characters (again, for optimisation purposes), an offset (since a String.substr()points to the original string data) and the character array, which contains the actual string data. Hence your metrics showing that String consumes relatively little, but the majority of memory is taken by the underlying character arrays.</p>
+<p>String is the perfect example. It contains a handful of primitive fields, plus the char[]. The char[]accounts for the vast majority of the memory usage. The shallow size of String is very small, but it’s retained size is much larger, since that includes the char[].<br>大概就是说尽管没有直接使用char数组，但是对String的频繁使用也会造成这个问题。</p>
+</blockquote>
+<h2 id="参考链接:">参考链接:</h2><p><a href="http://www.importnew.com/14086.html" target="_blank" rel="external">Java内存与垃圾回收调优</a></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/08/17/pipeline-sync-problem/" itemprop="url">
+                  pipline sync
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-17T09:36:24+08:00" content="2015-08-17">
+              2015-08-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/17/pipeline-sync-problem/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/pipeline-sync-problem/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>之前因为项目需要先从redis中取出key的列表，再循环这些列表操作后写入到redis中，因为使用pipline，中间出现了一些问题记录学习下。<br>最初の源代码:<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/17/pipeline-sync-problem/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/08/17/Servlet-gzip-filter/" itemprop="url">
+                  [翻译]Servlet Gzip Filter简介
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-17T09:36:05+08:00" content="2015-08-17">
+              2015-08-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/17/Servlet-gzip-filter/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/Servlet-gzip-filter/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>原文地址:<a href="http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html">http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html</a></p>
+<h2 id="简介">简介</h2><blockquote>
+<p>A GZip Servlet Filter can be used to GZip compress content sent to a browser from a Java web application. This text will explain how that works, and contains a GZip Servlet Filter you can use in your own Java web applications. If you do not know what a Servlet filter is, read my text on Servlet Filters.</p>
+</blockquote>
+<p>gzip servlet filter 可用来压缩网页内容。本文将介绍其如何工作，以及如何使用gzip servlet filter 在你的web服务器中。如果不了解servlet filter是什么可以参考这篇文章:<a href="http://tutorials.jenkov.com/java-servlets/servlet-filters.html">Servlet Filters.</a></p>
+<h2 id="为什么要使用gzip压缩网页内容">为什么要使用gzip压缩网页内容</h2><blockquote>
+<p>GZip compressing HTML, JavaScript, CSS etc. makes the data sent to the browser smaller. This speeds up the download. This is especially beneficial for mobile phones where internet bandwidth may be limited. GZip compressing content adds a CPU overhead on the server and browser, but it is still speeding up the total page load compared to not GZip compressing.</p>
+</blockquote>
+<p>gzip 压缩html、Javascript，css等等文件，目的是为了是发送到浏览器的数据更小，加速下载，这对于限制了带宽的移动端作用特别大。当然gzip增加了server端和浏览器端的cpu的压力，但是总体来说还是加速了页面的载入。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/17/Servlet-gzip-filter/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/08/17/Spring-bean/" itemprop="url">
+                  Bean的基本用法备忘
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-17T09:35:54+08:00" content="2015-08-17">
+              2015-08-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/17/Spring-bean/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/Spring-bean/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="前言">前言</h2><p>本文为实验楼<a href="https://www.shiyanlou.com/courses/33">Spring框架入门教程</a> 学习笔记</p>
+<h2 id="Spring中的相互引用">Spring中的相互引用</h2><ul>
+<li>引用不同配置文件中的Bean，可以使用<code>ref</code>标签，结合<code>bean</code>属性</li>
+<li>引用相同配置文件中的Bean，可以使用<code>ref</code>标签,结合<code>local</code>属性</li>
+</ul>
+<blockquote>
+<p>ref 标签中 bean 属性，既可以引用相同xml文件中的bean，也可以引用不同xml文件中的bean，但是，考虑到项目的可读性，引用相同xml配置文件的bean时，应该尽量使用 local 属性。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/17/Spring-bean/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/08/17/tomcat-architecture/" itemprop="url">
+                  Tomcat源码结构分析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-17T09:35:40+08:00" content="2015-08-17">
+              2015-08-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Tomcat/" itemprop="url" rel="index">
+                    <span itemprop="name">Tomcat</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/17/tomcat-architecture/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/tomcat-architecture/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Tomcat的总体架构">Tomcat的总体架构</h2><p>Tomcat即是一个Http服务器也是一个Servlet容器，它的总体结构我们可以用下图来描述：<br><img src="http://10.240.225.100/gitbucket/xuyifei/Tomcat/_attached/1436858235159hn9lHQz7Ny" alt="Tomcat架构示例图"></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/17/tomcat-architecture/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/" itemprop="url">
+                  七周七语言读书笔记之Ruby
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-17T09:31:57+08:00" content="2015-08-17">
+              2015-08-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>语言特性</p>
+<ul>
+<li>Ruby是解释执行的。</li>
+<li>除了NIL和false 之外其他值都表示true</li>
+</ul>
+<p>鸭子类型</p>
+<ul>
+<li>Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行时而非编译时进行类型检查（动态类型）。</li>
+<li>所谓鸭子类型并不关心其内在类型是什么。只要看上去像就可以了。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/21/JDK-Tools/" itemprop="url">
+                  JDK 自带工具备忘
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-21T13:31:08+08:00" content="2015-04-21">
+              2015-04-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/21/JDK-Tools/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/21/JDK-Tools/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="简介">简介</h2><ul>
+<li>jps JVM process status 显示系统内所有的hotspot虚拟机进程。</li>
+<li>jstat JVM statistics monitoring tool 收集hotspot虚拟机各方面的运行数据</li>
+<li>jinfo configuration info for java 显示虚拟机配置信息</li>
+<li>jmap 生成虚拟机的内存转储快照</li>
+<li>jhat JVM heap dump browser 用于分析heapdump文件。</li>
+<li>jstack stack trace for java 显示虚拟机上的线程快照
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/04/21/JDK-Tools/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
 
   </section>
 
@@ -353,7 +1340,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-count">33</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -367,7 +1354,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

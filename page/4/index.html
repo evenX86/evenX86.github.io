@@ -212,6 +212,110 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/14/jedis-pipline-test/" itemprop="url">
+                  jedis pipline 性能测试
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-14T15:25:21+08:00" content="2015-04-14">
+              2015-04-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/14/jedis-pipline-test/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/14/jedis-pipline-test/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="pipline模式">pipline模式</h2><blockquote>
+<p>Pipeline：“管道”，和很多设计模式中的“管道”具有同样的概念，pipleline的操作，将明确client与server端的交互，都是“单向的”：你可以将多个command，依次发给server，但在此期间，你将无法获得单个command的响应数据，此后你可以关闭“请求”，然后依次获取每个command的响应结果。<br>    从简单来说，在IO操作层面，对于client而言，就是一次批量的连续的“write”请求，然后是批量的连续的“read”操作。其实对于底层Socket-IO而言，对于client而言，只不过是多次write，然后一次read的操作；对于server端，input通道上read到数据之后，就会立即被实施，也会和非pipeline一样在output通道上输出执行的结果，只不过此时数据会被阻塞在网络缓冲区上，直到client端开始read或者关闭链接。神秘的面纱已被解开，或许你也能创造一个pipeline的实现。<br>    非pipleline模式：<br>    Request——&gt;执行<br>    ——&gt;Response<br>    Request——&gt;执行<br>    ——&gt;Response<br>    Pipeline模式下：<br>    Request——&gt;执行，Server将响应结果队列化<br>    Request——&gt;执行，Server将响应结果队列化<br>    ——&gt;Response<br>    ——&gt;Response<br>    Client端根据Redis的数据协议，将响应结果进行解析，并将结果做类似于“队列化”的操作。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/04/14/jedis-pipline-test/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/03/25/hello-world/" itemprop="url">
                   Hello World
                 </a>
@@ -436,7 +540,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-count">33</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -450,7 +554,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
