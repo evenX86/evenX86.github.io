@@ -63,7 +63,7 @@ Quartz使用Schedulers是由工厂方法生成的。Scheduler Job会在调用sta
 <meta property="og:description" content="quartz是由Java编写的一款调度程序,github的地址:https://github.com/quartz-scheduler/quartz
 Quartz使用Schedulers是由工厂方法生成的。Scheduler Job会在调用start()之后才会开始执行。
 使用Scheduling API扩展接口Job，在里面的execute()方法里即可编写被调度程序的逻辑代码.12345678">
-<meta property="og:image" content="http://40.media.tumblr.com/e0dbe72ed3a82f73f02fd5f6fc6d4c15/tumblr_o5k5a7IvUm1vryu4so1_1280.png">
+<meta property="og:image" content="http://7xsxll.com2.z0.glb.clouddn.com/yuxuhong7250_1460525740708_53.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="quartz 概述">
 <meta name="twitter:description" content="quartz是由Java编写的一款调度程序,github的地址:https://github.com/quartz-scheduler/quartz
@@ -219,7 +219,7 @@ Quartz使用Schedulers是由工厂方法生成的。Scheduler Job会在调用sta
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-04-13T13:55:04+08:00" content="2016-04-13">
+            <time itemprop="dateCreated" datetime="2016-04-13T14:08:15+08:00" content="2016-04-13">
               2016-04-13
             </time>
           </span>
@@ -270,7 +270,7 @@ Quartz使用Schedulers是由工厂方法生成的。Scheduler Job会在调用sta
 <h3 id="使用Scheduling_API">使用Scheduling API</h3><p>扩展接口<code>Job</code>，在里面的<code>execute()</code>方法里即可编写被调度程序的逻辑代码.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyJob</span> <span class="keyword">implements</span> <span class="title">org</span>.<span class="title">quartz</span>.<span class="title">Job</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyJob</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(JobExecutionContext context)</span> <span class="keyword">throws</span> JobExecutionException </span>&#123;</span><br><span class="line">        System.err.println(<span class="string">"Hello World!  MyJob is executing."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <p>然后将<code>Job</code>与触发<code>Trigger</code>加入到调度周期里就可以运行了。<br><figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// define the job <span class="literal">and</span> tie it <span class="keyword">to</span> our MyJob <span class="class"><span class="keyword">class</span></span></span><br><span class="line">JobDetail job = newJob(MyJob.class)</span><br><span class="line">    .withIdentity(<span class="string">"job1"</span>, <span class="string">"group1"</span>)</span><br><span class="line">    .build();</span><br><span class="line"> </span><br><span class="line">// Trigger the job <span class="keyword">to</span> run now, <span class="literal">and</span> <span class="keyword">then</span> <span class="keyword">repeat</span> every <span class="number">40</span> seconds</span><br><span class="line">Trigger trigger = newTrigger()</span><br><span class="line">    .withIdentity(<span class="string">"trigger1"</span>, <span class="string">"group1"</span>)</span><br><span class="line">    .startNow()</span><br><span class="line">    .withSchedule(simpleSchedule()</span><br><span class="line">            .withIntervalInSeconds(<span class="number">40</span>)</span><br><span class="line">            .repeatForever())</span><br><span class="line">    .build();</span><br><span class="line"> </span><br><span class="line">// Tell quartz <span class="keyword">to</span> schedule the job using our trigger</span><br><span class="line">scheduler.scheduleJob(job, trigger);</span><br></pre></td></tr></table></figure></p>
-<h2 id="quartz各个组件之间的关系图">quartz各个组件之间的关系图</h2><p><img src="http://40.media.tumblr.com/e0dbe72ed3a82f73f02fd5f6fc6d4c15/tumblr_o5k5a7IvUm1vryu4so1_1280.png" alt=""></p>
+<h2 id="quartz各个组件之间的关系图">quartz各个组件之间的关系图</h2><p><img src="http://7xsxll.com2.z0.glb.clouddn.com/yuxuhong7250_1460525740708_53.png" alt=""></p>
 <h2 id="参考链接">参考链接</h2><ul>
 <li><a href="http://nkcoder.github.io/tags/quartz/page/2/" target="_blank" rel="external">http://nkcoder.github.io/tags/quartz/page/2/</a></li>
 </ul>
@@ -298,6 +298,10 @@ Quartz使用Schedulers是由工厂方法生成的。Scheduler Job会在调用sta
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/13/Thread-Runnable-diff/" rel="prev" title="实现线程为什么Thread和Runnable 都可以">
+                实现线程为什么Thread和Runnable 都可以 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -369,7 +373,7 @@ Quartz使用Schedulers是由工厂方法生成的。Scheduler Job会在调用sta
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -383,7 +387,7 @@ Quartz使用Schedulers是由工厂方法生成的。Scheduler Job会在调用sta
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

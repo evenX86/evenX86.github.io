@@ -212,6 +212,109 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/13/Thread-Runnable-diff/" itemprop="url">
+                  实现线程为什么Thread和Runnable 都可以
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-13T15:36:46+08:00" content="2016-04-13">
+              2016-04-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/13/Thread-Runnable-diff/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/13/Thread-Runnable-diff/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>在最近的几次面试中有时候会问，实现线程的两种方式以及用哪个更好。<br>同学们一般都会答出<code>extends Thread</code> 和 <code>implement Runnable</code> ，至于哪种更好，大概会有半数人答不出来，虽然这个问题很简单，但是在实际工作中自己去<br>生成一个线程的情况还是很少遇见的。但这里面的问题稍微抽象下就可以看出是考察<code>extends</code>和<code>implements</code>之间的区别和优劣。<br>一般来说我们会选择<code>implement Runnable</code> 方式，因为Java是单继承但可以多个扩展，使用接口更利于扩展，另外扩展<code>Runnable</code>接口更利于资源共享，即多线程处理同一资源.<br>面试的话到这里可能就结束了，但是深入探究下，为什么两者都可以，两者之间的关系是怎么样的。<br>先写两个方法的简单示例:<br>Thread方式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="number">_</span>N = <span class="number">10</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">" : "</span> + <span class="number">_</span>N);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        ThreadTest t0 = <span class="keyword">new</span> ThreadTest();</span><br><span class="line">        t0.start();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/13/Thread-Runnable-diff/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/13/quartz-overview/" itemprop="url">
                   quartz 概述
                 </a>
@@ -223,7 +326,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-04-13T13:55:04+08:00" content="2016-04-13">
+            <time itemprop="dateCreated" datetime="2016-04-13T14:08:15+08:00" content="2016-04-13">
               2016-04-13
             </time>
           </span>
@@ -1171,110 +1274,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/29/Spark-Op-Into/" itemprop="url">
-                  Spark 变换与动作备忘与例子
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-29T18:01:12+08:00" content="2016-03-29">
-              2016-03-29
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spark/" itemprop="url" rel="index">
-                    <span itemprop="name">Spark</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/29/Spark-Op-Into/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/29/Spark-Op-Into/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>首先安利一个学习网站:<a href="http://www.hubwiz.com/">http://www.hubwiz.com/</a></p>
-<h2 id="组合">组合</h2><p>例子:<br>将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.<span class="function"><span class="title">map</span><span class="params">(line =&gt; line.split(<span class="string">" "</span>)</span></span>.size).<span class="function"><span class="title">reduce</span><span class="params">((a, b)</span></span> =&gt; <span class="keyword">if</span> (<span class="tag">a</span> &gt; b) <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">res4: Long = <span class="number">15</span></span><br></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/29/Spark-Op-Into/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1321,7 +1320,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1335,7 +1334,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
