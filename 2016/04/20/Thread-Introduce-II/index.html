@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Spark," />
+  <meta name="keywords" content="Thread," />
 
 
 
@@ -53,18 +53,30 @@
 
 
 
-<meta name="description" content="首先安利一个学习网站:http://www.hubwiz.com/
-组合例子:将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。12scala&amp;gt; textFile.map(line =&amp;gt; line.split(&quot; &quot;).size).reduce((a, b) =&amp;gt; if (a &amp;gt">
+<meta name="description" content="Why Thread在没有线程的从前日子，当服务器处理成千上万个连接的时候性能问题就非常突兀了，这个时候
+
+重用进程
+使用轻量级的线程书中提到使用线程代替进程会使服务器性能提升三倍，如果再使用线程池可以提升九倍多。使用线程池处理短连接可以在每分钟使用100个不到线程处理数千个短连接。
+异步I/O在IM的应用场景中经常会出现同时需要数千个很长时间的连接。这个会在以后的文章中详细讲解。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spark 变换与动作备忘与例子">
-<meta property="og:url" content="http://evenx86.github.io/2016/03/29/Spark-Op-Into/index.html">
+<meta property="og:title" content="再谈线程">
+<meta property="og:url" content="http://evenx86.github.io/2016/04/20/Thread-Introduce-II/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="首先安利一个学习网站:http://www.hubwiz.com/
-组合例子:将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。12scala&amp;gt; textFile.map(line =&amp;gt; line.split(&quot; &quot;).size).reduce((a, b) =&amp;gt; if (a &amp;gt">
+<meta property="og:description" content="Why Thread在没有线程的从前日子，当服务器处理成千上万个连接的时候性能问题就非常突兀了，这个时候
+
+重用进程
+使用轻量级的线程书中提到使用线程代替进程会使服务器性能提升三倍，如果再使用线程池可以提升九倍多。使用线程池处理短连接可以在每分钟使用100个不到线程处理数千个短连接。
+异步I/O在IM的应用场景中经常会出现同时需要数千个很长时间的连接。这个会在以后的文章中详细讲解。">
+<meta property="og:image" content="http://7xsxll.com2.z0.glb.clouddn.com/1109262.png">
+<meta property="og:image" content="http://7xsxll.com2.z0.glb.clouddn.com/2386594.png">
+<meta property="og:image" content="http://7xsxll.com2.z0.glb.clouddn.com/2672313.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spark 变换与动作备忘与例子">
-<meta name="twitter:description" content="首先安利一个学习网站:http://www.hubwiz.com/
-组合例子:将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。12scala&amp;gt; textFile.map(line =&amp;gt; line.split(&quot; &quot;).size).reduce((a, b) =&amp;gt; if (a &amp;gt">
+<meta name="twitter:title" content="再谈线程">
+<meta name="twitter:description" content="Why Thread在没有线程的从前日子，当服务器处理成千上万个连接的时候性能问题就非常突兀了，这个时候
+
+重用进程
+使用轻量级的线程书中提到使用线程代替进程会使服务器性能提升三倍，如果再使用线程池可以提升九倍多。使用线程池处理短连接可以在每分钟使用100个不到线程处理数千个短连接。
+异步I/O在IM的应用场景中经常会出现同时需要数千个很长时间的连接。这个会在以后的文章中详细讲解。">
 
 
 
@@ -76,7 +88,7 @@
   };
 </script>
 
-  <title> Spark 变换与动作备忘与例子 | 曲径通幽 </title>
+  <title> 再谈线程 | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -206,7 +218,7 @@
             
             
               
-                Spark 变换与动作备忘与例子
+                再谈线程
               
             
           </h1>
@@ -215,8 +227,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-03-29T18:01:12+08:00" content="2016-03-29">
-              2016-03-29
+            <time itemprop="dateCreated" datetime="2016-04-20T09:50:14+08:00" content="2016-04-20">
+              2016-04-20
             </time>
           </span>
 
@@ -225,8 +237,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spark/" itemprop="url" rel="index">
-                    <span itemprop="name">Spark</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -241,8 +253,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/29/Spark-Op-Into/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/29/Spark-Op-Into/" itemprop="commentsCount"></span>
+                <a href="/2016/04/20/Thread-Introduce-II/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/20/Thread-Introduce-II/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -261,40 +273,16 @@
       
 
       
-        <span itemprop="articleBody"><p>首先安利一个学习网站:<a href="http://www.hubwiz.com/" target="_blank" rel="external">http://www.hubwiz.com/</a></p>
-<h2 id="组合">组合</h2><p>例子:<br>将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.<span class="function"><span class="title">map</span><span class="params">(line =&gt; line.split(<span class="string">" "</span>)</span></span>.size).<span class="function"><span class="title">reduce</span><span class="params">((a, b)</span></span> =&gt; <span class="keyword">if</span> (<span class="tag">a</span> &gt; b) <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">res4: Long = <span class="number">15</span></span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<h2 id="动作">动作</h2><p>首先获得textFile后面的变量，后面的例子都会用到。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">var</span> tf = sc.<span class="function"><span class="title">textFile</span><span class="params">(<span class="string">"README.md"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+        <span itemprop="articleBody"><h2 id="Why_Thread">Why Thread</h2><p>在没有线程的从前日子，当服务器处理成千上万个连接的时候性能问题就非常突兀了，这个时候</p>
 <ul>
-<li><p>count：计数<br>返回文件的总行数：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; tf.<span class="function"><span class="title">count</span><span class="params">()</span></span></span><br><span class="line">res9: Long = <span class="number">95</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>top：前N个记录<br>可以指定一个排序函数来进行排序比较，不指定的话使用默认的ascii码进行记录排序<br>示例：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="tag">var</span> top2 = tf.<span class="function"><span class="title">top</span><span class="params">(<span class="number">2</span>)</span></span></span><br><span class="line">top2: Array[String] = <span class="function"><span class="title">Array</span><span class="params">(will run the Pi example locally., supports general computation graphs for data analysis. It also supports a)</span></span></span><br></pre></td></tr></table></figure>
-</li>
+<li>重用进程</li>
+<li>使用轻量级的线程<br>书中提到使用线程代替进程会使服务器性能提升三倍，如果再使用线程池可以提升九倍多。<br>使用线程池处理短连接可以在每分钟使用100个不到线程处理数千个短连接。</li>
+<li>异步I/O<br>在IM的应用场景中经常会出现同时需要数千个很长时间的连接。<br>这个会在以后的文章中详细讲解。<a id="more"></a>
+<h2 id="再谈实现线程的两种方式">再谈实现线程的两种方式</h2>在上一篇文章中我们详细分析了<code>new Thread</code>和<code>implements Runnable</code>的区别，在本书中再次涉及这两种方式。<br>一般选择<code>Runnable</code>因为这种方式可以更清楚的将线程要完成的任务与线程本身区分开。<br>另外在继承<code>Thread</code>类的时候要注意，仅覆盖<code>run</code>方法，其他方法都有其特殊的语义，且其在虚拟机中的交互很难在你的代码中重新实现。<br>然而并不认为<code>Runnable</code>接口就一定优于继承<code>Thread</code>类，因为在某些场景下需要在每个<code>Thread</code>对象的构造函数中调用<code>Thread</code>类的一些实例方法，这种情况就继承就很有用。<h2 id="从线程中返回信息">从线程中返回信息</h2><code>run()</code>和<code>start()</code>并不返回任何值。那么该如何获得。看下下面这张图。<br><img src="http://7xsxll.com2.z0.glb.clouddn.com/1109262.png" alt=""><h2 id="同步">同步</h2>当两个线程同时访问同一个资源时候，其中一个必须等待另个结束。这里就需要同步。<br>看下下面这张图<br><img src="http://7xsxll.com2.z0.glb.clouddn.com/2386594.png" alt=""></li>
 </ul>
-<p>使用排序函数的例子:<br>暂无</p>
-<ul>
-<li>max : 取值最大的记录<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">scala</span>&gt; tf.<span class="literal">max</span>()</span><br><span class="line">res14: String = will <span class="keyword">run</span> the Pi example locally.</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>使用排序函数的例子:<br>暂无</p>
-<ul>
-<li>reduce : 归约RDD<br>例子：使用匿名函数将所有记录连接起来构成一个字符串<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b)</span><br><span class="line">res60:String = <span class="id">#Apache</span> SparkSpake is <span class="tag">a</span> fast...</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>例子:请使用你创建的textFile变量，返回最长的单词。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a.size&gt;b.size)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">&lt;console&gt;:<span class="number">30</span>: error: value size is not <span class="tag">a</span> member of Char</span><br><span class="line">              tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a.size&gt;b.size)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">                                                         ^</span><br><span class="line"> </span><br><span class="line">scala&gt; tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a&gt;b)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">res35: Char = z</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>collect : 取出全部记录</li>
-</ul>
-<h1 id="变换">变换</h1><ul>
-<li>map 映射</li>
-<li>filter 过滤</li>
-<li>sample 采样</li>
-<li>union 合并</li>
-<li>intersection  相交</li>
-<li>distinct  去重</li>
-</ul>
+<p>同步锁住资源的同时也会导致一个问题:<strong>死锁</strong><br>要防止死锁，最主要的还是要避免不必要的同步(同步应该是保证线程安全的最后一道防线)，这个在前面的文章里也讲过很多方法。建议参考<a href="https://book.douban.com/subject/10484692/" target="_blank" rel="external">《Java并发编程》</a></p>
+<h2 id="线程调度">线程调度</h2><p>现在我们已经通过<code>Thread</code>或者<code>Runnable</code>方式获得了多个线程，那么该如何保证其中的线程按照你想要的顺序执行呢。<br>看下面这张图能大致了解。<br><img src="http://7xsxll.com2.z0.glb.clouddn.com/2672313.png" alt=""></p>
+<h2 id="参考资料">参考资料</h2><p><a href="https://book.douban.com/subject/26259017/" target="_blank" rel="external">《Java网络编程》</a>第三章</p>
 </span>
       
     </div>
@@ -303,7 +291,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Spark/" rel="tag">#Spark</a>
+            <a href="/tags/Thread/" rel="tag">#Thread</a>
           
         </div>
       
@@ -312,17 +300,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/24/Spring-mybatis-cant-inject-case/" rel="next" title="Spring+MyBatis 注入为NULL的一个case.md">
-                <i class="fa fa-chevron-left"></i> Spring+MyBatis 注入为NULL的一个case.md
+              <a href="/2016/04/13/Thread-Runnable-diff/" rel="next" title="实现线程为什么Thread和Runnable 都可以">
+                <i class="fa fa-chevron-left"></i> 实现线程为什么Thread和Runnable 都可以
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/29/Spark-Install-On-Yarn/" rel="prev" title="Spark on yarn 集群安装">
-                Spark on yarn 集群安装 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -349,8 +333,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/29/Spark-Op-Into/"
-           data-title="Spark 变换与动作备忘与例子" data-url="http://evenx86.github.io/2016/03/29/Spark-Op-Into/">
+      <div class="ds-thread" data-thread-key="2016/04/20/Thread-Introduce-II/"
+           data-title="再谈线程" data-url="http://evenx86.github.io/2016/04/20/Thread-Introduce-II/">
       </div>
     
   </div>
@@ -440,7 +424,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#组合"><span class="nav-number">1.</span> <span class="nav-text">组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动作"><span class="nav-number">2.</span> <span class="nav-text">动作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变换"><span class="nav-number"></span> <span class="nav-text">变换</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Why_Thread"><span class="nav-number">1.</span> <span class="nav-text">Why Thread</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#再谈实现线程的两种方式"><span class="nav-number">2.</span> <span class="nav-text">再谈实现线程的两种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从线程中返回信息"><span class="nav-number">3.</span> <span class="nav-text">从线程中返回信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步"><span class="nav-number">4.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程调度"><span class="nav-number">5.</span> <span class="nav-text">线程调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
