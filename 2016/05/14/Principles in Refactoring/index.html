@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="jdk," />
+  <meta name="keywords" content="软件工程," />
 
 
 
@@ -53,30 +53,69 @@
 
 
 
-<meta name="description" content="简介
-jps JVM process status 显示系统内所有的hotspot虚拟机进程。
-jstat JVM statistics monitoring tool 收集hotspot虚拟机各方面的运行数据
-jinfo configuration info for java 显示虚拟机配置信息
-jmap 生成虚拟机的内存转储快照
-jhat JVM heap dump browser 用于分析h">
+<meta name="description" content="前言本文是重构读书笔记系列第一篇
+什么是重构重构，每个人都对重构有自己的理解和定义。
+文中提到的名词和动词的理解
+
+名词，对软件内部结构的一种调整，在不改变软件可观察行为的前提下，提高可理解性。降低修改成本。
+
+
+动词，使用一系列重构方法调整结构。
+
+重构要扩展的两点
+
+使软件更容易被理解和修改。
+不会改变软件可观察的行为。
+
+对用户是透明的。
+为什么要重构
+重构不是银弹
+
+重构改进软件设计软件是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JDK 自带工具备忘">
-<meta property="og:url" content="http://evenx86.github.io/2015/04/21/JDK-Tools/index.html">
+<meta property="og:title" content="什么是重构">
+<meta property="og:url" content="http://evenx86.github.io/2016/05/14/Principles in Refactoring/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="简介
-jps JVM process status 显示系统内所有的hotspot虚拟机进程。
-jstat JVM statistics monitoring tool 收集hotspot虚拟机各方面的运行数据
-jinfo configuration info for java 显示虚拟机配置信息
-jmap 生成虚拟机的内存转储快照
-jhat JVM heap dump browser 用于分析h">
+<meta property="og:description" content="前言本文是重构读书笔记系列第一篇
+什么是重构重构，每个人都对重构有自己的理解和定义。
+文中提到的名词和动词的理解
+
+名词，对软件内部结构的一种调整，在不改变软件可观察行为的前提下，提高可理解性。降低修改成本。
+
+
+动词，使用一系列重构方法调整结构。
+
+重构要扩展的两点
+
+使软件更容易被理解和修改。
+不会改变软件可观察的行为。
+
+对用户是透明的。
+为什么要重构
+重构不是银弹
+
+重构改进软件设计软件是">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JDK 自带工具备忘">
-<meta name="twitter:description" content="简介
-jps JVM process status 显示系统内所有的hotspot虚拟机进程。
-jstat JVM statistics monitoring tool 收集hotspot虚拟机各方面的运行数据
-jinfo configuration info for java 显示虚拟机配置信息
-jmap 生成虚拟机的内存转储快照
-jhat JVM heap dump browser 用于分析h">
+<meta name="twitter:title" content="什么是重构">
+<meta name="twitter:description" content="前言本文是重构读书笔记系列第一篇
+什么是重构重构，每个人都对重构有自己的理解和定义。
+文中提到的名词和动词的理解
+
+名词，对软件内部结构的一种调整，在不改变软件可观察行为的前提下，提高可理解性。降低修改成本。
+
+
+动词，使用一系列重构方法调整结构。
+
+重构要扩展的两点
+
+使软件更容易被理解和修改。
+不会改变软件可观察的行为。
+
+对用户是透明的。
+为什么要重构
+重构不是银弹
+
+重构改进软件设计软件是">
 
 
 
@@ -88,7 +127,7 @@ jhat JVM heap dump browser 用于分析h">
   };
 </script>
 
-  <title> JDK 自带工具备忘 | 曲径通幽 </title>
+  <title> 什么是重构 | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -218,7 +257,7 @@ jhat JVM heap dump browser 用于分析h">
             
             
               
-                JDK 自带工具备忘
+                什么是重构
               
             
           </h1>
@@ -227,8 +266,8 @@ jhat JVM heap dump browser 用于分析h">
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-04-21T13:31:08+08:00" content="2015-04-21">
-              2015-04-21
+            <time itemprop="dateCreated" datetime="2016-05-14T13:38:19+08:00" content="2016-05-14">
+              2016-05-14
             </time>
           </span>
 
@@ -237,8 +276,8 @@ jhat JVM heap dump browser 用于分析h">
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -253,8 +292,8 @@ jhat JVM heap dump browser 用于分析h">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/04/21/JDK-Tools/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/21/JDK-Tools/" itemprop="commentsCount"></span>
+                <a href="/2016/05/14/Principles in Refactoring/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/14/Principles in Refactoring/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -273,43 +312,74 @@ jhat JVM heap dump browser 用于分析h">
       
 
       
-        <span itemprop="articleBody"><h2 id="简介">简介</h2><ul>
-<li>jps JVM process status 显示系统内所有的hotspot虚拟机进程。</li>
-<li>jstat JVM statistics monitoring tool 收集hotspot虚拟机各方面的运行数据</li>
-<li>jinfo configuration info for java 显示虚拟机配置信息</li>
-<li>jmap 生成虚拟机的内存转储快照</li>
-<li>jhat JVM heap dump browser 用于分析heapdump文件。</li>
-<li>jstack stack trace for java 显示虚拟机上的线程快照<a id="more"></a>
-<h2 id="jps">jps</h2>参数列表<blockquote>
-<p>-q Suppress the output of the class name, JAR file name, and arguments passed to the main method, producing only a list of local VM identifiers. 只显示LVMID省略主类名称<br>-m Output the arguments passed to the main method. The output may be null for embedded JVMs. 显示进程启动时传递的参数<br>-l Output the full package name for the application’s main class or the full path name to the application’s JAR file. 显示主类全名，jar路径<br>-v Output the arguments passed to the JVM. 显示进程启动时JVM参数<br>-V Output the arguments passed to the JVM through the flags file (the .hotspotrc file or the file specified by the -XX:Flags=<filename> argument).</filename></p>
-</blockquote>
-</li>
-</ul>
-<h2 id="jstat">jstat</h2><p>JStat可以用来查看JVM的一些统计信息，及GC的情况等。JStat命令本身支持了定时刷新功能。<br>     jstat-gc [pid] 2000 10</p>
-<p>具体参数含义如下：<br>   jstat -classpid:显示加载class的数量，及所占空间等信息。<br>   jstat -compilerpid:显示VM实时编译的数量等信息。<br>   jstat -gc pid:可以显示gc的信息，查看gc的次数，及时间。其中最后五项，分别是young gc的次数，younggc的时间，full gc的次数，fullgc的时间，gc的总时间。<br>  jstat-gccapacity:可以显示，VM内存中三代（young,old,perm）对象的使用和占用大小，如：PGCMN显示的是最小perm的内存使用量，PGCMX显示的是perm的内存最大使用量，PGC是当前新生成的perm内存占用量，PC是但前perm内存占用量。其他的可以根据这个类推，OC是old内纯的占用量。<br>   jstat -gcnewpid:new对象的信息。<br>   jstat -gcnewcapacitypid:new对象的信息及其占用量。<br>   jstat -gcoldpid:old对象的信息。<br>   jstat -gcoldcapacitypid:old对象的信息及其占用量。<br>   jstat -gcpermcapacity pid:perm对象的信息及其占用量。<br>   jstat -utilpid:统计gc信息统计。<br>   jstat -printcompilationpid:当前VM执行的信息。  </p>
-<h2 id="jmap">jmap</h2><p>使用JMap可以解决上面提到的问题，并通过Linux的watch命令达到实时监控的效果。<br>例如，通过下面命令打印堆上apache包占用内存最大的前30个对象，每一秒刷新一次： <code>watch-n 1 -d &quot;jmap -histo:live [pid] | grep &quot;apache&quot; | head -n 30&quot;</code><br> jmap [option] vmid</p>
+        <span itemprop="articleBody"><h2 id="前言">前言</h2><p>本文是<a href="https://book.douban.com/subject/4262627/" target="_blank" rel="external">重构</a>读书笔记系列第一篇</p>
+<h2 id="什么是重构">什么是重构</h2><p>重构，每个人都对重构有自己的理解和定义。</p>
+<p>文中提到的名词和动词的理解</p>
 <ul>
-<li>-dump 生成Java堆转储快照</li>
-<li>-heap 显示Java堆的详细信息</li>
-<li>-histo 显示堆中对象统计信息，包括类实例数量合计容量</li>
+<li>名词，对软件内部结构的一种调整，在不改变软件可观察行为的前提下，提高可理解性。降低修改成本。</li>
+</ul>
+<ul>
+<li>动词，使用一系列重构方法调整结构。</li>
+</ul>
+<p>重构要扩展的两点</p>
+<ul>
+<li>使软件更容易被理解和修改。</li>
+<li>不会改变软件可观察的行为。</li>
+</ul>
+<p>对用户是透明的。</p>
+<h2 id="为什么要重构">为什么要重构</h2><blockquote>
+<p>重构不是银弹</p>
+</blockquote>
+<h3 id="重构改进软件设计">重构改进软件设计</h3><p>软件是会腐烂的。</p>
+<p>重构-&gt;让所有的东西回到应该在的地方-&gt;经常性的重构可以使代码维持自己该有的形态</p>
+<p>通过重构来消除不良设计程序里的冗余代码，使得所有事物和行为在代码中只表述一次。</p>
+<h3 id="重构使软件更容易理解。">重构使软件更容易理解。</h3><p>先重构细节</p>
+<blockquote>
+<p>擦掉窗户上的污垢，可以看得更远</p>
+</blockquote>
+<p>重构在研究代码时候可以带到更高的层次上。</p>
+<h3 id="重构帮助找到bug">重构帮助找到bug</h3><p>理解程序结构的同时发现bug</p>
+<h3 id="重构提高编程速度">重构提高编程速度</h3><p>良好的设计是根本，重构防止软件腐烂，提高设计质量。</p>
+<h2 id="何时重构">何时重构</h2><blockquote>
+<p>重构不是一件应该特别拔出时间来做的事情，应该随时随地进行。</p>
+</blockquote>
+<h3 id="三分法则">三分法则</h3><p>同一件事情，如果第三次还在做，就该考虑重构，要有这个警惕。</p>
+<h3 id="添加功能时重构">添加功能时重构</h3><blockquote>
+<p>在前进的过程中把代码理清，可以从中理解更多东西。</p>
+</blockquote>
+<p>这个就是要求在写代码的时候不断思考这样做是否是最好的，如果用某种方式来设计，添加特性会简单的多。</p>
+<h3 id="修补错误时重构">修补错误时重构</h3><blockquote>
+<p>收到一份错误报告，这就是需要重构的信号</p>
+</blockquote>
+<h3 id="复审代码时重构">复审代码时重构</h3><p>code review</p>
+<p>不断改进不断认识更高层次。</p>
+<h2 id="重构的难题">重构的难题</h2><h3 id="修改接口">修改接口</h3><p>如何修改已发布的接口</p>
+<p>留下旧接口，并调用新函数，同时使用@Deprecated标记旧接口。</p>
+<h3 id="何时不该重构">何时不该重构</h3><blockquote>
+<p>讯号:现有代码根本不能正常运作</p>
+</blockquote>
+<p>自己要把握住重写和重构的度。</p>
+<h2 id="重构与性能">重构与性能</h2><blockquote>
+<p>编写快速软件的秘密就是: 首先写出可调的软件，然后调整它以求获得足够的速度。</p>
+</blockquote>
+<p>三种快速编写软件的方法</p>
+<ul>
+<li>时间预算法</li>
+</ul>
+<p>只用于性能要求极高的地方。</p>
+<p>给每个组件预先分配资源，绝对不能超出自己的预算。</p>
+<ul>
+<li>持续关注法</li>
+</ul>
+<p>任何时间做任何事情都要关注系统性能。</p>
+<p>这种方法的缺点在于，大半时间浪费在海面上的冰山</p>
+<ul>
+<li>专门的性能优化阶段</li>
 </ul>
 <blockquote>
-<p>watch 是周期性的执行下个程序并全屏显示执行结果，。<br>-n或—interval  watch缺省每2秒运行一下程序，可以用-n或-interval来指定间隔的时间。<br>-d或—differences  用-d或—differences 选项watch 会高亮显示变化的区域。 而-d=cumulative选项会把变动过的地方(不管最近的那次有没有变动)都高亮显示出来。<br>-t 或-no-title  会关闭watch命令在顶部的时间间隔,命令，当前时间的输出。</p>
+<p>发现热点,去除热点</p>
 </blockquote>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# jmap -histo 27109</span><br><span class="line"></span><br><span class="line"><span class="header"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span></span><br><span class="line"><span class="code">   1:      30115700     2278829352  [I</span></span><br><span class="line"><span class="code">   2:      29118169     1620754128  [C</span></span><br><span class="line"><span class="code">   3:      13780299     1212666312  java.util.regex.Matcher</span></span><br><span class="line"><span class="code">   4:       7813981      707061400  [B</span></span><br><span class="line"><span class="code">   5:      20477817      655290144  java.lang.String</span></span><br><span class="line"><span class="code">   6:       2988315      472124848  [Ljava.lang.Object;</span></span><br><span class="line"><span class="code">   7:       7817628      437787168  java.util.HashMap$Entry</span></span><br><span class="line"><span class="code">   8:       1098010      265252184  [Ljava.util.HashMap$Entry;</span></span><br><span class="line"><span class="code">   9:       1973855      142117560  java.util.LinkedHashMap$Entry</span></span><br><span class="line"><span class="code">  10:       1010641      121276920  java.util.TreeMap$AscendingSubMap</span></span><br><span class="line"><span class="code">  11:       1948128      109095168  java.nio.HeapByteBuffer</span></span><br><span class="line"><span class="code">  12:             4       86507584  [Ljava.io.ObjectInputStream$HandleTable$HandleList;</span></span><br><span class="line"><span class="code">  13:       3482239       83573736  java.lang.Long</span></span><br></pre></td></tr></table></figure>
-<p>这里涉及到一个问题：</p>
-<p><a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html#getName%28%29" target="_blank" rel="external">http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html#getName%28%29</a></p>
-<p>其中I,C等表示class文件里的class的标识。<br>对应关系如下:</p>
-<ul>
-<li>B 代表<code>byte</code></li>
-<li>C 代表<code>char</code></li>
-<li>D 代表<code>double</code></li>
-<li>F 代表<code>float</code></li>
-<li>I 代表<code>int</code></li>
-<li>J 代表<code>long</code></li>
-<li>Z代表<code>boolean</code><br>前边有<code>[</code>代表数组，<code>[I</code> 就相当于<code>int[]</code><br>对象用<code>[L</code>+类名表示</li>
-</ul>
-<h2 id="参考链接">参考链接</h2><p><a href="http://itzoo.info/?p=256" target="_blank" rel="external">http://itzoo.info/?p=256</a></p>
+<p>使用度量工具监控程序的运行，每走一步都要编译测试在此度量如果没能提升性能就应该撤销此次修改</p>
 </span>
       
     </div>
@@ -318,7 +388,7 @@ jhat JVM heap dump browser 用于分析h">
       
         <div class="post-tags">
           
-            <a href="/tags/jdk/" rel="tag">#jdk</a>
+            <a href="/tags/软件工程/" rel="tag">#软件工程</a>
           
         </div>
       
@@ -327,17 +397,13 @@ jhat JVM heap dump browser 用于分析h">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/04/14/jedis-pipline-test/" rel="next" title="jedis pipline 性能测试">
-                <i class="fa fa-chevron-left"></i> jedis pipline 性能测试
+              <a href="/2016/04/20/Thread-Introduce-II/" rel="next" title="再谈线程">
+                <i class="fa fa-chevron-left"></i> 再谈线程
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/" rel="prev" title="七周七语言读书笔记之Ruby">
-                七周七语言读书笔记之Ruby <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -364,8 +430,8 @@ jhat JVM heap dump browser 用于分析h">
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/04/21/JDK-Tools/"
-           data-title="JDK 自带工具备忘" data-url="http://evenx86.github.io/2015/04/21/JDK-Tools/">
+      <div class="ds-thread" data-thread-key="2016/05/14/Principles in Refactoring/"
+           data-title="什么是重构" data-url="http://evenx86.github.io/2016/05/14/Principles in Refactoring/">
       </div>
     
   </div>
@@ -455,7 +521,7 @@ jhat JVM heap dump browser 用于分析h">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jps"><span class="nav-number">2.</span> <span class="nav-text">jps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jstat"><span class="nav-number">3.</span> <span class="nav-text">jstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jmap"><span class="nav-number">4.</span> <span class="nav-text">jmap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是重构"><span class="nav-number">2.</span> <span class="nav-text">什么是重构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要重构"><span class="nav-number">3.</span> <span class="nav-text">为什么要重构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重构改进软件设计"><span class="nav-number">3.1.</span> <span class="nav-text">重构改进软件设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重构使软件更容易理解。"><span class="nav-number">3.2.</span> <span class="nav-text">重构使软件更容易理解。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重构帮助找到bug"><span class="nav-number">3.3.</span> <span class="nav-text">重构帮助找到bug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重构提高编程速度"><span class="nav-number">3.4.</span> <span class="nav-text">重构提高编程速度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#何时重构"><span class="nav-number">4.</span> <span class="nav-text">何时重构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三分法则"><span class="nav-number">4.1.</span> <span class="nav-text">三分法则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加功能时重构"><span class="nav-number">4.2.</span> <span class="nav-text">添加功能时重构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修补错误时重构"><span class="nav-number">4.3.</span> <span class="nav-text">修补错误时重构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复审代码时重构"><span class="nav-number">4.4.</span> <span class="nav-text">复审代码时重构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重构的难题"><span class="nav-number">5.</span> <span class="nav-text">重构的难题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改接口"><span class="nav-number">5.1.</span> <span class="nav-text">修改接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#何时不该重构"><span class="nav-number">5.2.</span> <span class="nav-text">何时不该重构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重构与性能"><span class="nav-number">6.</span> <span class="nav-text">重构与性能</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
