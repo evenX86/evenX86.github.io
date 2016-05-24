@@ -212,8 +212,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/05/14/Principles in Refactoring/" itemprop="url">
-                  什么是重构
+                <a class="post-title-link" href="/2016/05/24/Bad Smells in Code/" itemprop="url">
+                  代码的坏味道
                 </a>
               
             
@@ -223,8 +223,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-05-14T13:38:19+08:00" content="2016-05-14">
-              2016-05-14
+            <time itemprop="dateCreated" datetime="2016-05-24T10:12:24+08:00" content="2016-05-24">
+              2016-05-24
             </time>
           </span>
 
@@ -233,8 +233,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/软件工程/" itemprop="url" rel="index">
+                    <span itemprop="name">软件工程</span>
                   </a>
                 </span>
 
@@ -249,8 +249,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/14/Principles in Refactoring/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/14/Principles in Refactoring/" itemprop="commentsCount"></span>
+                <a href="/2016/05/24/Bad Smells in Code/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/24/Bad Smells in Code/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -270,9 +270,125 @@
 
       
         
-          <span itemprop="articleBody">
+          <p>本文是<a href="https://book.douban.com/subject/4262627/">重构</a> 读书笔记第二篇</p>
+<p>读完本文你会大概清楚重构开始和停止的时机以及重构机制如何运作。</p>
+<p>重构一般是靠经验丰富者的直觉，本章也只是给出一些迹象来表明这里有一个可以用重构解决的问题。</p>
+<h2 id="重复代码">重复代码</h2><p>IDEA15新增了一个非常好的功能，就是遇到重复代码，IDE会用标记提醒你重复的代码段并可以跳转到重复代码。</p>
+<p>常见的重复代码情况:</p>
+<ul>
+<li><p>同一个的类的两个函数含有相同的代码</p>
+</li>
+<li><p>两个互为兄弟的子类内含相同表达式</p>
+</li>
+<li><p>两个不相关的类出现重复代码</p>
+<p>对于第一种情况，需要使用<code>Extract Method</code>, 提炼出重复代码，然后让两个函数调用提炼出来的代码。</p>
+<p>对于第二种情况，可以将重复代码提炼出来后放入超类中。</p>
+<p>对于第三种情况，需要使用<code>Extract Class</code> , 将重复代码提炼到一独立类中，然后在另一个类中使用这个新类。</p>
+</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/24/Bad Smells in Code/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
             
-              <h2 id="前言">前言</h2><p>本文是<a href="https://book.douban.com/subject/4262627/" target="_blank" rel="external">重构</a>读书笔记系列第一篇</p>
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/24/Principles in Refactoring/" itemprop="url">
+                  什么是重构
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-05-24T10:12:06+08:00" content="2016-05-24">
+              2016-05-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/软件工程/" itemprop="url" rel="index">
+                    <span itemprop="name">软件工程</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/24/Principles in Refactoring/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/24/Principles in Refactoring/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="前言">前言</h2><p>本文是<a href="https://book.douban.com/subject/4262627/">重构</a>读书笔记系列第一篇</p>
 <h2 id="什么是重构">什么是重构</h2><p>重构，每个人都对重构有自己的理解和定义。</p>
 <p>文中提到的名词和动词的理解</p>
 <ul>
@@ -288,61 +404,12 @@
 </ul>
 <p>对用户是透明的。</p>
 <h2 id="为什么要重构">为什么要重构</h2><blockquote>
-<p>重构不是银弹</p>
-</blockquote>
-<h3 id="重构改进软件设计">重构改进软件设计</h3><p>软件是会腐烂的。</p>
-<p>重构-&gt;让所有的东西回到应该在的地方-&gt;经常性的重构可以使代码维持自己该有的形态</p>
-<p>通过重构来消除不良设计程序里的冗余代码，使得所有事物和行为在代码中只表述一次。</p>
-<h3 id="重构使软件更容易理解。">重构使软件更容易理解。</h3><p>先重构细节</p>
-<blockquote>
-<p>擦掉窗户上的污垢，可以看得更远</p>
-</blockquote>
-<p>重构在研究代码时候可以带到更高的层次上。</p>
-<h3 id="重构帮助找到bug">重构帮助找到bug</h3><p>理解程序结构的同时发现bug</p>
-<h3 id="重构提高编程速度">重构提高编程速度</h3><p>良好的设计是根本，重构防止软件腐烂，提高设计质量。</p>
-<h2 id="何时重构">何时重构</h2><blockquote>
-<p>重构不是一件应该特别拔出时间来做的事情，应该随时随地进行。</p>
-</blockquote>
-<h3 id="三分法则">三分法则</h3><p>同一件事情，如果第三次还在做，就该考虑重构，要有这个警惕。</p>
-<h3 id="添加功能时重构">添加功能时重构</h3><blockquote>
-<p>在前进的过程中把代码理清，可以从中理解更多东西。</p>
-</blockquote>
-<p>这个就是要求在写代码的时候不断思考这样做是否是最好的，如果用某种方式来设计，添加特性会简单的多。</p>
-<h3 id="修补错误时重构">修补错误时重构</h3><blockquote>
-<p>收到一份错误报告，这就是需要重构的信号</p>
-</blockquote>
-<h3 id="复审代码时重构">复审代码时重构</h3><p>code review</p>
-<p>不断改进不断认识更高层次。</p>
-<h2 id="重构的难题">重构的难题</h2><h3 id="修改接口">修改接口</h3><p>如何修改已发布的接口</p>
-<p>留下旧接口，并调用新函数，同时使用@Deprecated标记旧接口。</p>
-<h3 id="何时不该重构">何时不该重构</h3><blockquote>
-<p>讯号:现有代码根本不能正常运作</p>
-</blockquote>
-<p>自己要把握住重写和重构的度。</p>
-<h2 id="重构与性能">重构与性能</h2><blockquote>
-<p>编写快速软件的秘密就是: 首先写出可调的软件，然后调整它以求获得足够的速度。</p>
-</blockquote>
-<p>三种快速编写软件的方法</p>
-<ul>
-<li>时间预算法</li>
-</ul>
-<p>只用于性能要求极高的地方。</p>
-<p>给每个组件预先分配资源，绝对不能超出自己的预算。</p>
-<ul>
-<li>持续关注法</li>
-</ul>
-<p>任何时间做任何事情都要关注系统性能。</p>
-<p>这种方法的缺点在于，大半时间浪费在海面上的冰山</p>
-<ul>
-<li>专门的性能优化阶段</li>
-</ul>
-<blockquote>
-<p>发现热点,去除热点</p>
-</blockquote>
-<p>使用度量工具监控程序的运行，每走一步都要编译测试在此度量如果没能提升性能就应该撤销此次修改</p>
-
-            
-          </span>
+<p>重构不是银弹<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/24/Principles in Refactoring/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1230,115 +1297,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/31/Why-Java-ThreadPool/" itemprop="url">
-                  Java线程池解惑
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-31T17:12:09+08:00" content="2016-03-31">
-              2016-03-31
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/31/Why-Java-ThreadPool/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/31/Why-Java-ThreadPool/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>首先本文还是为实习生同学解惑用的。某天有个实习生表示对线程池不理解为何要用线程池代替每次产生线程的方式，简单说了几句后，想想干脆整理篇文章好了。</p>
-<p>首先按照实习生的想法，来看一段代码<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> ThreadPerTaskWebServer &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">80</span>);</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">final</span> Socket socket = ss.accept();</span><br><span class="line">            Runnable <span class="keyword">task</span> = ()-&gt; &#123;</span><br><span class="line">                handlRequest(socket);</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">new</span> Thread(<span class="keyword">task</span>).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这段代码为每个连接创建一个线程来处理请求，线程在run方法执行完后终止。在正常负载的情况下，为每个任务创建一个线程能提升串行执行的性能。<br>但是是否存在问题，当需要创建大量线程的时候：</p>
-<ul>
-<li>线程生命周期的开销非常高</li>
-<li>资源消耗，活跃线程会消耗系统资源尤其是内存，当线程多于可用处理器的数量，空闲线程会占用许多线程，所以如果CPU已经处于忙碌状态，再创建线程反而会降低性能。</li>
-<li>稳定性，在一个平台上创建的线程数是有限的，如果无限创建会突破这些限制则会抛出异常。
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/31/Why-Java-ThreadPool/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1385,14 +1343,14 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">分类</span>
               
           </div>

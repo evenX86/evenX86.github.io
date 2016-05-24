@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="ruby," />
+  <meta name="keywords" content="软件工程," />
 
 
 
@@ -53,39 +53,39 @@
 
 
 
-<meta name="description" content="语言特性
+<meta name="description" content="本文是重构 读书笔记第二篇
+读完本文你会大概清楚重构开始和停止的时机以及重构机制如何运作。
+重构一般是靠经验丰富者的直觉，本章也只是给出一些迹象来表明这里有一个可以用重构解决的问题。
+重复代码IDEA15新增了一个非常好的功能，就是遇到重复代码，IDE会用标记提醒你重复的代码段并可以跳转到重复代码。
+常见的重复代码情况:
 
-Ruby是解释执行的。
-除了NIL和false 之外其他值都表示true
+同一个的类的两个函数含有相同的代码
 
-鸭子类型
-
-Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行时而非编译时进行类型检查（动态类型）。
-所谓鸭子类型并不关心其内在类型是什么。只要看上去像就可以了。">
+两个互为兄弟的子类内含相同表达式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="七周七语言读书笔记之Ruby">
-<meta property="og:url" content="http://evenx86.github.io/2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/index.html">
+<meta property="og:title" content="代码的坏味道">
+<meta property="og:url" content="http://evenx86.github.io/2016/05/24/Bad Smells in Code/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="语言特性
+<meta property="og:description" content="本文是重构 读书笔记第二篇
+读完本文你会大概清楚重构开始和停止的时机以及重构机制如何运作。
+重构一般是靠经验丰富者的直觉，本章也只是给出一些迹象来表明这里有一个可以用重构解决的问题。
+重复代码IDEA15新增了一个非常好的功能，就是遇到重复代码，IDE会用标记提醒你重复的代码段并可以跳转到重复代码。
+常见的重复代码情况:
 
-Ruby是解释执行的。
-除了NIL和false 之外其他值都表示true
+同一个的类的两个函数含有相同的代码
 
-鸭子类型
-
-Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行时而非编译时进行类型检查（动态类型）。
-所谓鸭子类型并不关心其内在类型是什么。只要看上去像就可以了。">
+两个互为兄弟的子类内含相同表达式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="七周七语言读书笔记之Ruby">
-<meta name="twitter:description" content="语言特性
+<meta name="twitter:title" content="代码的坏味道">
+<meta name="twitter:description" content="本文是重构 读书笔记第二篇
+读完本文你会大概清楚重构开始和停止的时机以及重构机制如何运作。
+重构一般是靠经验丰富者的直觉，本章也只是给出一些迹象来表明这里有一个可以用重构解决的问题。
+重复代码IDEA15新增了一个非常好的功能，就是遇到重复代码，IDE会用标记提醒你重复的代码段并可以跳转到重复代码。
+常见的重复代码情况:
 
-Ruby是解释执行的。
-除了NIL和false 之外其他值都表示true
+同一个的类的两个函数含有相同的代码
 
-鸭子类型
-
-Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行时而非编译时进行类型检查（动态类型）。
-所谓鸭子类型并不关心其内在类型是什么。只要看上去像就可以了。">
+两个互为兄弟的子类内含相同表达式">
 
 
 
@@ -97,7 +97,7 @@ Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行
   };
 </script>
 
-  <title> 七周七语言读书笔记之Ruby | 曲径通幽 </title>
+  <title> 代码的坏味道 | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -227,7 +227,7 @@ Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行
             
             
               
-                七周七语言读书笔记之Ruby
+                代码的坏味道
               
             
           </h1>
@@ -236,8 +236,8 @@ Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-08-17T09:31:57+08:00" content="2015-08-17">
-              2015-08-17
+            <time itemprop="dateCreated" datetime="2016-05-24T10:12:24+08:00" content="2016-05-24">
+              2016-05-24
             </time>
           </span>
 
@@ -246,8 +246,8 @@ Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
+                  <a href="/categories/软件工程/" itemprop="url" rel="index">
+                    <span itemprop="name">软件工程</span>
                   </a>
                 </span>
 
@@ -262,8 +262,8 @@ Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/" itemprop="commentsCount"></span>
+                <a href="/2016/05/24/Bad Smells in Code/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/24/Bad Smells in Code/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -282,48 +282,73 @@ Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行
       
 
       
-        <span itemprop="articleBody"><p>语言特性</p>
+        <span itemprop="articleBody"><p>本文是<a href="https://book.douban.com/subject/4262627/" target="_blank" rel="external">重构</a> 读书笔记第二篇</p>
+<p>读完本文你会大概清楚重构开始和停止的时机以及重构机制如何运作。</p>
+<p>重构一般是靠经验丰富者的直觉，本章也只是给出一些迹象来表明这里有一个可以用重构解决的问题。</p>
+<h2 id="重复代码">重复代码</h2><p>IDEA15新增了一个非常好的功能，就是遇到重复代码，IDE会用标记提醒你重复的代码段并可以跳转到重复代码。</p>
+<p>常见的重复代码情况:</p>
 <ul>
-<li>Ruby是解释执行的。</li>
-<li>除了NIL和false 之外其他值都表示true</li>
+<li><p>同一个的类的两个函数含有相同的代码</p>
+</li>
+<li><p>两个互为兄弟的子类内含相同表达式</p>
+</li>
+<li><p>两个不相关的类出现重复代码</p>
+<p>对于第一种情况，需要使用<code>Extract Method</code>, 提炼出重复代码，然后让两个函数调用提炼出来的代码。</p>
+<p>对于第二种情况，可以将重复代码提炼出来后放入超类中。</p>
+<p>对于第三种情况，需要使用<code>Extract Class</code> , 将重复代码提炼到一独立类中，然后在另一个类中使用这个新类。</p>
+</li>
 </ul>
-<p>鸭子类型</p>
+<a id="more"></a>
+<h2 id="过长函数">过长函数</h2><blockquote>
+<p>拥有短函数的对象会获得比较好，比较长。</p>
+</blockquote>
+<h3 id="程序员使用短函数的忧虑_:">程序员使用短函数的忧虑 :</h3><ul>
+<li><p>在早前，子程序调用需要额外开销，现代的OO语言已经几乎完全免除了进程内的函数调用开销。</p>
+</li>
+<li><p>短函数影响阅读。阅读时遇到函数确实需要跳转上下文去理解子程序做了什么，这一点，我们可以通过<strong>给函数起个好名字</strong>,这样代码阅读者只要通过名字去了解函数的作用，而不必去看其中写了什么，当然当阅读者需要去查看子程序是怎么做到的另外。</p>
+<h3 id="如何确定提炼哪一段代码">如何确定提炼哪一段代码</h3></li>
+<li><p>寻找注释</p>
+<p>如果代码前方有一行注释表示如下代码段的作用，此时就可以提炼这段代码，并在注释的基础上给这段函数命名。</p>
+</li>
+<li><p>条件表达式和循环</p>
+<p>将条件表达式内提炼到方法。注.p238</p>
+<p>将循环和其内的代码提炼到一个独立函数中</p>
+</li>
+</ul>
+<h2 id="过大的类">过大的类</h2><p>利用单个类做太多的事情，内存往往就会出现过多的实例变量。这时也就会有重复代码的情况出现。</p>
+<h2 id="过长参数列表">过长参数列表</h2><p>利用对象解决。</p>
+<h2 id="发散式变化_Divergent_Change">发散式变化 Divergent Change</h2><blockquote>
+<p>一个类受多种变化的影响</p>
+</blockquote>
+<p>如果某个类经常因为不同的原因在不同的方向上变化，就应该警惕到去找出某特定原因而造成的所有变化。然后运用<code>Extract Class</code>将他们提炼到另一个类中。</p>
+<h2 id="散弹式变化_shotgun_surgery">散弹式变化 shotgun surgery</h2><blockquote>
+<p>一个变化引发多个类相应修改</p>
+</blockquote>
+<p>此时需要将一系列相关行为都放进同一个类。</p>
+<h2 id="依赖情节_feature_envy">依赖情节 feature envy</h2><blockquote>
+<p>面向对象的全部要点在于: 这是一种“将数据和对数据的操作行为包装子在一起”的技术</p>
+</blockquote>
+<p>如果某个函数计算某个值而从另一个对象那里调用几乎大半的取值函数，则此时需要考虑迁移函数到另一个地方。</p>
+<h2 id="数据泥团_Data_Clumps">数据泥团 Data Clumps</h2><p>如果多个数据项经常出现在一起，则应该讲他们提炼到一个对象中。</p>
+<h2 id="Switch_Statements">Switch Statements</h2><blockquote>
+<p>面向对象的一个最明显特征就是: 少用<code>switch</code>语句.</p>
+</blockquote>
+<p>多态可以带来优雅的解决办法。</p>
+<h2 id="冗余类">冗余类</h2><blockquote>
+<p>你所创建的每个类，都得有人去理解它，维护它，这些工作都是要花钱的，如果一个类的所得不值其身价，它应该消失。</p>
+</blockquote>
+<h2 id="夸夸其谈未来性_Speculate_generality">夸夸其谈未来性 Speculate generality</h2><p>删掉没有用的类或变量。</p>
+<h2 id="迷惑的临时变量_templorary_field">迷惑的临时变量 templorary field</h2><h2 id="中间人_middle_man">中间人 middle man</h2><p>防止过度封装，过多的“不干实事”的函数。</p>
+<h2 id="过多的注释">过多的注释</h2><blockquote>
+<p>当你感觉要写注释时，请先尝试重构，试着让所有注释都显得多余</p>
+</blockquote>
+<p>注释的作用：</p>
 <ul>
-<li>Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行时而非编译时进行类型检查（动态类型）。</li>
-<li>所谓鸭子类型并不关心其内在类型是什么。只要看上去像就可以了。<a id="more"></a>
-<h2 id="ruby_类型">ruby 类型</h2></li>
-<li>数组</li>
-<li>散列表。</li>
-<li><p>代码块和yield<br>Ruby的一般惯例是代码块只占一行的用大括号，代码块占多行的用doend</p>
-</li>
-<li><p>定义类<br>Object -&gt; Module -&gt; Class-&gt; Numeric -&gt; Integer -&gt; Fixnum -&gt;4</p>
-</li>
+<li>你不知道改干什么的时候</li>
+<li>记述将来的打算</li>
+<li>标记你并无十足把握的区域</li>
+<li>为什么做xx事</li>
 </ul>
-<p>类一般以大写字母开头，写采用驼峰命名法，实例变量前加@，类变量前必须加上@@</p>
-<p><code>attr</code>用来定义实例变量和访问变量的同名方法<br><code>attr_accessor</code>定义实例变量，访问方法和设置方法。</p>
-<p>Ruby使用模块来处理多继承。如果在类中包含了一个模块，那么该模块的行为和常量会成为类的一部分。</p>
-<h3 id="问题">问题</h3><ul>
-<li>分别找到用代码块和不用代码块读取文件的方法，用代码块有什么好处<br>使用代码块:</li>
-</ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">ToFile</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>filename</span><br><span class="line">    <span class="string">"Object_24144260.txt"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> </span>ptint_f</span><br><span class="line">    <span class="constant">File</span>.open(filename, <span class="string">'r'</span>) &#123; |f| puts f.readline &#125;</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>不使用代码块:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f = File.<span class="function"><span class="title">new</span><span class="params">(<span class="string">"text.txt"</span>,<span class="string">"r"</span>)</span></span></span><br><span class="line">puts f<span class="class">.gets</span></span><br><span class="line">f.close</span><br></pre></td></tr></table></figure></p>
-<p>代码块方便调用。</p>
-<ul>
-<li>如何把散列表转换成数组?数组能转换成散列表吗?<br>将散列表转换成数组:<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">animals = &#123;'1'=&gt;'one','2'=&gt;'two'&#125;</span><br><span class="line"><span class="header">#puts animals.to_a</span></span><br><span class="line">animals = animals.to_a</span><br><span class="line">puts animals[<span class="link_label">1</span>][<span class="link_reference">1</span>] #print two</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>数组转换成散列表的:<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">animals = %w[a b c d]</span><br><span class="line">puts Hash[*animals] #<span class="built_in">print</span> &#123;<span class="string">"a"</span>=&gt;<span class="string">"b"</span>, <span class="string">"c"</span>=&gt;<span class="string">"d"</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p>你能循环遍历散列表吗</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">animals = &#123;<span class="string">'1'</span>=&gt;<span class="string">'one'</span>,<span class="string">'2'</span>=&gt;<span class="string">'two'</span>&#125;</span><br><span class="line">animals.each&#123;|x,y| puts <span class="string">"key is <span class="subst">#&#123;x&#125;</span>,value is <span class="subst">#&#123;y&#125;</span>"</span>&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Ruby  的 数组还能当做栈用，它还能用作哪些常用的数据结构?<br>队列</p>
-</li>
-</ul>
-<h2 id="元编程">元编程</h2><p>元编程:写能写程序的程序。</p>
-<h3 id="开放类">开放类</h3><p>随时可以改变任何类的定义，常用语添加类的行为。</p>
-<h3 id="method_missing">method_missing</h3><h3 id="module，模块。">module，模块。</h3><p>只要某个模块被另一个模块包含，ruby就会调用该模块的include方法。类也是模块。</p>
-<h2 id="总结">总结</h2><p>Ruby的核心优势是它的语法和灵活性，根本的不足之处大概是性能。</p>
 </span>
       
     </div>
@@ -332,7 +357,7 @@ Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行
       
         <div class="post-tags">
           
-            <a href="/tags/ruby/" rel="tag">#ruby</a>
+            <a href="/tags/软件工程/" rel="tag">#软件工程</a>
           
         </div>
       
@@ -341,17 +366,13 @@ Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/04/21/JDK-Tools/" rel="next" title="JDK 自带工具备忘">
-                <i class="fa fa-chevron-left"></i> JDK 自带工具备忘
+              <a href="/2016/05/24/Principles in Refactoring/" rel="next" title="什么是重构">
+                <i class="fa fa-chevron-left"></i> 什么是重构
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/08/17/tomcat-architecture/" rel="prev" title="Tomcat源码结构分析">
-                Tomcat源码结构分析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -378,8 +399,8 @@ Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/"
-           data-title="七周七语言读书笔记之Ruby" data-url="http://evenx86.github.io/2015/08/17/Seven-Lanuage-In-Seven-Weeks-Ruby/">
+      <div class="ds-thread" data-thread-key="2016/05/24/Bad Smells in Code/"
+           data-title="代码的坏味道" data-url="http://evenx86.github.io/2016/05/24/Bad Smells in Code/">
       </div>
     
   </div>
@@ -469,7 +490,7 @@ Ruby在大部分时间里都表现的像一门强类型语言。Ruby是在运行
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ruby_类型"><span class="nav-number">1.</span> <span class="nav-text">ruby 类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.1.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元编程"><span class="nav-number">2.</span> <span class="nav-text">元编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开放类"><span class="nav-number">2.1.</span> <span class="nav-text">开放类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#method_missing"><span class="nav-number">2.2.</span> <span class="nav-text">method_missing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#module，模块。"><span class="nav-number">2.3.</span> <span class="nav-text">module，模块。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#重复代码"><span class="nav-number">1.</span> <span class="nav-text">重复代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过长函数"><span class="nav-number">2.</span> <span class="nav-text">过长函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序员使用短函数的忧虑_:"><span class="nav-number">2.1.</span> <span class="nav-text">程序员使用短函数的忧虑 :</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何确定提炼哪一段代码"><span class="nav-number">2.2.</span> <span class="nav-text">如何确定提炼哪一段代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过大的类"><span class="nav-number">3.</span> <span class="nav-text">过大的类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过长参数列表"><span class="nav-number">4.</span> <span class="nav-text">过长参数列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发散式变化_Divergent_Change"><span class="nav-number">5.</span> <span class="nav-text">发散式变化 Divergent Change</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#散弹式变化_shotgun_surgery"><span class="nav-number">6.</span> <span class="nav-text">散弹式变化 shotgun surgery</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖情节_feature_envy"><span class="nav-number">7.</span> <span class="nav-text">依赖情节 feature envy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据泥团_Data_Clumps"><span class="nav-number">8.</span> <span class="nav-text">数据泥团 Data Clumps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Switch_Statements"><span class="nav-number">9.</span> <span class="nav-text">Switch Statements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#冗余类"><span class="nav-number">10.</span> <span class="nav-text">冗余类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#夸夸其谈未来性_Speculate_generality"><span class="nav-number">11.</span> <span class="nav-text">夸夸其谈未来性 Speculate generality</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迷惑的临时变量_templorary_field"><span class="nav-number">12.</span> <span class="nav-text">迷惑的临时变量 templorary field</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间人_middle_man"><span class="nav-number">13.</span> <span class="nav-text">中间人 middle man</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过多的注释"><span class="nav-number">14.</span> <span class="nav-text">过多的注释</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
