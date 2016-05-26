@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Spark," />
+  <meta name="keywords" content="软件工程,重构," />
 
 
 
@@ -53,18 +53,36 @@
 
 
 
-<meta name="description" content="首先安利一个学习网站:http://www.hubwiz.com/
-组合例子:将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。12scala&amp;gt; textFile.map(line =&amp;gt; line.split(&quot; &quot;).size).reduce((a, b) =&amp;gt; if (a &amp;gt">
+<meta name="description" content="本文是重构 读书笔记第三篇
+自测试代码的价值
+每个类都应该有一个测试函数，并以它来测试自己这个类。
+
+确保所有测试都完全自动化，让他们检查自己的测试结果。
+编写测试代码的最有用的时机就是在开始编程之前，当你需要添加特性的时候，先写相应的测试代码。
+编写测试代码的时候其实就是在问自己，添加这个功能需要做些什么。编写测试代码还能使你把注意力集中于接口而非实现。
+频繁进行测试是极限编程的重要一环。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spark 变换与动作备忘与例子">
-<meta property="og:url" content="http://evenx86.github.io/2016/05/26/Spark-Op-Into/index.html">
+<meta property="og:title" content="Junit 测试框架">
+<meta property="og:url" content="http://evenx86.github.io/2016/05/27/JUnit-Test-Framework/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="首先安利一个学习网站:http://www.hubwiz.com/
-组合例子:将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。12scala&amp;gt; textFile.map(line =&amp;gt; line.split(&quot; &quot;).size).reduce((a, b) =&amp;gt; if (a &amp;gt">
+<meta property="og:description" content="本文是重构 读书笔记第三篇
+自测试代码的价值
+每个类都应该有一个测试函数，并以它来测试自己这个类。
+
+确保所有测试都完全自动化，让他们检查自己的测试结果。
+编写测试代码的最有用的时机就是在开始编程之前，当你需要添加特性的时候，先写相应的测试代码。
+编写测试代码的时候其实就是在问自己，添加这个功能需要做些什么。编写测试代码还能使你把注意力集中于接口而非实现。
+频繁进行测试是极限编程的重要一环。">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spark 变换与动作备忘与例子">
-<meta name="twitter:description" content="首先安利一个学习网站:http://www.hubwiz.com/
-组合例子:将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。12scala&amp;gt; textFile.map(line =&amp;gt; line.split(&quot; &quot;).size).reduce((a, b) =&amp;gt; if (a &amp;gt">
+<meta name="twitter:title" content="Junit 测试框架">
+<meta name="twitter:description" content="本文是重构 读书笔记第三篇
+自测试代码的价值
+每个类都应该有一个测试函数，并以它来测试自己这个类。
+
+确保所有测试都完全自动化，让他们检查自己的测试结果。
+编写测试代码的最有用的时机就是在开始编程之前，当你需要添加特性的时候，先写相应的测试代码。
+编写测试代码的时候其实就是在问自己，添加这个功能需要做些什么。编写测试代码还能使你把注意力集中于接口而非实现。
+频繁进行测试是极限编程的重要一环。">
 
 
 
@@ -76,7 +94,7 @@
   };
 </script>
 
-  <title> Spark 变换与动作备忘与例子 | 曲径通幽 </title>
+  <title> Junit 测试框架 | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -206,7 +224,7 @@
             
             
               
-                Spark 变换与动作备忘与例子
+                Junit 测试框架
               
             
           </h1>
@@ -215,8 +233,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-05-26T17:39:53+08:00" content="2016-05-26">
-              2016-05-26
+            <time itemprop="dateCreated" datetime="2016-05-27T00:29:44+08:00" content="2016-05-27">
+              2016-05-27
             </time>
           </span>
 
@@ -225,8 +243,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spark/" itemprop="url" rel="index">
-                    <span itemprop="name">Spark</span>
+                  <a href="/categories/软件工程/" itemprop="url" rel="index">
+                    <span itemprop="name">软件工程</span>
                   </a>
                 </span>
 
@@ -241,8 +259,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/26/Spark-Op-Into/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/Spark-Op-Into/" itemprop="commentsCount"></span>
+                <a href="/2016/05/27/JUnit-Test-Framework/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/27/JUnit-Test-Framework/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -261,40 +279,31 @@
       
 
       
-        <span itemprop="articleBody"><p>首先安利一个学习网站:<a href="http://www.hubwiz.com/" target="_blank" rel="external">http://www.hubwiz.com/</a></p>
-<h2 id="组合">组合</h2><p>例子:<br>将每一行（成员）映射为一个整数值（单词数量），这获得了一个新的RDD。然后在 这个新的RDD上执行reduce动作，找到（返回）了单词数量最多的行。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.<span class="function"><span class="title">map</span><span class="params">(line =&gt; line.split(<span class="string">" "</span>)</span></span>.size).<span class="function"><span class="title">reduce</span><span class="params">((a, b)</span></span> =&gt; <span class="keyword">if</span> (<span class="tag">a</span> &gt; b) <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">res4: Long = <span class="number">15</span></span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<h2 id="动作">动作</h2><p>首先获得textFile后面的变量，后面的例子都会用到。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">var</span> tf = sc.<span class="function"><span class="title">textFile</span><span class="params">(<span class="string">"README.md"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li><p>count：计数<br>返回文件的总行数：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; tf.<span class="function"><span class="title">count</span><span class="params">()</span></span></span><br><span class="line">res9: Long = <span class="number">95</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>top：前N个记录<br>可以指定一个排序函数来进行排序比较，不指定的话使用默认的ascii码进行记录排序<br>示例：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="tag">var</span> top2 = tf.<span class="function"><span class="title">top</span><span class="params">(<span class="number">2</span>)</span></span></span><br><span class="line">top2: Array[String] = <span class="function"><span class="title">Array</span><span class="params">(will run the Pi example locally., supports general computation graphs for data analysis. It also supports a)</span></span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>使用排序函数的例子:<br>暂无</p>
-<ul>
-<li>max : 取值最大的记录<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">scala</span>&gt; tf.<span class="literal">max</span>()</span><br><span class="line">res14: String = will <span class="keyword">run</span> the Pi example locally.</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>使用排序函数的例子:<br>暂无</p>
-<ul>
-<li>reduce : 归约RDD<br>例子：使用匿名函数将所有记录连接起来构成一个字符串<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; textFile.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b)</span><br><span class="line">res60:String = <span class="id">#Apache</span> SparkSpake is <span class="tag">a</span> fast...</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>例子:请使用你创建的textFile变量，返回最长的单词。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a.size&gt;b.size)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">&lt;console&gt;:<span class="number">30</span>: error: value size is not <span class="tag">a</span> member of Char</span><br><span class="line">              tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a.size&gt;b.size)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">                                                         ^</span><br><span class="line"> </span><br><span class="line">scala&gt; tf.<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span>=&gt;a+b).<span class="function"><span class="title">reduce</span><span class="params">((a,b)</span></span> =&gt; <span class="function"><span class="title">if</span><span class="params">(a&gt;b)</span></span> <span class="tag">a</span> <span class="keyword">else</span> b)</span><br><span class="line">res35: Char = z</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>collect : 取出全部记录</li>
-</ul>
-<h1 id="变换">变换</h1><ul>
-<li>map 映射</li>
-<li>filter 过滤</li>
-<li>sample 采样</li>
-<li>union 合并</li>
-<li>intersection  相交</li>
-<li>distinct  去重</li>
-</ul>
+        <span itemprop="articleBody"><p>本文是<a href="https://book.douban.com/subject/4262627/" target="_blank" rel="external">重构</a> 读书笔记第三篇</p>
+<h2 id="自测试代码的价值">自测试代码的价值</h2><blockquote>
+<p>每个类都应该有一个测试函数，并以它来测试自己这个类。</p>
+</blockquote>
+<p>确保所有测试都完全自动化，让他们检查自己的测试结果。</p>
+<p>编写测试代码的最有用的时机就是在<strong>开始编程之前</strong>，当你需要添加特性的时候，先写相应的测试代码。</p>
+<p>编写测试代码的时候其实就是在问自己，<strong>添加这个功能需要做些什么</strong>。编写测试代码还能使你把注意力集中于接口而非实现。</p>
+<p>频繁进行测试是极限编程的重要一环。<br><a id="more"></a></p>
+<h2 id="JUnit测试框架">JUnit测试框架</h2><p>在引入Junit框架之前，我们会在每个类的Main函数里进行测试。这样做的问题是很难运行多个测试。</p>
+<p>而junit则让我们建立一个独立的类用于测试，并在其中运行它，使测试工作更加轻松。</p>
+<p>你可以执行一大堆测试然后出去吃个午饭XD</p>
+<blockquote>
+<p>频繁的运行测试，每次编译请把测试也考虑进去——每天至少执行每个测试一次。</p>
+</blockquote>
+<h3 id="单元测试和功能测试">单元测试和功能测试</h3><p>JUnit框架的用途是单元测试（Unit Test）</p>
+<p>单元测试和功能测试的区别在于功能测试是黑箱测试，站在用户的角度保障软件质量，当功能测试找出bug的时候需要单元测试暴露这个bug。</p>
+<blockquote>
+<p>当你收到bug报告，请先写一个单元测试来暴露这个bug</p>
+</blockquote>
+<h2 id="添加更多测试">添加更多测试</h2><blockquote>
+<p>观察类该做的事情，然后针对任何一项功能的任何一种可能失败情况，进行测试。</p>
+</blockquote>
+<p>测试最可能出错的部分。</p>
+<p>花合理时间抓出大多数bug</p>
+<p>测试代码和产品代码相比有个好处就是，测试代码可以放心的复制，编辑测试代码。</p>
 </span>
       
     </div>
@@ -303,7 +312,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Spark/" rel="tag">#Spark</a>
+            <a href="/tags/软件工程/" rel="tag">#软件工程</a>
+          
+            <a href="/tags/重构/" rel="tag">#重构</a>
           
         </div>
       
@@ -312,17 +323,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/26/Spark-Install-On-Yarn/" rel="next" title="Spark on yarn 集群安装">
-                <i class="fa fa-chevron-left"></i> Spark on yarn 集群安装
+              <a href="/2016/05/26/Bad Smells in Code/" rel="next" title="代码的坏味道">
+                <i class="fa fa-chevron-left"></i> 代码的坏味道
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/26/Spark-Op-Remote/" rel="prev" title="远程操作Spark集群">
-                远程操作Spark集群 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -349,8 +356,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/05/26/Spark-Op-Into/"
-           data-title="Spark 变换与动作备忘与例子" data-url="http://evenx86.github.io/2016/05/26/Spark-Op-Into/">
+      <div class="ds-thread" data-thread-key="2016/05/27/JUnit-Test-Framework/"
+           data-title="Junit 测试框架" data-url="http://evenx86.github.io/2016/05/27/JUnit-Test-Framework/">
       </div>
     
   </div>
@@ -440,7 +447,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#组合"><span class="nav-number">1.</span> <span class="nav-text">组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动作"><span class="nav-number">2.</span> <span class="nav-text">动作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变换"><span class="nav-number"></span> <span class="nav-text">变换</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#自测试代码的价值"><span class="nav-number">1.</span> <span class="nav-text">自测试代码的价值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JUnit测试框架"><span class="nav-number">2.</span> <span class="nav-text">JUnit测试框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单元测试和功能测试"><span class="nav-number">2.1.</span> <span class="nav-text">单元测试和功能测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加更多测试"><span class="nav-number">3.</span> <span class="nav-text">添加更多测试</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

@@ -435,6 +435,117 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/26/A-Programmer's-Rantings-note/" itemprop="url">
+                  《程序员的呐喊》读书笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-05-26T17:39:53+08:00" content="2016-05-26">
+              2016-05-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/26/A-Programmer's-Rantings-note/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/A-Programmer's-Rantings-note/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>对这本书没什么很大的期待，但是看完之后感觉对我的职业观产生了冲击了。而且很多观点其实我一直在想的，但是经验和觉悟太低一直都没能写出来，看到文中写的就深有同感。</p>
+<h2 id="编程语言里的宗教">编程语言里的宗教</h2><blockquote>
+<p>语言本身不给力，类库再牛也是有限的</p>
+</blockquote>
+<p>额这不是在吐槽Java吗，但是至少现在看来Java还是挺牛逼的呀。还是自己接触的语言太少了。作者在后面提到语言就是程序员的宗教。此言不差。</p>
+<blockquote>
+<p>Java 在语言层面上和C++也就打个平手，其实Java 要好的多，至少他有了字符串，连字符串都支持不好的语言哪是人用的。</p>
+</blockquote>
+<p>这个把C++喷的，其实还是赞同的哈哈哈，不过貌似作者对字符串有执念，所以对perl也非常喜欢。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/26/A-Programmer's-Rantings-note/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/26/JDK-HashMap-HashSet/" itemprop="url">
                   HashMap与HashSet实现
                 </a>
@@ -543,8 +654,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/05/26/Why-Java-ThreadPool/" itemprop="url">
-                  Java线程池解惑
+                <a class="post-title-link" href="/2016/05/26/Thread-Runnable-diff/" itemprop="url">
+                  实现线程为什么Thread和Runnable 都可以
                 </a>
               
             
@@ -580,8 +691,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/26/Why-Java-ThreadPool/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/Why-Java-ThreadPool/" itemprop="commentsCount"></span>
+                <a href="/2016/05/26/Thread-Runnable-diff/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/Thread-Runnable-diff/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -601,15 +712,9 @@
 
       
         
-          <p>首先本文还是为实习生同学解惑用的。某天有个实习生表示对线程池不理解为何要用线程池代替每次产生线程的方式，简单说了几句后，想想干脆整理篇文章好了。</p>
-<p>首先按照实习生的想法，来看一段代码<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> ThreadPerTaskWebServer &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">80</span>);</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">final</span> Socket socket = ss.accept();</span><br><span class="line">            Runnable <span class="keyword">task</span> = ()-&gt; &#123;</span><br><span class="line">                handlRequest(socket);</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">new</span> Thread(<span class="keyword">task</span>).start();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这段代码为每个连接创建一个线程来处理请求，线程在run方法执行完后终止。在正常负载的情况下，为每个任务创建一个线程能提升串行执行的性能。<br>但是是否存在问题，当需要创建大量线程的时候：</p>
-<ul>
-<li>线程生命周期的开销非常高</li>
-<li>资源消耗，活跃线程会消耗系统资源尤其是内存，当线程多于可用处理器的数量，空闲线程会占用许多线程，所以如果CPU已经处于忙碌状态，再创建线程反而会降低性能。</li>
-<li>稳定性，在一个平台上创建的线程数是有限的，如果无限创建会突破这些限制则会抛出异常。
+          <p>在最近的几次面试实习生有时候会问，实现线程的两种方式以及用哪个更好。<br>同学们一般都会答出<code>extends Thread</code> 和 <code>implement Runnable</code> ，至于哪种更好，大概会有半数人答不出来，虽然这个问题很简单，但是在实际工作中自己去生成一个线程的情况还是很少遇见的。但这里面的问题稍微抽象下就可以看出是考察<code>extends</code>和<code>implements</code>之间的区别和优劣。<br>一般来说我们会选择<code>implement Runnable</code> 方式，因为Java是单继承但可以多个扩展，使用接口更利于扩展，另外扩展<code>Runnable</code>接口更利于资源共享，即多线程处理同一资源.<br>面试的话到这里可能就结束了，但是深入探究下，为什么两者都可以，两者之间的关系是怎么样的。<br>先写两个方法的简单示例:<br>Thread方式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="number">_</span>N = <span class="number">10</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">" : "</span> + <span class="number">_</span>N);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        ThreadTest t0 = <span class="keyword">new</span> ThreadTest();</span><br><span class="line">        t0.start();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/26/Why-Java-ThreadPool/#more" rel="contents">
+            <a class="btn" href="/2016/05/26/Thread-Runnable-diff/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -978,7 +1083,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">38</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
