@@ -1,0 +1,703 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Servlet," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="原文地址:http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html
+简介
+A GZip Servlet Filter can be used to GZip compress content sent to a browser from a Java web application. This text will expl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[翻译]Servlet Gzip Filter简介">
+<meta property="og:url" content="http://evenx86.github.io/2016/05/26/Servlet-gzip-filter/index.html">
+<meta property="og:site_name" content="曲径通幽">
+<meta property="og:description" content="原文地址:http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html
+简介
+A GZip Servlet Filter can be used to GZip compress content sent to a browser from a Java web application. This text will expl">
+<meta property="og:image" content="http://tutorials.jenkov.com/images/java-servlets/gzip-servlet-filter-1.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[翻译]Servlet Gzip Filter简介">
+<meta name="twitter:description" content="原文地址:http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html
+简介
+A GZip Servlet Filter can be used to GZip compress content sent to a browser from a Java web application. This text will expl">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> [翻译]Servlet Gzip Filter简介 | 曲径通幽 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b2685220a474d217f2b635080567f31b";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">曲径通幽</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">代码与数据搬运工</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [翻译]Servlet Gzip Filter简介
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-05-26T17:39:53+08:00" content="2016-05-26">
+              2016-05-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/26/Servlet-gzip-filter/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/Servlet-gzip-filter/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>原文地址:<a href="http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html" target="_blank" rel="external">http://tutorials.jenkov.com/java-servlets/gzip-servlet-filter.html</a></p>
+<h2 id="简介">简介</h2><blockquote>
+<p>A GZip Servlet Filter can be used to GZip compress content sent to a browser from a Java web application. This text will explain how that works, and contains a GZip Servlet Filter you can use in your own Java web applications. If you do not know what a Servlet filter is, read my text on Servlet Filters.</p>
+</blockquote>
+<p>gzip servlet filter 可用来压缩网页内容。本文将介绍其如何工作，以及如何使用gzip servlet filter 在你的web服务器中。如果不了解servlet filter是什么可以参考这篇文章:<a href="http://tutorials.jenkov.com/java-servlets/servlet-filters.html" target="_blank" rel="external">Servlet Filters.</a></p>
+<h2 id="为什么要使用gzip压缩网页内容">为什么要使用gzip压缩网页内容</h2><blockquote>
+<p>GZip compressing HTML, JavaScript, CSS etc. makes the data sent to the browser smaller. This speeds up the download. This is especially beneficial for mobile phones where internet bandwidth may be limited. GZip compressing content adds a CPU overhead on the server and browser, but it is still speeding up the total page load compared to not GZip compressing.</p>
+</blockquote>
+<p>gzip 压缩html、Javascript，css等等文件，目的是为了是发送到浏览器的数据更小，加速下载，这对于限制了带宽的移动端作用特别大。当然gzip增加了server端和浏览器端的cpu的压力，但是总体来说还是加速了页面的载入。<br> <a id="more"></a></p>
+<h2 id="Gzip_HTTP_Header">Gzip HTTP Header</h2><blockquote>
+<p>The browser includes the Accept-Encoding HTTP header in requests sent to an HTTP server (e.g. a Java web server). The content of the Accept-Encoding header tells what content encodings the browser can accept. If that header contains the value gzip in it, the browser can accept GZip compressed content. The server can then GZip compress the content sent back to the browser.<br>If the content sent back from the server is GZip compressed, the server includes the Content-EncodingHTTP header with the value gzip in the HTTP response. That way the browser knows that the content is GZip compressed.</p>
+</blockquote>
+<p>浏览器端的HTTP报头包含<code>Accept-Encoding</code>在请求发送到一个HTTP服务器(例如Java Web Server)，包含<code>Accept-Encoding</code>请求头的主体告知服务器端该浏览器可以接收编码主体，如果头部中包含gzip，那么浏览器可以接收通过gzip压缩的主体。服务端可以发送gzip压缩主体到浏览器端。</p>
+<h2 id="为什么是Gzip_Servlet_Filter">为什么是Gzip Servlet Filter</h2><blockquote>
+<p>You could implement GZip compression in each and every Servlet or JSP in your application if you wanted to. But that gets clumsy.<br>The smart thing about a GZip Servlet filter is that it is executed before and after any Servlet, JSP, or even static files. That way you can create a single servlet filter that enables GZip compression for all content that needs it. The Servlets, JSPs etc. don’t even know that the content is being compressed, because it happens in the Servlet filter. The GZip Servlet filter enables GZip compression, sets the right HTTP headers, and makes sure that content written by Servlets, JSPs etc. is compressed.</p>
+</blockquote>
+<p>你可以在在您的应用程序中每个Servlet或JSP实现GZip压缩,但这非常麻烦。一种巧妙的GZip Servlet过滤器是它之前和之后执行任何Servlet,JSP、甚至是静态文件。通过这种方式可以创建一个servlet过滤器,使用GZip压缩所有需要的内容。Servlet、jsp等或者不需要知道什么内容的文件被压缩,因为它存在Servlet过滤器中。GZip Servlet Filter支持GZip压缩,设置正确的HTTP标头,并确保内容由Servlet、jsp等被压缩。</p>
+<h2 id="设计Gzip_Servlet_Filter">设计Gzip Servlet Filter</h2><blockquote>
+<p>The design of a GZip servlet filter looks like this:<img src="http://tutorials.jenkov.com/images/java-servlets/gzip-servlet-filter-1.png" alt="gzip-servlet-filter-1.png"><br>First you need a Servlet filter class. That class is mapped to a set of URL’s in the web.xml file.<br>When an HTTP request arrives at the Servlet container which is mapped to the filter, the filter intercepts the request before it is handled by the Servlet, JSP etc. which the request is targeted at. The GZip servlet filter checks if the client (browser) can accept GZip compressed content. If yes, it enables compression of the response.<br>GZip compression of the response is enabled by wrapping the HttpServletResponse object in a GZipServletResponseWrapper. This wrapper is passed to the Servlet, JSP etc. which handles the request. When the Servlet, JSP etc. writes output to be sent to the browser, it does so to the response wrapper object. The Servlet, JSP etc. cannot see the difference between a real HttpServletResponse and the wrapper object. The response wrapper object then compresses the written content and writes the compressed content to the HttpServletResponse. Quite simple.</p>
+</blockquote>
+<p> GZip servlet filter 的设计如上图所示，首先需要编写一个Servlet filter的类，在web.xml中设置映射到该类的URL.<br>当一个HTTP请求到达Servlet容器时候会被映射到这个filter上，filter会拦截之前处理的Servlet或者JSP等等，Gzip Servlet Filter会判断请求客户端是否接收Gzip压缩的内容，如果接收的话则允许压缩response。<br>GZip压缩的response是通过GZipServletResponseWrapper 封装 HttpServletResponse对象处理的，wrapper 处理Request传过来的Servlet、JSP等。当Servlet、JSP等写到输出并被发送到浏览器,它响应wrapper对象。Servlet和JSP等无法看到真实HttpServletResponse的区别和包装器对象,相应的wrapper对象然后压缩的内容并且写到HttpServletResponse中。</p>
+<h2 id="GZip_Servlet_Filter_编码">GZip Servlet Filter 编码</h2><p>接下来的代码是Gzip Servlet Filter的代码，事实上并没有很多方式让你去写，直截了当。<br>代码包含三个类，其中<code>GZipServletFilter</code>拦截请求，检查客户端是否接收压缩，它在传递过滤链之前封装<code>HttpServletResponse</code>.<br><code>GZipServletResponseWrapper</code>response的gzip封装.<br><code>GZipServletOutputStream</code> 输出流.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GZipServletFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, </span><br><span class="line">                       ServletResponse response,</span><br><span class="line">                       FilterChain chain)</span> </span><br><span class="line">  <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line"></span><br><span class="line">    HttpServletRequest  httpRequest  = (HttpServletRequest)  request;</span><br><span class="line">    HttpServletResponse httpResponse = (HttpServletResponse) response;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ( acceptsGZipEncoding(httpRequest) ) &#123;</span><br><span class="line">      httpResponse.addHeader(<span class="string">"Content-Encoding"</span>, <span class="string">"gzip"</span>);</span><br><span class="line">      GZipServletResponseWrapper gzipResponse =</span><br><span class="line">        <span class="keyword">new</span> GZipServletResponseWrapper(httpResponse);</span><br><span class="line">      chain.doFilter(request, gzipResponse);</span><br><span class="line">      gzipResponse.close();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      chain.doFilter(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">acceptsGZipEncoding</span><span class="params">(HttpServletRequest httpRequest)</span> </span>&#123;</span><br><span class="line">      String acceptEncoding = </span><br><span class="line">        httpRequest.getHeader(<span class="string">"Accept-Encoding"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> acceptEncoding != <span class="keyword">null</span> &amp;&amp; </span><br><span class="line">             acceptEncoding.indexOf(<span class="string">"gzip"</span>) != -<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GZipServletResponseWrapper</span> <span class="keyword">extends</span> <span class="title">HttpServletResponseWrapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> GZipServletOutputStream gzipOutputStream = <span class="keyword">null</span>;</span><br><span class="line">  <span class="keyword">private</span> PrintWriter             printWriter      = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">GZipServletResponseWrapper</span><span class="params">(HttpServletResponse response)</span></span><br><span class="line">          <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      <span class="keyword">super</span>(response);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">//PrintWriter.close does not throw exceptions.</span></span><br><span class="line">      <span class="comment">//Hence no try-catch block.</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.printWriter != <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.printWriter.close();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.gzipOutputStream != <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">this</span>.gzipOutputStream.close();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="javadoc">/**</span><br><span class="line">   * Flush OutputStream or PrintWriter</span><br><span class="line">   *</span><br><span class="line">   *<span class="javadoctag"> @throws</span> IOException</span><br><span class="line">   */</span></span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flushBuffer</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//PrintWriter.flush() does not throw exception</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.printWriter != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.printWriter.flush();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    IOException exception1 = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.gzipOutputStream != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.gzipOutputStream.flush();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(IOException e) &#123;</span><br><span class="line">        exception1 = e;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    IOException exception2 = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">super</span>.flushBuffer();</span><br><span class="line">    &#125; <span class="keyword">catch</span>(IOException e)&#123;</span><br><span class="line">      exception2 = e;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(exception1 != <span class="keyword">null</span>) <span class="keyword">throw</span> exception1;</span><br><span class="line">    <span class="keyword">if</span>(exception2 != <span class="keyword">null</span>) <span class="keyword">throw</span> exception2;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> ServletOutputStream <span class="title">getOutputStream</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.printWriter != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">        <span class="string">"PrintWriter obtained already - cannot get OutputStream"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.gzipOutputStream == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.gzipOutputStream = <span class="keyword">new</span> GZipServletOutputStream(</span><br><span class="line">        getResponse().getOutputStream());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.gzipOutputStream;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> PrintWriter <span class="title">getWriter</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (<span class="keyword">this</span>.printWriter == <span class="keyword">null</span> &amp;&amp; <span class="keyword">this</span>.gzipOutputStream != <span class="keyword">null</span>) &#123;</span><br><span class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">         <span class="string">"OutputStream obtained already - cannot get PrintWriter"</span>);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">if</span> (<span class="keyword">this</span>.printWriter == <span class="keyword">null</span>) &#123;</span><br><span class="line">       <span class="keyword">this</span>.gzipOutputStream = <span class="keyword">new</span> GZipServletOutputStream(</span><br><span class="line">         getResponse().getOutputStream());</span><br><span class="line">       <span class="keyword">this</span>.printWriter      = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> OutputStreamWriter(</span><br><span class="line">       <span class="keyword">this</span>.gzipOutputStream, getResponse().getCharacterEncoding()));</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.printWriter;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentLength</span><span class="params">(<span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//ignore, since content length of zipped content</span></span><br><span class="line">    <span class="comment">//does not match content length of unzipped content.</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GZipServletOutputStream</span> <span class="keyword">extends</span> <span class="title">ServletOutputStream</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> GZIPOutputStream    gzipOutputStream = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">GZipServletOutputStream</span><span class="params">(OutputStream output)</span></span><br><span class="line">        <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">    <span class="keyword">this</span>.gzipOutputStream = <span class="keyword">new</span> GZIPOutputStream(output);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.gzipOutputStream.close();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flush</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.gzipOutputStream.flush();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">byte</span> b[])</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.gzipOutputStream.write(b);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">byte</span> b[], <span class="keyword">int</span> off, <span class="keyword">int</span> len)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.gzipOutputStream.write(b, off, len);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">int</span> b)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">     <span class="keyword">this</span>.gzipOutputStream.write(b);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="web-xml中GZip_Servlet_Filter的配置">web.xml中GZip Servlet Filter的配置</h2><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">&lt;filter&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-name&gt;</span>GzipFilter<span class="variable">&lt;/filter-name&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-class&gt;</span>com.myapp.GZipServletFilter<span class="variable">&lt;/filter-class&gt;</span></span><br><span class="line"><span class="variable">&lt;/filter&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="variable">&lt;filter-mapping&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-name&gt;</span>GzipFilter<span class="variable">&lt;/filter-name&gt;</span></span><br><span class="line">  <span class="variable">&lt;url-pattern&gt;</span><span class="keyword">*</span>.js<span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="variable">&lt;/filter-mapping&gt;</span></span><br><span class="line"><span class="variable">&lt;filter-mapping&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-name&gt;</span>GzipFilter<span class="variable">&lt;/filter-name&gt;</span></span><br><span class="line">  <span class="variable">&lt;url-pattern&gt;</span><span class="keyword">*</span>.css<span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="variable">&lt;/filter-mapping&gt;</span></span><br><span class="line"><span class="variable">&lt;filter-mapping&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-name&gt;</span>GzipFilter<span class="variable">&lt;/filter-name&gt;</span></span><br><span class="line">  <span class="variable">&lt;url-pattern&gt;</span><span class="keyword">*</span>.html<span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="variable">&lt;/filter-mapping&gt;</span></span><br><span class="line"><span class="variable">&lt;filter-mapping&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-name&gt;</span>GzipFilter<span class="variable">&lt;/filter-name&gt;</span></span><br><span class="line">  <span class="variable">&lt;url-pattern&gt;</span><span class="keyword">*</span>.jsp<span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="variable">&lt;/filter-mapping&gt;</span></span><br><span class="line"><span class="variable">&lt;filter-mapping&gt;</span></span><br><span class="line">  <span class="variable">&lt;filter-name&gt;</span>GzipFilter<span class="variable">&lt;/filter-name&gt;</span></span><br><span class="line">  <span class="variable">&lt;url-pattern&gt;</span>/<span class="variable">&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="variable">&lt;/filter-mapping&gt;</span></span><br></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Servlet/" rel="tag">#Servlet</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/26/Principles in Refactoring/" rel="next" title="什么是重构">
+                <i class="fa fa-chevron-left"></i> 什么是重构
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/26/Seven-Lanuage-In-Seven-Weeks-Ruby/" rel="prev" title="七周七语言读书笔记之Ruby">
+                七周七语言读书笔记之Ruby <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/26/Servlet-gzip-filter/"
+           data-title="[翻译]Servlet Gzip Filter简介" data-url="http://evenx86.github.io/2016/05/26/Servlet-gzip-filter/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="xuyifei" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">xuyifei</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">Developer,目前在点Hadoop</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要使用gzip压缩网页内容"><span class="nav-number">2.</span> <span class="nav-text">为什么要使用gzip压缩网页内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gzip_HTTP_Header"><span class="nav-number">3.</span> <span class="nav-text">Gzip HTTP Header</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么是Gzip_Servlet_Filter"><span class="nav-number">4.</span> <span class="nav-text">为什么是Gzip Servlet Filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计Gzip_Servlet_Filter"><span class="nav-number">5.</span> <span class="nav-text">设计Gzip Servlet Filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GZip_Servlet_Filter_编码"><span class="nav-number">6.</span> <span class="nav-text">GZip Servlet Filter 编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web-xml中GZip_Servlet_Filter的配置"><span class="nav-number">7.</span> <span class="nav-text">web.xml中GZip Servlet Filter的配置</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xuyifei</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"evenx86"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>

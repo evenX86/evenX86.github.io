@@ -1,0 +1,760 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="软件工程,重构," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="本文是重构 读书笔记第二篇
+读完本文你会大概清楚重构开始和停止的时机以及重构机制如何运作。
+重构一般是靠经验丰富者的直觉，本章也只是给出一些迹象来表明这里有一个可以用重构解决的问题。
+重复代码IDEA15新增了一个非常好的功能，就是遇到重复代码，IDE会用标记提醒你重复的代码段并可以跳转到重复代码。
+常见的重复代码情况:
+
+同一个的类的两个函数含有相同的代码
+
+两个互为兄弟的子类内含相同表达式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码的坏味道">
+<meta property="og:url" content="http://evenx86.github.io/2016/05/26/Bad Smells in Code/index.html">
+<meta property="og:site_name" content="曲径通幽">
+<meta property="og:description" content="本文是重构 读书笔记第二篇
+读完本文你会大概清楚重构开始和停止的时机以及重构机制如何运作。
+重构一般是靠经验丰富者的直觉，本章也只是给出一些迹象来表明这里有一个可以用重构解决的问题。
+重复代码IDEA15新增了一个非常好的功能，就是遇到重复代码，IDE会用标记提醒你重复的代码段并可以跳转到重复代码。
+常见的重复代码情况:
+
+同一个的类的两个函数含有相同的代码
+
+两个互为兄弟的子类内含相同表达式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码的坏味道">
+<meta name="twitter:description" content="本文是重构 读书笔记第二篇
+读完本文你会大概清楚重构开始和停止的时机以及重构机制如何运作。
+重构一般是靠经验丰富者的直觉，本章也只是给出一些迹象来表明这里有一个可以用重构解决的问题。
+重复代码IDEA15新增了一个非常好的功能，就是遇到重复代码，IDE会用标记提醒你重复的代码段并可以跳转到重复代码。
+常见的重复代码情况:
+
+同一个的类的两个函数含有相同的代码
+
+两个互为兄弟的子类内含相同表达式">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> 代码的坏味道 | 曲径通幽 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b2685220a474d217f2b635080567f31b";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">曲径通幽</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">代码与数据搬运工</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                代码的坏味道
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-05-26T17:41:35+08:00" content="2016-05-26">
+              2016-05-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/软件工程/" itemprop="url" rel="index">
+                    <span itemprop="name">软件工程</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/26/Bad Smells in Code/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/Bad Smells in Code/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>本文是<a href="https://book.douban.com/subject/4262627/" target="_blank" rel="external">重构</a> 读书笔记第二篇</p>
+<p>读完本文你会大概清楚重构开始和停止的时机以及重构机制如何运作。</p>
+<p>重构一般是靠经验丰富者的直觉，本章也只是给出一些迹象来表明这里有一个可以用重构解决的问题。</p>
+<h2 id="重复代码">重复代码</h2><p>IDEA15新增了一个非常好的功能，就是遇到重复代码，IDE会用标记提醒你重复的代码段并可以跳转到重复代码。</p>
+<p>常见的重复代码情况:</p>
+<ul>
+<li><p>同一个的类的两个函数含有相同的代码</p>
+</li>
+<li><p>两个互为兄弟的子类内含相同表达式</p>
+</li>
+<li><p>两个不相关的类出现重复代码</p>
+<p>对于第一种情况，需要使用<code>Extract Method</code>, 提炼出重复代码，然后让两个函数调用提炼出来的代码。</p>
+<p>对于第二种情况，可以将重复代码提炼出来后放入超类中。</p>
+<p>对于第三种情况，需要使用<code>Extract Class</code> , 将重复代码提炼到一独立类中，然后在另一个类中使用这个新类。</p>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="过长函数">过长函数</h2><blockquote>
+<p>拥有短函数的对象会获得比较好，比较长。</p>
+</blockquote>
+<h3 id="程序员使用短函数的忧虑_:">程序员使用短函数的忧虑 :</h3><ul>
+<li><p>在早前，子程序调用需要额外开销，现代的OO语言已经几乎完全免除了进程内的函数调用开销。</p>
+</li>
+<li><p>短函数影响阅读。阅读时遇到函数确实需要跳转上下文去理解子程序做了什么，这一点，我们可以通过<strong>给函数起个好名字</strong>,这样代码阅读者只要通过名字去了解函数的作用，而不必去看其中写了什么，当然当阅读者需要去查看子程序是怎么做到的另外。</p>
+<h3 id="如何确定提炼哪一段代码">如何确定提炼哪一段代码</h3></li>
+<li><p>寻找注释</p>
+<p>如果代码前方有一行注释表示如下代码段的作用，此时就可以提炼这段代码，并在注释的基础上给这段函数命名。</p>
+</li>
+<li><p>条件表达式和循环</p>
+<p>将条件表达式内提炼到方法。注.p238</p>
+<p>将循环和其内的代码提炼到一个独立函数中</p>
+</li>
+</ul>
+<h2 id="过大的类">过大的类</h2><p>利用单个类做太多的事情，内存往往就会出现过多的实例变量。这时也就会有重复代码的情况出现。</p>
+<h2 id="过长参数列表">过长参数列表</h2><p>利用对象解决。</p>
+<h2 id="发散式变化_Divergent_Change">发散式变化 Divergent Change</h2><blockquote>
+<p>一个类受多种变化的影响</p>
+</blockquote>
+<p>如果某个类经常因为不同的原因在不同的方向上变化，就应该警惕到去找出某特定原因而造成的所有变化。然后运用<code>Extract Class</code>将他们提炼到另一个类中。</p>
+<h2 id="散弹式变化_shotgun_surgery">散弹式变化 shotgun surgery</h2><blockquote>
+<p>一个变化引发多个类相应修改</p>
+</blockquote>
+<p>此时需要将一系列相关行为都放进同一个类。</p>
+<h2 id="依赖情节_feature_envy">依赖情节 feature envy</h2><blockquote>
+<p>面向对象的全部要点在于: 这是一种“将数据和对数据的操作行为包装子在一起”的技术</p>
+</blockquote>
+<p>如果某个函数计算某个值而从另一个对象那里调用几乎大半的取值函数，则此时需要考虑迁移函数到另一个地方。</p>
+<h2 id="数据泥团_Data_Clumps">数据泥团 Data Clumps</h2><p>如果多个数据项经常出现在一起，则应该讲他们提炼到一个对象中。</p>
+<h2 id="Switch_Statements">Switch Statements</h2><blockquote>
+<p>面向对象的一个最明显特征就是: 少用<code>switch</code>语句.</p>
+</blockquote>
+<p>多态可以带来优雅的解决办法。</p>
+<h2 id="冗余类">冗余类</h2><blockquote>
+<p>你所创建的每个类，都得有人去理解它，维护它，这些工作都是要花钱的，如果一个类的所得不值其身价，它应该消失。</p>
+</blockquote>
+<h2 id="夸夸其谈未来性_Speculate_generality">夸夸其谈未来性 Speculate generality</h2><p>删掉没有用的类或变量。</p>
+<h2 id="迷惑的临时变量_templorary_field">迷惑的临时变量 templorary field</h2><h2 id="中间人_middle_man">中间人 middle man</h2><p>防止过度封装，过多的“不干实事”的函数。</p>
+<h2 id="过多的注释">过多的注释</h2><blockquote>
+<p>当你感觉要写注释时，请先尝试重构，试着让所有注释都显得多余</p>
+</blockquote>
+<p>注释的作用：</p>
+<ul>
+<li>你不知道改干什么的时候</li>
+<li>记述将来的打算</li>
+<li>标记你并无十足把握的区域</li>
+<li>为什么做xx事</li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/软件工程/" rel="tag">#软件工程</a>
+          
+            <a href="/tags/重构/" rel="tag">#重构</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/26/A-Programmer's-Rantings-note/" rel="next" title="《程序员的呐喊》读书笔记">
+                <i class="fa fa-chevron-left"></i> 《程序员的呐喊》读书笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/26/Bad Smells in Code/"
+           data-title="代码的坏味道" data-url="http://evenx86.github.io/2016/05/26/Bad Smells in Code/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="xuyifei" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">xuyifei</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">Developer,目前在点Hadoop</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#重复代码"><span class="nav-number">1.</span> <span class="nav-text">重复代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过长函数"><span class="nav-number">2.</span> <span class="nav-text">过长函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序员使用短函数的忧虑_:"><span class="nav-number">2.1.</span> <span class="nav-text">程序员使用短函数的忧虑 :</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何确定提炼哪一段代码"><span class="nav-number">2.2.</span> <span class="nav-text">如何确定提炼哪一段代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过大的类"><span class="nav-number">3.</span> <span class="nav-text">过大的类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过长参数列表"><span class="nav-number">4.</span> <span class="nav-text">过长参数列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发散式变化_Divergent_Change"><span class="nav-number">5.</span> <span class="nav-text">发散式变化 Divergent Change</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#散弹式变化_shotgun_surgery"><span class="nav-number">6.</span> <span class="nav-text">散弹式变化 shotgun surgery</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖情节_feature_envy"><span class="nav-number">7.</span> <span class="nav-text">依赖情节 feature envy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据泥团_Data_Clumps"><span class="nav-number">8.</span> <span class="nav-text">数据泥团 Data Clumps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Switch_Statements"><span class="nav-number">9.</span> <span class="nav-text">Switch Statements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#冗余类"><span class="nav-number">10.</span> <span class="nav-text">冗余类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#夸夸其谈未来性_Speculate_generality"><span class="nav-number">11.</span> <span class="nav-text">夸夸其谈未来性 Speculate generality</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迷惑的临时变量_templorary_field"><span class="nav-number">12.</span> <span class="nav-text">迷惑的临时变量 templorary field</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中间人_middle_man"><span class="nav-number">13.</span> <span class="nav-text">中间人 middle man</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过多的注释"><span class="nav-number">14.</span> <span class="nav-text">过多的注释</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xuyifei</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"evenx86"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>
