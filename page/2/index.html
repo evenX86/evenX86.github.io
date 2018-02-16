@@ -212,6 +212,125 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/05/Java-Concurrent/" itemprop="url">
+                  Java线程提升性能解惑
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-05T14:04:32+08:00" content="2016-04-05">
+              2016-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/05/Java-Concurrent/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/05/Java-Concurrent/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="问题">问题</h2><p>首先明确一个问题，什么是提升性能?所谓的提升性能就是用更少的资源去做更多的事情。<br>在Java中我们最常使用多线程来提升性能，但是多线程也存在如下问题</p>
+<ul>
+<li>线程间的协调<ul>
+<li>加锁</li>
+<li>触发信号</li>
+<li>内存同步<ul>
+<li>有竞争同步，需要关注调优。</li>
+<li>无竞争同步，无竞争同步，JVM会通过逸出分析，锁粒度粗化来优化。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>上下文切换<br>  造成: 可运行的线程数 &gt; 处理器的数量<br>  处理: 分配最小执行时间，分担开销<br>  开销: 5000-10000个时钟周期(可通过vmstat查看上下文切换次数与在内核中执行时间所占的比例)</p>
+</li>
+<li><p>线程的创建与销毁</p>
+</li>
+<li>线程的调度
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/05/Java-Concurrent/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/05/Spark-Or-MR/" itemprop="url">
                   spark 真比 mr on hadoop 快吗
                 </a>
@@ -1192,110 +1311,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/04/Java-problem-arraylist/" itemprop="url">
-                  遍历List出现问题:ConcurrentModificationException.md
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-04T14:48:58+08:00" content="2016-03-04">
-              2016-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/04/Java-problem-arraylist/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/04/Java-problem-arraylist/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="问题">问题</h2><p>某一天增加计算的节点后发现在遍历节点List出现如下问题:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java<span class="class">.util</span><span class="class">.ConcurrentModificationException</span></span><br><span class="line">	at java<span class="class">.util</span><span class="class">.ArrayList</span><span class="variable">$Itr</span>.<span class="function"><span class="title">checkForComodification</span><span class="params">(ArrayList.java:<span class="number">859</span>)</span></span></span><br><span class="line">	at java<span class="class">.util</span><span class="class">.ArrayList</span><span class="variable">$Itr</span>.<span class="function"><span class="title">next</span><span class="params">(ArrayList.java:<span class="number">831</span>)</span></span></span><br><span class="line">	at com<span class="class">.sdg</span><span class="class">.mir</span><span class="class">.sync</span><span class="class">.impl</span><span class="class">.SyncThreeDegreeDetail</span><span class="class">.exec</span>(SyncThreeDegreeDetail<span class="class">.java</span>:<span class="number">70</span>)</span><br><span class="line">	at com<span class="class">.sdg</span><span class="class">.mir</span><span class="class">.sync</span><span class="class">.impl</span><span class="class">.SyncThreeDegreeDetail</span><span class="class">.main</span>(SyncThreeDegreeDetail<span class="class">.java</span>:<span class="number">199</span>)</span><br><span class="line">	at sun<span class="class">.reflect</span><span class="class">.NativeMethodAccessorImpl</span><span class="class">.invoke0</span>(Native Method)</span><br><span class="line">	at sun<span class="class">.reflect</span><span class="class">.NativeMethodAccessorImpl</span><span class="class">.invoke</span>(NativeMethodAccessorImpl<span class="class">.java</span>:<span class="number">57</span>)</span><br><span class="line">	at sun<span class="class">.reflect</span><span class="class">.DelegatingMethodAccessorImpl</span><span class="class">.invoke</span>(DelegatingMethodAccessorImpl<span class="class">.java</span>:<span class="number">43</span>)</span><br><span class="line">	at java<span class="class">.lang</span><span class="class">.reflect</span><span class="class">.Method</span><span class="class">.invoke</span>(Method<span class="class">.java</span>:<span class="number">606</span>)</span><br><span class="line">	at com<span class="class">.intellij</span><span class="class">.rt</span><span class="class">.execution</span><span class="class">.application</span><span class="class">.AppMain</span><span class="class">.main</span>(AppMain<span class="class">.java</span>:<span class="number">144</span>)</span><br></pre></td></tr></table></figure></p>
-<h2 id="原因">原因</h2><p>原来ArrayList只有一个元素不会出现这种问题。当增加节点后，ArrayList中的元素增加，由于ArrayList是线程不安全的。<br>foreach遍历arraylist是使用Iterator迭代器的。<br>一般是不允许一个线程在用迭代器遍历的同时，另一个线程在修改的。<br>后来在发现代码里在循环的最后居然清空了list，o(╯□╰)o.所以报了错。及时修正代码解决了问题<br>不过之前眼瞎没有看到这个时候把ArrayList换成了CopyOnWriteArrayList也是解决了问题。<br>CopyOnWriteArrayList创建迭代器时使用了对数组状态的引用。此数组在迭代器的生存期内不会更改，因此不可能发生冲突，<br>并且迭代器保证不会抛出 ConcurrentModificationException。创建迭代器以后，迭代器就不会反映列表的添加、移除或者更改。<br>在迭代器上进行的元素更改操作（remove、set 和 add）不受支持。这些方法将抛出 UnsupportedOperationException。</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1342,21 +1357,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-count">39</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
