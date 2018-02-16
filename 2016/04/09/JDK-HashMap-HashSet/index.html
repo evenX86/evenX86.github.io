@@ -1,0 +1,694 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JDK,Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="HashMapHashMap使用链表和红黑树来解决Hash冲突，当Hash冲突数比较少时使用链表，当Hash冲突比较多时使用红黑树（Java8新增）。HashMap的初始大小是16，最大是1&amp;lt;&amp;lt;30，大概是10亿。
+
+This map usually acts as a binned (bucketed) hash table, but when bins get too large,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap与HashSet实现">
+<meta property="og:url" content="http://evenx86.github.io/2016/04/09/JDK-HashMap-HashSet/index.html">
+<meta property="og:site_name" content="曲径通幽">
+<meta property="og:description" content="HashMapHashMap使用链表和红黑树来解决Hash冲突，当Hash冲突数比较少时使用链表，当Hash冲突比较多时使用红黑树（Java8新增）。HashMap的初始大小是16，最大是1&amp;lt;&amp;lt;30，大概是10亿。
+
+This map usually acts as a binned (bucketed) hash table, but when bins get too large,">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HashMap与HashSet实现">
+<meta name="twitter:description" content="HashMapHashMap使用链表和红黑树来解决Hash冲突，当Hash冲突数比较少时使用链表，当Hash冲突比较多时使用红黑树（Java8新增）。HashMap的初始大小是16，最大是1&amp;lt;&amp;lt;30，大概是10亿。
+
+This map usually acts as a binned (bucketed) hash table, but when bins get too large,">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> HashMap与HashSet实现 | 曲径通幽 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b2685220a474d217f2b635080567f31b";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">曲径通幽</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">代码与数据搬运工</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                HashMap与HashSet实现
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-09T19:31:20+08:00" content="2016-04-09">
+              2016-04-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/09/JDK-HashMap-HashSet/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/09/JDK-HashMap-HashSet/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="HashMap">HashMap</h2><p><code>HashMap</code>使用链表和红黑树来解决Hash冲突，当Hash冲突数比较少时使用链表，当Hash冲突比较多时使用红黑树（Java8新增）。<br><code>HashMap</code>的初始大小是16，最大是1&lt;&lt;30，大概是10亿。</p>
+<blockquote>
+<p>This map usually acts as a binned (bucketed) hash table, but when bins get too large, they are transformed into bins of TreeNodes, each structured similarly to those in java.util.TreeMap.</p>
+</blockquote>
+<p>Hashmap一般使用传统的hash桶，如果冲突过多就会转换成使用树节点(TreeNode)来替换hash链表，类似treeMap的结构，<br>大部分情况下都只是用到普通的hash桶，树节点的hash桶支持更快的查找。</p>
+<p><code>TreeNode</code>的数据结构:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Entry for Tree bins. Extends LinkedHashMap.Entry (which in turn</span><br><span class="line"> * extends Node) so can be used as extension of either regular or</span><br><span class="line"> * linked node.</span><br><span class="line"> */</span></span><br><span class="line">static <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeNode&lt;K</span>,<span class="title">V&gt;</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">LinkedHashMap</span>.<span class="title">Entry&lt;K</span>,<span class="title">V&gt;</span> &#123;</span></span><br><span class="line">    <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; parent;  <span class="comment">// red-black tree links</span></span><br><span class="line">    <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; left;</span><br><span class="line">    <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; right;</span><br><span class="line">    <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; prev;    <span class="comment">// needed to unlink next upon deletion</span></span><br><span class="line">    boolean red;</span><br><span class="line">    <span class="type">TreeNode</span>(int hash, <span class="type">K</span> key, <span class="type">V</span> <span class="function"><span class="keyword">val</span>, <span class="title">Node&lt;K</span>,<span class="title">V&gt;</span> <span class="title">next</span>) &#123;</span></span><br><span class="line">        <span class="keyword">super</span>(hash, key, <span class="function"><span class="keyword">val</span>, <span class="title">next</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Returns root of tree containing this node.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; root() &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; r = <span class="keyword">this</span>, p;;) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((p = r.parent) == <span class="literal">null</span>)</span><br><span class="line">                <span class="keyword">return</span> r;</span><br><span class="line">            r = p;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p><code>HashMap</code>取得节点的函数<br><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Implements Map.<span class="built_in">get</span> <span class="built_in">and</span> related methods</span><br><span class="line"> *</span><br><span class="line"> * @param hash hash for <span class="built_in">key</span></span><br><span class="line"> * @param <span class="built_in">key</span> the <span class="built_in">key</span></span><br><span class="line"> * @return the node, <span class="built_in">or</span> <span class="built_in">null</span> if none</span><br><span class="line"> */</span><br><span class="line">final Node&lt;K,V&gt; getNode(<span class="typename">int</span> hash, Object <span class="built_in">key</span>) &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; <span class="built_in">first</span>, e; <span class="typename">int</span> n; K k;</span><br><span class="line">    if ((tab = table) != <span class="built_in">null</span> &amp;&amp; (n = tab.length) &gt; <span class="number">0</span> &amp;&amp;</span><br><span class="line">        (<span class="built_in">first</span> = tab[(n - <span class="number">1</span>) &amp; hash]) != <span class="built_in">null</span>) &#123;</span><br><span class="line">        if (<span class="built_in">first</span>.hash == hash &amp;&amp; <span class="comment">// always check first node</span></span><br><span class="line">            ((k = <span class="built_in">first</span>.<span class="built_in">key</span>) == <span class="built_in">key</span> || (<span class="built_in">key</span> != <span class="built_in">null</span> &amp;&amp; <span class="built_in">key</span>.equals(k))))</span><br><span class="line">            return <span class="built_in">first</span>;</span><br><span class="line">        if ((e = <span class="built_in">first</span>.<span class="built_in">next</span>) != <span class="built_in">null</span>) &#123;</span><br><span class="line">            if (<span class="built_in">first</span> instanceof TreeNode)</span><br><span class="line">                return ((TreeNode&lt;K,V&gt;)<span class="built_in">first</span>).getTreeNode(hash, <span class="built_in">key</span>);</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                if (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.<span class="built_in">key</span>) == <span class="built_in">key</span> || (<span class="built_in">key</span> != <span class="built_in">null</span> &amp;&amp; <span class="built_in">key</span>.equals(k))))</span><br><span class="line">                    return e;</span><br><span class="line">            &#125; <span class="keyword">while</span> ((e = e.<span class="built_in">next</span>) != <span class="built_in">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return <span class="built_in">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>TreeNode</code>寻找节点的函数:<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Finds the node starting at root p with the given hash and key.</span><br><span class="line"> * The kc argument caches comparableClassFor(key) upon first use</span><br><span class="line"> * comparing keys.</span><br><span class="line"> */</span></span><br><span class="line">final TreeNode&lt;K,V&gt; find(int <span class="keyword">h</span>, Object k, <span class="keyword">Class</span>&lt;?&gt; kc) &#123;</span><br><span class="line">    TreeNode&lt;K,V&gt; p = this;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        int ph, <span class="keyword">dir</span>; K pk;</span><br><span class="line">        TreeNode&lt;K,V&gt; <span class="keyword">pl</span> = p.left, <span class="keyword">pr</span> = p.right, q;</span><br><span class="line">        <span class="keyword">if</span> ((ph = p.hash) &gt; <span class="keyword">h</span>)</span><br><span class="line">            p = <span class="keyword">pl</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (ph &lt; <span class="keyword">h</span>)</span><br><span class="line">            p = <span class="keyword">pr</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ((pk = p.key) == k || (k != null &amp;&amp; k.equals(pk)))</span><br><span class="line">            <span class="keyword">return</span> p;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">pl</span> == null)</span><br><span class="line">            p = <span class="keyword">pr</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">pr</span> == null)</span><br><span class="line">            p = <span class="keyword">pl</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ((kc != null ||</span><br><span class="line">                  (kc = comparableClassFor(k)) != null) &amp;&amp;</span><br><span class="line">                 (<span class="keyword">dir</span> = compareComparables(kc, k, pk)) != 0)</span><br><span class="line">            p = (<span class="keyword">dir</span> &lt; 0) ? <span class="keyword">pl</span> : <span class="keyword">pr</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ((q = <span class="keyword">pr</span>.find(<span class="keyword">h</span>, k, kc)) != null)</span><br><span class="line">            <span class="keyword">return</span> q;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            p = <span class="keyword">pl</span>;</span><br><span class="line">    &#125; <span class="keyword">while</span> (p != null);</span><br><span class="line">    <span class="keyword">return</span> null;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Calls find for root node.</span><br><span class="line"> */</span></span><br><span class="line">final TreeNode&lt;K,V&gt; getTreeNode(int <span class="keyword">h</span>, Object k) &#123;</span><br><span class="line">    <span class="keyword">return</span> ((parent != null) ? root() : this).find(<span class="keyword">h</span>, k, null);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>往<code>HashMap</code>中节点赋值的情况:<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> V putVal(<span class="built_in">int</span> hash, K <span class="variable">key</span>, V value, <span class="built_in">boolean</span> onlyIfAbsent,</span><br><span class="line">               <span class="built_in">boolean</span> evict) &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span class="built_in">int</span> n, i;</span><br><span class="line">    <span class="keyword">if</span> ((tab = table) == <span class="keyword">null</span> || (n = tab.length) == <span class="number">0</span>)</span><br><span class="line">        n = (tab = resize()).length;</span><br><span class="line">    <span class="keyword">if</span> ((p = tab[i = (n - <span class="number">1</span>) &amp; hash]) == <span class="keyword">null</span>)</span><br><span class="line">        tab[i] = newNode(hash, <span class="variable">key</span>, value, <span class="keyword">null</span>);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        Node&lt;K,V&gt; e; K k;</span><br><span class="line">        <span class="keyword">if</span> (p.hash == hash &amp;&amp;</span><br><span class="line">            ((k = p.<span class="variable">key</span>) == <span class="variable">key</span> || (<span class="variable">key</span> != <span class="keyword">null</span> &amp;&amp; <span class="variable">key</span>.equals(k))))</span><br><span class="line">            e = p;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (p <span class="keyword">instanceof</span> TreeNode)</span><br><span class="line">            e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(<span class="keyword">this</span>, tab, hash, <span class="variable">key</span>, value);</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> binCount = <span class="number">0</span>; ; ++binCount) &#123;</span><br><span class="line">                <span class="keyword">if</span> ((e = p.next) == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    p.next = newNode(hash, <span class="variable">key</span>, value, <span class="keyword">null</span>);</span><br><span class="line">                    <span class="keyword">if</span> (binCount &gt;= TREEIFY_THRESHOLD - <span class="number">1</span>) <span class="comment">// -1 for 1st</span></span><br><span class="line">                        treeifyBin(tab, hash);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.<span class="variable">key</span>) == <span class="variable">key</span> || (<span class="variable">key</span> != <span class="keyword">null</span> &amp;&amp; <span class="variable">key</span>.equals(k))))</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                p = e;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123; <span class="comment">// existing mapping for key</span></span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            <span class="keyword">if</span> (!onlyIfAbsent || oldValue == <span class="keyword">null</span>)</span><br><span class="line">                e.value = value;</span><br><span class="line">            afterNodeAccess(e);</span><br><span class="line">            <span class="keyword">return</span> oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ++modCount;</span><br><span class="line">    <span class="keyword">if</span> (++<span class="built_in">size</span> &gt; threshold)</span><br><span class="line">        resize();</span><br><span class="line">    afterNodeInsertion(evict);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>那么在什么时候会把link 转换成 Red-Black Tree呢，注意看在putVal里有一段<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> binCount = <span class="number">0</span>; ; ++binCount) &#123;</span><br><span class="line">                    <span class="keyword">if</span> ((e = p.next) == <span class="keyword">null</span>) &#123;</span><br><span class="line">                        p.next = newNode(hash, <span class="variable">key</span>, value, <span class="keyword">null</span>);</span><br><span class="line">                        <span class="keyword">if</span> (binCount &gt;= TREEIFY_THRESHOLD - <span class="number">1</span>) <span class="comment">// -1 for 1st</span></span><br><span class="line">                            treeifyBin(tab, hash);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (e.hash == hash &amp;&amp;</span><br><span class="line">                        ((k = e.<span class="variable">key</span>) == <span class="variable">key</span> || (<span class="variable">key</span> != <span class="keyword">null</span> &amp;&amp; <span class="variable">key</span>.equals(k))))</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    p = e;</span><br><span class="line">                &#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果冲突超过<code>TREEIFY_THRESHOLD</code>(8),则执行树状化。<br>链表节点树状化函数:<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Replaces all linked nodes in bin at index for given hash unless</span><br><span class="line"> * table is too small, in which case resizes instead.</span><br><span class="line"> */</span></span><br><span class="line">final void treeifyBin(Node&lt;K,V&gt;[] tab, int hash) &#123;</span><br><span class="line">    int n, index; Node&lt;K,V&gt; e;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">tab =</span>= <span class="constant">null</span> || (<span class="variable">n =</span> tab.length) &lt; MIN_TREEIFY_CAPACITY)</span><br><span class="line">        resize();</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ((<span class="variable">e =</span> tab[<span class="variable">index =</span> (n - <span class="number">1</span>) &amp; hash]) != <span class="constant">null</span>) &#123;</span><br><span class="line">        TreeNode&lt;K,V&gt; <span class="variable">hd =</span> <span class="constant">null</span>, <span class="variable">tl =</span> <span class="constant">null</span>;</span><br><span class="line">        do &#123;</span><br><span class="line">            TreeNode&lt;K,V&gt; <span class="variable">p =</span> replacementTreeNode(e, <span class="constant">null</span>);</span><br><span class="line">            <span class="keyword">if</span> (<span class="variable">tl =</span>= <span class="constant">null</span>)</span><br><span class="line">                <span class="variable">hd =</span> p;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                p.<span class="variable">prev =</span> tl;</span><br><span class="line">                tl.<span class="variable">next =</span> p;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="variable">tl =</span> p;</span><br><span class="line">        &#125; while ((<span class="variable">e =</span> e.next) != <span class="constant">null</span>);</span><br><span class="line">        <span class="keyword">if</span> ((tab[index] = hd) != <span class="constant">null</span>)</span><br><span class="line">            hd.treeify(tab);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="HashSet">HashSet</h2><p><code>HashSet</code>实际上是封装了一个HashMap对象.<br>看其中一个构造函数<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">map</span> = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>Map</code>中的<code>value</code>为一个空对象:<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Dummy value to associate with an Object in the backing Map</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">Object</span> PRESENT = <span class="keyword">new</span> <span class="keyword">Object</span>();</span><br></pre></td></tr></table></figure></p>
+<h2 id="HashTable">HashTable</h2><p><code>HashTable</code> 是同步的，即它是线程安全的，如果没有线程安全的需求则建议用<code>HashMap</code>,如果有需要线程安全，且要求高并发则选择<code>ConcurrentHashMap</code>.<br><code>HashTable</code> 相当于加了同步的<code>HashMap</code>,但是在Java8里没有针对冲突像<code>HashMap</code>一样做处理，相对于锁分段的<code>ConcurrentHashMap</code>效率不高。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JDK/" rel="tag">#JDK</a>
+          
+            <a href="/tags/Java/" rel="tag">#Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/05/Java-Concurrent/" rel="next" title="Java线程提升性能解惑">
+                <i class="fa fa-chevron-left"></i> Java线程提升性能解惑
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/12/JDBC-DataSource-DriverManager/" rel="prev" title="为什么要用DataSource代替DriverManager">
+                为什么要用DataSource代替DriverManager <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/09/JDK-HashMap-HashSet/"
+           data-title="HashMap与HashSet实现" data-url="http://evenx86.github.io/2016/04/09/JDK-HashMap-HashSet/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="xuyifei" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">xuyifei</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">Developer,目前在点Hadoop</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap"><span class="nav-number">1.</span> <span class="nav-text">HashMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashSet"><span class="nav-number">2.</span> <span class="nav-text">HashSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashTable"><span class="nav-number">3.</span> <span class="nav-text">HashTable</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xuyifei</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"evenx86"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>

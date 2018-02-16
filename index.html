@@ -333,7 +333,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-05-26T17:41:35+08:00" content="2016-05-26">
+            <time itemprop="dateCreated" datetime="2016-05-26T17:41:34+08:00" content="2016-05-26">
               2016-05-26
             </time>
           </span>
@@ -440,8 +440,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/05/26/quartz-overview/" itemprop="url">
-                  quartz 概述
+                <a class="post-title-link" href="/2016/05/24/Principles in Refactoring/" itemprop="url">
+                  什么是重构
                 </a>
               
             
@@ -451,8 +451,127 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-05-26T17:39:53+08:00" content="2016-05-26">
-              2016-05-26
+            <time itemprop="dateCreated" datetime="2016-05-24T10:12:08+08:00" content="2016-05-24">
+              2016-05-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/软件工程/" itemprop="url" rel="index">
+                    <span itemprop="name">软件工程</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/24/Principles in Refactoring/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/24/Principles in Refactoring/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="前言">前言</h2><p>本文是<a href="https://book.douban.com/subject/4262627/">重构</a>读书笔记系列第一篇</p>
+<h2 id="什么是重构">什么是重构</h2><p>重构，每个人都对重构有自己的理解和定义。</p>
+<p>文中提到的名词和动词的理解</p>
+<ul>
+<li>名词，对软件内部结构的一种调整，在不改变软件可观察行为的前提下，提高可理解性。降低修改成本。</li>
+</ul>
+<ul>
+<li>动词，使用一系列重构方法调整结构。</li>
+</ul>
+<p>重构要扩展的两点</p>
+<ul>
+<li>使软件更容易被理解和修改。</li>
+<li>不会改变软件可观察的行为。</li>
+</ul>
+<p>对用户是透明的。</p>
+<h2 id="为什么要重构">为什么要重构</h2><blockquote>
+<p>重构不是银弹<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/24/Principles in Refactoring/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/20/Thread-Introduce-II/" itemprop="url">
+                  再谈线程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-20T09:50:16+08:00" content="2016-04-20">
+              2016-04-20
             </time>
           </span>
 
@@ -477,8 +596,218 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/26/quartz-overview/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/quartz-overview/" itemprop="commentsCount"></span>
+                <a href="/2016/04/20/Thread-Introduce-II/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/20/Thread-Introduce-II/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="Why_Thread">Why Thread</h2><p>在没有线程的从前日子，当服务器处理成千上万个连接的时候性能问题就非常突兀了，这个时候</p>
+<ul>
+<li>重用进程</li>
+<li>使用轻量级的线程<br>书中提到使用线程代替进程会使服务器性能提升三倍，如果再使用线程池可以提升九倍多。<br>使用线程池处理短连接可以在每分钟使用100个不到线程处理数千个短连接。</li>
+<li>异步I/O<br>在IM的应用场景中经常会出现同时需要数千个很长时间的连接。<br>这个会在以后的文章中详细讲解。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/20/Thread-Introduce-II/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/13/Thread-Runnable-diff/" itemprop="url">
+                  实现线程为什么Thread和Runnable 都可以
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-13T16:50:56+08:00" content="2016-04-13">
+              2016-04-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/13/Thread-Runnable-diff/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/13/Thread-Runnable-diff/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>在最近的几次面试实习生有时候会问，实现线程的两种方式以及用哪个更好。<br>同学们一般都会答出<code>extends Thread</code> 和 <code>implement Runnable</code> ，至于哪种更好，大概会有半数人答不出来，虽然这个问题很简单，但是在实际工作中自己去生成一个线程的情况还是很少遇见的。但这里面的问题稍微抽象下就可以看出是考察<code>extends</code>和<code>implements</code>之间的区别和优劣。<br>一般来说我们会选择<code>implement Runnable</code> 方式，因为Java是单继承但可以多个扩展，使用接口更利于扩展，另外扩展<code>Runnable</code>接口更利于资源共享，即多线程处理同一资源.<br>面试的话到这里可能就结束了，但是深入探究下，为什么两者都可以，两者之间的关系是怎么样的。<br>先写两个方法的简单示例:<br>Thread方式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTest</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="number">_</span>N = <span class="number">10</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">" : "</span> + <span class="number">_</span>N);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        ThreadTest t0 = <span class="keyword">new</span> ThreadTest();</span><br><span class="line">        t0.start();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/13/Thread-Runnable-diff/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/13/quartz-overview/" itemprop="url">
+                  quartz 概述
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-13T14:08:16+08:00" content="2016-04-13">
+              2016-04-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/13/quartz-overview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/13/quartz-overview/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -502,7 +831,7 @@
 <h2 id="Quartz使用">Quartz使用</h2><p>Schedulers是由工厂方法生成的。<br>Scheduler Job会在调用<code>start()</code>之后才会开始执行。</p>
 <h3 id="使用Scheduling_API">使用Scheduling API</h3><p>扩展接口<code>Job</code>，在里面的<code>execute()</code>方法里即可编写被调度程序的逻辑代码.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyJob</span> <span class="keyword">implements</span> <span class="title">org</span>.<span class="title">quartz</span>.<span class="title">Job</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyJob</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(JobExecutionContext context)</span> <span class="keyword">throws</span> JobExecutionException </span>&#123;</span><br><span class="line">        System.err.println(<span class="string">"Hello World!  MyJob is executing."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/26/quartz-overview/#more" rel="contents">
+            <a class="btn" href="/2016/04/13/quartz-overview/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -545,8 +874,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/05/26/pipeline-sync-problem/" itemprop="url">
-                  pipline sync
+                <a class="post-title-link" href="/2016/04/12/dbutils-source-code/" itemprop="url">
+                  dbutils源码阅读
                 </a>
               
             
@@ -556,8 +885,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-05-26T17:39:53+08:00" content="2016-05-26">
-              2016-05-26
+            <time itemprop="dateCreated" datetime="2016-04-12T16:19:08+08:00" content="2016-04-12">
+              2016-04-12
             </time>
           </span>
 
@@ -582,8 +911,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/26/pipeline-sync-problem/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/pipeline-sync-problem/" itemprop="commentsCount"></span>
+                <a href="/2016/04/12/dbutils-source-code/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/dbutils-source-code/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -603,9 +932,12 @@
 
       
         
-          <p>之前因为项目需要先从redis中取出key的列表，再循环这些列表操作后写入到redis中，因为使用pipline，中间出现了一些问题记录学习下。<br>最初の源代码:<br>
+          <p>在查询或者更新数据的时候我们都容易犯忘记关闭JDBC的错误,spring之类的框架又非常笨重，DbUtils 是一个非常轻量的操作JDBC的工具。<br>除了操作简便之外，dbutils还可以将ResultSet转换成不同的对象。</p>
+<h3 id="使用示例">使用示例</h3><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span></span><br><span class="line"><span class="keyword">*</span> <span class="comment">@param dataNode 相应的数据节点的信息</span></span><br><span class="line"><span class="keyword">*</span> <span class="comment">@return 返回QueryRunner实例</span></span><br><span class="line"><span class="keyword">*</span> <span class="comment">@throws java.lang.NullPointerException 如果连接池并没有初始化，则抛出此异常</span></span><br><span class="line"><span class="keyword">*</span> <span class="keyword">*</span>/</span><br><span class="line">public static QueryRunner getQueryRunner(final String dataNode) &#123;</span><br><span class="line">    return new QueryRunner(MySQLHelper._DATASOURCEMAP.get(dataNode));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中_DATASOURCEMAP数组存放的是线程池,初始化_DATASOURCEMAP:<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private <span class="literal">static</span> <span class="keyword">final</span> <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, DataSource&gt; _DATASOURCEMAP = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line">...</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">final</span> <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">Object</span>&gt; row : (<span class="built_in">List</span>&lt;<span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">Object</span>&gt;&gt;) config.<span class="literal">get</span>(<span class="string">"node"</span>)) &#123;</span><br><span class="line">    <span class="comment">//System.out.println(row.get("aliasName"));</span></span><br><span class="line">    _CONFIG.put(row.<span class="literal">get</span>(<span class="string">"aliasName"</span>).toString(), row);  <span class="comment">/*把节点缓存*/</span></span><br><span class="line">    _DATASOURCEMAP.put(row.<span class="literal">get</span>(<span class="string">"aliasName"</span>).toString(), DruidDataSourceFactory.createDataSource(row));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这部分有个druid的线程池的部分，关于druid的可以参考博客中的druid源码阅读。<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/26/pipeline-sync-problem/#more" rel="contents">
+            <a class="btn" href="/2016/04/12/dbutils-source-code/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -648,469 +980,7 @@
             
               
                 
-                <a class="post-title-link" href="/2016/05/26/jvm-startup/" itemprop="url">
-                  Java内存与垃圾回收总结备忘
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-05-26T17:39:53+08:00" content="2016-05-26">
-              2016-05-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/26/jvm-startup/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/jvm-startup/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="引入">引入</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# free -m</span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line">Mem:         32094      29292       2802          0        274       1647</span><br><span class="line">-/+ buffers/cache:      27370       4724</span><br><span class="line">Swap:            0          0          0</span><br><span class="line"><span class="comment">&lt;!-- more --&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这是一台Java同步服务器的内存占用情况，使用jmap查看堆上信息:<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost sync]# jmap -histo 7840</span><br><span class="line"></span><br><span class="line"><span class="header"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span></span><br><span class="line"><span class="code">   1:      77399077     5156382528  [C</span></span><br><span class="line"><span class="code">   2:      41662587     3924901448  [I</span></span><br><span class="line"><span class="code">   3:      33678441     2424847752  java.util.LinkedHashMap$Entry</span></span><br><span class="line"><span class="code">   4:      64361432     2059565824  java.lang.String</span></span><br><span class="line"><span class="code">   5:      18967113     1669105944  java.util.regex.Matcher</span></span><br><span class="line"><span class="code">   6:       9996594     1534988024  [Ljava.lang.Object;</span></span><br><span class="line"><span class="code">   7:       7225435     1235477264  [Ljava.util.HashMap$Entry;</span></span><br><span class="line"><span class="code">   8:      11458421     1074750168  [B</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line"><span class="code">            ·</span></span><br><span class="line">Total     332044853    22585874416</span><br></pre></td></tr></table></figure></p>
-<p>上面这个输出中有好几个问题，暂时先不管。<br>看下Java的配置：<code>Xms26g -Xmx26g -Xmn12g -XX:PermSize=1024M -Xss2M</code><br>实际占用的29G内存中Java heap占了22G，<br>再看下PS的结果：<code>ps -aux|sort -k 1 -r |less</code></p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">USER       PID <span class="preprocessor">%</span>CPU <span class="preprocessor">%</span>MEM    <span class="title">VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root         7840</span> <span class="number">22.3</span>     <span class="number">82.5</span>  <span class="number">45956536</span> <span class="number">27124588</span> ?   Sl   May<span class="number">19</span> <span class="number">380</span>:<span class="number">04</span> java</span><br></pre></td></tr></table></figure>
-<p>可以看到Java 进程占了27G。<br>一般来说同步程序并需要这么多的内存，查看GC情况:</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="property">@localhost</span> sync]<span class="comment"># jstat  -gc 7840</span></span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       PC     PU    YGC     YGCT    FGC    FGCT     GCT   </span><br><span class="line"> <span class="number">0.0</span>   <span class="number">65536.0</span>  <span class="number">0.0</span>   <span class="number">65536.0</span> <span class="number">13148160.0</span> <span class="number">9207808.0</span> <span class="number">14049280.0</span> <span class="number">10819203.6</span> <span class="number">1048576.0</span> <span class="number">18093.7</span>    <span class="number">125</span>   <span class="number">25.202</span>   <span class="number">0</span>      <span class="number">0.000</span>   <span class="number">25.202</span></span><br></pre></td></tr></table></figure>
-<h3 id="问题1:">问题1:</h3><p>OLD区已经快满了(10/14),<br>回顾下对象是如何进入old区的：</p>
-<ul>
-<li>长期存活的对象将进入老年代，对象在Eden区中经过第一次MinorGC之后进入Survivor区中，每经过一次minorgc如果没有被回收，默认经过15次gc还未被回收就会进入old区</li>
-<li>大对象直接进入老年代，虚拟机提供了一个<code>-XX:PretenureSize</code>参数,大于这个值的对象直接在老年代中分配。避免了再Eden区和Survivor区中发生大量的内存复制（该参数只对几个收集器起作用）。<br>JVM内存回收过程<blockquote>
-<p>1、对象在Eden区完成内存分配<br>2、当Eden区满了，再创建对象，会因为申请不到空间，触发minorGC，进行young(eden+1survivor)区的垃圾回收<br>3、minorGC时，Eden不能被回收的对象被放入到空的survivor（Eden肯定会被清空），另一个survivor里不能被GC回收的对象也会被放入这个survivor，始终保证一个survivor是空的<br>4、当做第3步的时候，如果发现survivor满了，则这些对象被copy到old区，或者survivor并没有满，但是有些对象已经足够Old，也被放入Old区 XX:MaxTenuringThreshold<br>5、当Old区被放满的之后，进行fullGC</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="问题2">问题2</h3><p>heap中char数组占用内存过多，但是程序并有显示生成char对象。<br><a href="http://stackoverflow.com/questions/20388081/why-my-java-heap-is-with-so-many-char" target="_blank" rel="external">Why my Java heap is with so many char</a></p>
-<blockquote>
-<p>811k of char[] correspond to 800k of Strings, so yes, you have too many Strings.<br>If you’re having a memory leak (judging by the tag), then it’s most probably are strings in a HashMap. You have 800k instances of strings, 200k instances of hash entries, 30k of maps. This probably means that your strings are kept in this cache and are not removed. Global map is a frequent cause of memory leaks, one needs to make sure that they are evicted from this cache.</p>
-</blockquote>
-<p>Since all these values are not being GC-ed, you could try analyzing an object graph to see what’s holding them with a tool like JProfiler.</p>
-<p><a href="http://stackoverflow.com/questions/1985480/why-does-the-profiler-show-large-numbers-of-char-instances-when-i-am-not-creat" target="_blank" rel="external">Why does the profiler show large numbers of char[] instances when I am not creating any?</a></p>
-<blockquote>
-<p>Take a look at the String source code. The String object itself contains a cached hash code, a count of the number of characters (again, for optimisation purposes), an offset (since a String.substr()points to the original string data) and the character array, which contains the actual string data. Hence your metrics showing that String consumes relatively little, but the majority of memory is taken by the underlying character arrays.</p>
-<p>String is the perfect example. It contains a handful of primitive fields, plus the char[]. The char[]accounts for the vast majority of the memory usage. The shallow size of String is very small, but it’s retained size is much larger, since that includes the char[].<br>大概就是说尽管没有直接使用char数组，但是对String的频繁使用也会造成这个问题。</p>
-</blockquote>
-<h2 id="参考链接:">参考链接:</h2><p><a href="http://www.importnew.com/14086.html" target="_blank" rel="external">Java内存与垃圾回收调优</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/26/Intern-interview/" itemprop="url">
-                  Java实习生面试题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-05-26T17:39:53+08:00" content="2016-05-26">
-              2016-05-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/26/Intern-interview/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/Intern-interview/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>最近公司面试实习生搞了几个面试题，前面都是基础考察，后面两个是自己想的。</p>
-<ul>
-<li><h3 id="使用_final_关键字修饰一个变量时，是引用不能变，还是引用的对象不能变？">使用 final 关键字修饰一个变量时，是引用不能变，还是引用的对象不能变？</h3><br></li>
-</ul>
-<ul>
-<li><h3 id="简述Java中堆与栈的区别">简述Java中堆与栈的区别</h3></li>
-</ul>
-<p><br></p>
-<ul>
-<li><h3 id="简述Java实现线程的几种方式">简述Java实现线程的几种方式</h3></li>
-</ul>
-<p><br></p>
-<ul>
-<li><h3 id="阅读如下代码段,并指出其中存在的问题">阅读如下代码段,并指出其中存在的问题</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MySQLConnection</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Connection mySQLConnection;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getMySQLConnection</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Calendar today = Calendar.getInstance();</span><br><span class="line">        <span class="keyword">int</span> hour =today.<span class="keyword">get</span>( Calendar.HOUR_OF_DAY);      </span><br><span class="line">        <span class="keyword">if</span>(hour &gt; <span class="number">8</span> &amp;&amp; hour &lt;<span class="number">23</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span>(mySQLConnection != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> mySQLConnection;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Class.forName(<span class="string">"com.mysql.jdbc.Driver"</span>);</span><br><span class="line">                    Connection conn = DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost:3306/funnystudy"</span>,<span class="string">"root"</span>,<span class="string">"123456"</span>);</span><br><span class="line">                    mySQLConnection = conn;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> mySQLConnection;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><br><br><br></p>
-<ul>
-<li><h3 id="使用Java处理如下问题。">使用Java处理如下问题。</h3><blockquote>
-<p>现有一张游戏玩家登陆数据表，表结构为 : ‘id’,’name’,’login_date’,现在表中有最近三十天的玩家登陆数据，求出，连续15天的登陆玩家数以及累计15天登陆的玩家数。<br>注：连续登录是指，某个玩家在一段时间内，每天都登录游戏，比如1号到15号每天都登录，没错过任何一天，那他连续登录时间是15.一般我们习惯取最大连续登录时间。累计登录是指，某个玩家在一段时间内，登录天数的总和，比如1号 4号 5号登录了，其他时间都没登录，那他这段时间的累计登录天数是3天。</p>
-</blockquote>
-</li>
-</ul>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/26/java-web-xml/" itemprop="url">
-                  Java Web部署描述文件:web.xml [部分翻译]
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-05-26T17:39:53+08:00" content="2016-05-26">
-              2016-05-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/26/java-web-xml/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/java-web-xml/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="前言">前言</h2><p>Java web应用使用部署描述文件来绝对URL映射到Servlets的规则,哪些URL需要验证，以及一些其他的信息，这个文件就是<code>web.xml</code>，在servlet标准中这个文件位于应用war包的<code>WEB-INF/</code>目录下。<br>更多<code>web.xml</code>标准的信息，可以访问:<a href="http://wiki.metawerx.net/wiki/Web.xml"> the Metawerx web.xml reference wiki</a>和<a href="http://jcp.org/aboutJava/communityprocess/final/jsr154/index.html"> the Metawerx web.xml reference wiki</a></p>
-<h2 id="About_Deployment_Descriptors">About Deployment Descriptors</h2><p>web应用部署描述文件可以反映class文件,资源，配置，以及Java web server 使用它们来应对web请求。当web应用接收到请求时，通过应用部署描述文件把url映射到处理请求的代码上。<br>部署描述文件是一个名为<code>web.xml</code>的文件，它存在于war包下面的<code>WEB-INF/</code>目录下，是一个以<code>&lt;web-app&gt;</code>为根的XML文件。<br>以下是一个简单的<code>web.xml</code>示例，其将所有的URL路径映射到<code>mysite.server.ComingSoonServlet</code>:<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/26/java-web-xml/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/26/hive-over-hbase/" itemprop="url">
-                  Hive安装及整合HBase
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-05-26T17:39:53+08:00" content="2016-05-26">
-              2016-05-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/26/hive-over-hbase/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/hive-over-hbase/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="下载HIVE">下载HIVE</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">su - hadoop</span><br><span class="line">wget http:<span class="comment">//apache.fayea.com/hive/hive-1.2.1/apache-hive-1.2.1-bin.tar.gz</span></span><br><span class="line">tar -zxvf apache-hive-<span class="number">1.2</span>.<span class="number">1</span>-bin<span class="class">.tar</span><span class="class">.gz</span></span><br><span class="line">mv apache-hive-<span class="number">1.2</span>.<span class="number">1</span>-bin hive</span><br></pre></td></tr></table></figure>
-<h2 id="环境配置">环境配置</h2><p>在/etc/profile中追加:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> HIVE_HOME=/home/hadoop/hive</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$HIVE_HOME</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
-<h2 id="安装MySQL">安装MySQL</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc gcc- c ++ ncurses-devel  -y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">groupadd mysql</span><br><span class="line">useradd -g mysql mysql</span><br><span class="line">wget <span class="string">http:</span><span class="comment">//dev.mysql.com/get/downloads/mysql/mysql-5.6.25.tar.gz</span></span><br><span class="line">tar zxvf mysql-<span class="number">5.6</span><span class="number">.25</span>.tar.gz</span><br><span class="line">cd mysql-<span class="number">5.6</span><span class="number">.25</span></span><br><span class="line">cmake \</span><br><span class="line">-DCMAKE_INSTALL_PREFIX=<span class="regexp">/data/</span>mysql \</span><br><span class="line">-DMYSQL_UNIX_ADDR=<span class="regexp">/data/</span>mysql/mysql.sock \</span><br><span class="line">-DDEFAULT_CHARSET=utf8 \</span><br><span class="line">-DDEFAULT_COLLATION=utf8_general_ci \</span><br><span class="line">-DWITH_INNOBASE_STORAGE_ENGINE=<span class="number">1</span> \</span><br><span class="line">-DWITH_ARCHIVE_STORAGE_ENGINE=<span class="number">1</span> \</span><br><span class="line">-DWITH_BLACKHOLE_STORAGE_ENGINE=<span class="number">1</span> \</span><br><span class="line">-DMYSQL_DATADIR=<span class="regexp">/data/</span>mysql/data \</span><br><span class="line">-DMYSQL_TCP_PORT=<span class="number">3306</span> \</span><br><span class="line">-DENABLE_DOWNLOADS=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line">chmod +w <span class="regexp">/data/</span>mysql/</span><br><span class="line">chown -R <span class="string">mysql:</span>mysql <span class="regexp">/data/</span>mysql/</span><br><span class="line">ln -s <span class="regexp">/data/</span>mysql<span class="regexp">/lib/</span>libmysqlclient.so<span class="number">.18</span> <span class="regexp">/usr/</span>lib/libmysqlclient.so<span class="number">.18</span></span><br><span class="line">ln -s <span class="regexp">/data/</span>mysql<span class="regexp">/mysql.sock /</span>tmp/mysql.sock</span><br><span class="line"></span><br><span class="line">cp <span class="regexp">/data/</span>mysql<span class="regexp">/support-files/</span>my-<span class="keyword">default</span>.cnf <span class="regexp">/etc/</span>my.cnf</span><br><span class="line">cp <span class="regexp">/data/</span>mysql<span class="regexp">/support-files/</span>mysql.server <span class="regexp">/etc/</span>init.d/mysqld</span><br><span class="line"><span class="regexp">/data/</span>mysql<span class="regexp">/scripts/</span>mysql_install_db --user=mysql --defaults-file=<span class="regexp">/etc/</span>my.cnf --basedir=<span class="regexp">/data/</span>mysql --datadir=<span class="regexp">/data/</span>mysql/data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#创建hive数据库</span><br><span class="line">create database hive ;</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/26/hive-over-hbase/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/26/JDBC-DataSource-DriverManager/" itemprop="url">
+                <a class="post-title-link" href="/2016/04/12/JDBC-DataSource-DriverManager/" itemprop="url">
                   为什么要用DataSource代替DriverManager
                 </a>
               
@@ -1121,8 +991,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-05-26T17:39:53+08:00" content="2016-05-26">
-              2016-05-26
+            <time itemprop="dateCreated" datetime="2016-04-12T13:50:38+08:00" content="2016-04-12">
+              2016-04-12
             </time>
           </span>
 
@@ -1147,8 +1017,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/26/JDBC-DataSource-DriverManager/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/JDBC-DataSource-DriverManager/" itemprop="commentsCount"></span>
+                <a href="/2016/04/12/JDBC-DataSource-DriverManager/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/JDBC-DataSource-DriverManager/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1176,7 +1046,7 @@
 </blockquote>
 <p>先看下原来DM的用法(找了个实习生写的代码，顺便帮他review):<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/26/JDBC-DataSource-DriverManager/#more" rel="contents">
+            <a class="btn" href="/2016/04/12/JDBC-DataSource-DriverManager/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1219,8 +1089,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/05/26/hello-world/" itemprop="url">
-                  Hello World
+                <a class="post-title-link" href="/2016/04/09/JDK-HashMap-HashSet/" itemprop="url">
+                  HashMap与HashSet实现
                 </a>
               
             
@@ -1230,8 +1100,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-05-26T17:39:53+08:00" content="2016-05-26">
-              2016-05-26
+            <time itemprop="dateCreated" datetime="2016-04-09T19:31:20+08:00" content="2016-04-09">
+              2016-04-09
             </time>
           </span>
 
@@ -1240,8 +1110,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -1256,8 +1126,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/05/26/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/26/hello-world/" itemprop="commentsCount"></span>
+                <a href="/2016/04/09/JDK-HashMap-HashSet/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/09/JDK-HashMap-HashSet/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1277,20 +1147,136 @@
 
       
         
-          <span itemprop="articleBody">
-            
-              <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+          <h2 id="HashMap">HashMap</h2><p><code>HashMap</code>使用链表和红黑树来解决Hash冲突，当Hash冲突数比较少时使用链表，当Hash冲突比较多时使用红黑树（Java8新增）。<br><code>HashMap</code>的初始大小是16，最大是1&lt;&lt;30，大概是10亿。</p>
+<blockquote>
+<p>This map usually acts as a binned (bucketed) hash table, but when bins get too large, they are transformed into bins of TreeNodes, each structured similarly to those in java.util.TreeMap.</p>
+</blockquote>
+<p>Hashmap一般使用传统的hash桶，如果冲突过多就会转换成使用树节点(TreeNode)来替换hash链表，类似treeMap的结构，<br>大部分情况下都只是用到普通的hash桶，树节点的hash桶支持更快的查找。</p>
+<p><code>TreeNode</code>的数据结构:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Entry for Tree bins. Extends LinkedHashMap.Entry (which in turn</span><br><span class="line"> * extends Node) so can be used as extension of either regular or</span><br><span class="line"> * linked node.</span><br><span class="line"> */</span></span><br><span class="line">static <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeNode&lt;K</span>,<span class="title">V&gt;</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">LinkedHashMap</span>.<span class="title">Entry&lt;K</span>,<span class="title">V&gt;</span> &#123;</span></span><br><span class="line">    <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; parent;  <span class="comment">// red-black tree links</span></span><br><span class="line">    <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; left;</span><br><span class="line">    <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; right;</span><br><span class="line">    <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; prev;    <span class="comment">// needed to unlink next upon deletion</span></span><br><span class="line">    boolean red;</span><br><span class="line">    <span class="type">TreeNode</span>(int hash, <span class="type">K</span> key, <span class="type">V</span> <span class="function"><span class="keyword">val</span>, <span class="title">Node&lt;K</span>,<span class="title">V&gt;</span> <span class="title">next</span>) &#123;</span></span><br><span class="line">        <span class="keyword">super</span>(hash, key, <span class="function"><span class="keyword">val</span>, <span class="title">next</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Returns root of tree containing this node.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; root() &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; r = <span class="keyword">this</span>, p;;) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((p = r.parent) == <span class="literal">null</span>)</span><br><span class="line">                <span class="keyword">return</span> r;</span><br><span class="line">            r = p;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/09/JDK-HashMap-HashSet/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
 
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
             
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/05/Java-Concurrent/" itemprop="url">
+                  Java线程提升性能解惑
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-05T14:04:32+08:00" content="2016-04-05">
+              2016-04-05
+            </time>
           </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/05/Java-Concurrent/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/05/Java-Concurrent/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="问题">问题</h2><p>首先明确一个问题，什么是提升性能?所谓的提升性能就是用更少的资源去做更多的事情。<br>在Java中我们最常使用多线程来提升性能，但是多线程也存在如下问题</p>
+<ul>
+<li>线程间的协调<ul>
+<li>加锁</li>
+<li>触发信号</li>
+<li>内存同步<ul>
+<li>有竞争同步，需要关注调优。</li>
+<li>无竞争同步，无竞争同步，JVM会通过逸出分析，锁粒度粗化来优化。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>上下文切换<br>  造成: 可运行的线程数 &gt; 处理器的数量<br>  处理: 分配最小执行时间，分担开销<br>  开销: 5000-10000个时钟周期(可通过vmstat查看上下文切换次数与在内核中执行时间所占的比例)</p>
+</li>
+<li><p>线程的创建与销毁</p>
+</li>
+<li>线程的调度
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/05/Java-Concurrent/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1405,7 +1391,7 @@
         <div class="copyright" >
   
   &copy;  2015 - 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

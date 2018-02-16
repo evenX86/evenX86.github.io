@@ -1,0 +1,754 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="HBase,Hadoop," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="前言现在hadoop生态发展的这么完善，实际这些书讲的也已经非常好了，还有一些大神的博客，废话不多说。
+本书建了一个以hbase为数据库的twitter作为实例用来介绍hbase。
+连接管理创建表create &amp;#39;user&amp;#39;,&amp;#39;info&amp;#39;其中表名是user,info是列族(column family)
+
+HBase中的的列组成列族.
+列族
+检查表模式
+HBase创建表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HBase简介の备忘">
+<meta property="og:url" content="http://evenx86.github.io/2016/01/13/hbase-introduce/index.html">
+<meta property="og:site_name" content="曲径通幽">
+<meta property="og:description" content="前言现在hadoop生态发展的这么完善，实际这些书讲的也已经非常好了，还有一些大神的博客，废话不多说。
+本书建了一个以hbase为数据库的twitter作为实例用来介绍hbase。
+连接管理创建表create &amp;#39;user&amp;#39;,&amp;#39;info&amp;#39;其中表名是user,info是列族(column family)
+
+HBase中的的列组成列族.
+列族
+检查表模式
+HBase创建表">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HBase简介の备忘">
+<meta name="twitter:description" content="前言现在hadoop生态发展的这么完善，实际这些书讲的也已经非常好了，还有一些大神的博客，废话不多说。
+本书建了一个以hbase为数据库的twitter作为实例用来介绍hbase。
+连接管理创建表create &amp;#39;user&amp;#39;,&amp;#39;info&amp;#39;其中表名是user,info是列族(column family)
+
+HBase中的的列组成列族.
+列族
+检查表模式
+HBase创建表">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post',
+    motion: true
+  };
+</script>
+
+  <title> HBase简介の备忘 | 曲径通幽 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?b2685220a474d217f2b635080567f31b";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">曲径通幽</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">代码与数据搬运工</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                HBase简介の备忘
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-13T15:21:28+08:00" content="2016-01-13">
+              2016-01-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/13/hbase-introduce/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/13/hbase-introduce/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="前言">前言</h2><p>现在hadoop生态发展的这么完善，实际这些书讲的也已经非常好了，还有一些大神的博客，废话不多说。</p>
+<p>本书建了一个以hbase为数据库的twitter作为实例用来介绍hbase。</p>
+<h2 id="连接管理">连接管理</h2><h3 id="创建表">创建表</h3><p><code>create &#39;user&#39;,&#39;info&#39;</code><br>其中表名是<code>user</code>,<code>info</code>是列族(column family)</p>
+<blockquote>
+<p>HBase中的的列组成列族.</p>
+<h4 id="列族">列族</h4></blockquote>
+<h3 id="检查表模式">检查表模式</h3><blockquote>
+<p>HBase创建表时没提到任何列或者数据类型，除了列族HBase什么也不需要。</p>
+</blockquote>
+<p>HBase：无模式数据库</p>
+<blockquote>
+<p>HBase使用JRuby实现。</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="HBase连接管理">HBase连接管理</h3><blockquote>
+<p>使用Java连接HBase使用HTablePool比直接使用HTable更为城建，使用连接池更好一些，连接从连接池里分配。<br>完成工作及时关闭表，连接资源会返回到连接池中。</p>
+</blockquote>
+<h3 id="数据操作">数据操作</h3><blockquote>
+<p>HBase表的行有唯一标识符，叫做行键。<br>HBase中的所有数据都是作为原始数据使用字节数组形式存储的，行键也还是如此。<br>HBase使用坐标来定位表中的数据。</p>
+<ul>
+<li>行键</li>
+<li>列族</li>
+<li>列限定符</li>
+<li>时间</li>
+</ul>
+</blockquote>
+<h4 id="工作机制">工作机制</h4><p>HBase写路径 :</p>
+<blockquote>
+<p>HBase中，无论是增加新行还是修改已有的行，其内部流程都是相同的。<br>MemStore是内存里的写入缓冲区，HBase中数据在永久写入硬盘之前在这里累计，当MemStore填满后，其中的数据会刷鞋到硬盘，生成一个HFile，但是一个HFile不能存多个列族的数据，在集群的每个节点上，没个列族有一个MemStore。</p>
+</blockquote>
+<p>针对分布式系统常见的硬件故障导致的数据丢失问题，,HBase是这么解决:</p>
+<blockquote>
+<p>在写入之前先写入WAL。集群中每台服务器维护一个WAL来记录发生的变化，<br>WAL是底层文件系统上的一个文件，直到WAL新记录成功写入后，写动作才会被认为成功完成。大多数情况喜爱HBase使用HDFS作为底层文件系统。</p>
+<p>HBase写入时需要来自WAL和MemStore确认，这两个确认确保每次写入HBase 在尽可能快的同时保证持久性，当MemStore写满时刷<br>写到一个新HFile，写入时跳过WAL应该会提升写性能，但是不建议禁用WAL。</p>
+</blockquote>
+<p>HBase读路径</p>
+<blockquote>
+<p>读操作可以做到毫秒级，HBase读动作必须重新衔接持久化到硬盘上的HFile和内存中的MemStore中的数据<br>使用了LRU缓存技术，缓存叫做BlockCache，和MemStore在一个JVM堆里，BlockCache用来保存从HFile里读入内存的频繁访问的数据，避免硬盘读。每个列族都有自己的BlockCache。<br>BlockCache中的block是HBase从硬盘中完成一次读取的数据单位。Block是建立索引的最小数据单位。Block大小按照列族设定，默认值是64KB。<br>从HBase中读出一行首先会检查MemStore等待修改的队列，然后检查BlockCache看包含该行的Block是否最近被<br>访问过，最后才是访问硬盘上对应的HFile。</p>
+</blockquote>
+<p>合并:</p>
+<blockquote>
+<p>Delete命令不会立即删除内容，实际它只是个记录打上删除的标记。标志删除的内容不能在Get和Scan中返回结果，HFile是不能改变的，直到一次大合并，这些记录才会被出里，被删除记录的空间才会释放。</p>
+</blockquote>
+<p>时间版本数据库</p>
+<blockquote>
+<p>每次你在单元上执行操作，HBase都隐式存储一个新时间版本。单元的新建，修改和删除都会同样处理。它们都会留下新时间版本。时间版本是访问特定单元的最后一个坐标，没有设置这个坐标时候HBase就会使用当前时间。<br>如果一个单元的版本超过了最大数量，多处的记录会在下一次大合并时候扔掉。</p>
+</blockquote>
+<h3 id="数据组织">数据组织</h3><ul>
+<li>表: </li>
+<li>行  : 在表里数据按照行存储，行由行健唯一标识。</li>
+<li>列族 :  行里的数据按照列族分组，列族也影响到HBase数据的物理存放，因此列族必须事前定义且不轻易修改。</li>
+<li>列限定符: 列族里的数据通过列限定符来定位。</li>
+<li>单元 ： 行健列族和列限定符一起确定一个单元。</li>
+<li>时间版本: 单元值有时间版本，默认数量是3个</li>
+</ul>
+<h3 id="命令操作">命令操作</h3><ul>
+<li><h4 id="get">get</h4><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Get g <span class="subst">=</span> <span class="literal">new</span> Get(<span class="built_in">Bytes</span><span class="built_in">.</span>toBytes(<span class="string">"Name"</span>));</span><br><span class="line">g<span class="built_in">.</span>addColumn(<span class="built_in">Bytes</span><span class="built_in">.</span>toBytes(<span class="string">"info"</span>)) <span class="comment">//在Get中防止限制条件来减少返回的数据量。</span></span><br><span class="line">Result r <span class="subst">=</span> userTable<span class="built_in">.</span>get(g);</span><br><span class="line"><span class="string">``</span><span class="string">`   </span><br><span class="line">- #### put</span><br><span class="line">与get相似</span><br><span class="line"></span><br><span class="line">- #### delete</span><br><span class="line">`</span><span class="string">``</span>Delete d <span class="subst">=</span> <span class="literal">new</span> Delete (<span class="built_in">Bytes</span><span class="built_in">.</span>toBytes(<span class="string">""</span>Name));</span><br><span class="line">d<span class="built_in">.</span>deleteColumns(<span class="built_in">Bytes</span><span class="built_in">.</span>toBytes(<span class="string">"info"</span>));<span class="comment">//指定删除行的一部分</span></span><br><span class="line">table<span class="built_in">.</span>delete(d);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>deleteColumn</code> 是删除单元的内容<br><code>deleteColumn</code> 是删除一个单元</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HBase/" rel="tag">#HBase</a>
+          
+            <a href="/tags/Hadoop/" rel="tag">#Hadoop</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/16/A-Programmer's-Rantings-note/" rel="next" title="《程序员的呐喊》读书笔记">
+                <i class="fa fa-chevron-left"></i> 《程序员的呐喊》读书笔记
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/13/hbase-problem/" rel="prev" title="HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected">
+                HBase: Error: Found interface org.apache.hadoop.mapreduce.Counter, but class was expected <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/01/13/hbase-introduce/"
+           data-title="HBase简介の备忘" data-url="http://evenx86.github.io/2016/01/13/hbase-introduce/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="xuyifei" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">xuyifei</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">Developer,目前在点Hadoop</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接管理"><span class="nav-number">2.</span> <span class="nav-text">连接管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建表"><span class="nav-number">2.1.</span> <span class="nav-text">创建表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#列族"><span class="nav-number">2.1.1.</span> <span class="nav-text">列族</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查表模式"><span class="nav-number">2.2.</span> <span class="nav-text">检查表模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HBase连接管理"><span class="nav-number">2.3.</span> <span class="nav-text">HBase连接管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据操作"><span class="nav-number">2.4.</span> <span class="nav-text">数据操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#工作机制"><span class="nav-number">2.4.1.</span> <span class="nav-text">工作机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据组织"><span class="nav-number">2.5.</span> <span class="nav-text">数据组织</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令操作"><span class="nav-number">2.6.</span> <span class="nav-text">命令操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#get"><span class="nav-number">2.6.1.</span> <span class="nav-text">get</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xuyifei</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"evenx86"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>
