@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Git," />
+  <meta name="keywords" content="架构设计,读书笔记,软件工程," />
 
 
 
@@ -53,24 +53,15 @@
 
 
 
-<meta name="description" content="单单git diff 不过是显示还没有暂存起来的改动，而不是这次工作和上次提交之间的差异。所以有时候你一下子暂存了所有更新过的文件后，运行 git diff 后却什么也没有git diff --cached查看已经暂存起来的变化
-
-git 增量包打包命令 :
-1git archive -o update.zip NEW_COMMIT_ID_HERE $(git diff --name-only O">
+<meta name="description" content="How it works?作为一个工程师对这两章内容中的观点的解读">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git 自动部署">
-<meta property="og:url" content="http://evenx86.github.io/2016/01/26/git-auto-deploy/index.html">
+<meta property="og:title" content="组织与角色-架构即未来第二三章.md">
+<meta property="og:url" content="http://evenx86.github.io/2018/03/03/TheArtOfScalability-cha2&3/index.html">
 <meta property="og:site_name" content="曲径通幽">
-<meta property="og:description" content="单单git diff 不过是显示还没有暂存起来的改动，而不是这次工作和上次提交之间的差异。所以有时候你一下子暂存了所有更新过的文件后，运行 git diff 后却什么也没有git diff --cached查看已经暂存起来的变化
-
-git 增量包打包命令 :
-1git archive -o update.zip NEW_COMMIT_ID_HERE $(git diff --name-only O">
+<meta property="og:description" content="How it works?作为一个工程师对这两章内容中的观点的解读">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git 自动部署">
-<meta name="twitter:description" content="单单git diff 不过是显示还没有暂存起来的改动，而不是这次工作和上次提交之间的差异。所以有时候你一下子暂存了所有更新过的文件后，运行 git diff 后却什么也没有git diff --cached查看已经暂存起来的变化
-
-git 增量包打包命令 :
-1git archive -o update.zip NEW_COMMIT_ID_HERE $(git diff --name-only O">
+<meta name="twitter:title" content="组织与角色-架构即未来第二三章.md">
+<meta name="twitter:description" content="How it works?作为一个工程师对这两章内容中的观点的解读">
 
 
 
@@ -82,7 +73,7 @@ git 增量包打包命令 :
   };
 </script>
 
-  <title> Git 自动部署 | 曲径通幽 </title>
+  <title> 组织与角色-架构即未来第二三章.md | 曲径通幽 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -212,7 +203,7 @@ git 增量包打包命令 :
             
             
               
-                Git 自动部署
+                组织与角色-架构即未来第二三章.md
               
             
           </h1>
@@ -221,8 +212,8 @@ git 增量包打包命令 :
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-26T15:44:16+08:00" content="2016-01-26">
-              2016-01-26
+            <time itemprop="dateCreated" datetime="2018-03-03T22:49:42+08:00" content="2018-03-03">
+              2018-03-03
             </time>
           </span>
 
@@ -231,8 +222,8 @@ git 增量包打包命令 :
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
                   </a>
                 </span>
 
@@ -247,8 +238,8 @@ git 增量包打包命令 :
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/01/26/git-auto-deploy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/26/git-auto-deploy/" itemprop="commentsCount"></span>
+                <a href="/2018/03/03/TheArtOfScalability-cha2&3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/03/TheArtOfScalability-cha2&3/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -267,16 +258,44 @@ git 增量包打包命令 :
       
 
       
-        <span itemprop="articleBody"><blockquote>
-<p>单单<code>git diff</code> 不过是显示还没有暂存起来的改动，而不是这次工作和上次提交之间的差异。所以有时候你一下子暂存了所有更新过的文件后，运行 <code>git diff</code> 后却什么也没有<br><code>git diff --cached</code>查看已经暂存起来的变化</p>
-</blockquote>
-<p>git 增量包打包命令 :</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git archive -o <span class="operator"><span class="keyword">update</span>.zip NEW_COMMIT_ID_HERE $(git diff <span class="comment">--name-only OLD_COMMIT_ID_HERE NEW_COMMIT_ID_HERE)</span></span></span><br></pre></td></tr></table></figure>
-<p>git 获得最近一次commit id</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">git</span> rev-parse HEAD</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">log</span> -<span class="number">1</span> --pretty=<span class="string">"<span class="variable">%H</span>"</span></span><br></pre></td></tr></table></figure>
-<p>可以把其中1改为2则是最近两次的修改记录.这样就可以写脚本了XD</p>
+        <span itemprop="articleBody"><p>How it works?<br>作为一个工程师对这两章内容中的观点的解读<br><a id="more"></a> </p>
+<h3 id="角色和责任">角色和责任</h3><p>一个可扩展性的系统是如何工作的，理清与扩展性相关的技术与执行人员的角色和责任。</p>
+<ol>
+<li>要避免无人负责与多个团队负责同一个系统<br> 要清楚定义谁是决策者，谁负责为决策提供信息<br> 对于权力下放的注解<strong>可以下放任何权力，但是必须对其结果承担所有责任</strong>，好的领导应该是把赞扬留给团队，自己对其结果承担所有的责任。<br>ps:书中讲到的CEO，CTO的责任可以了解下： 架构师的职责就是确保系统的设计和架构随着业务的发展而发展。</li>
+<li>不应该有任何一个团队把角色和责任作为无法完成工作的障碍。<br> 记得曾听过一则FB里的话：所有关于FB的事都是你的事。<h3 id="组织的设置">组织的设置</h3></li>
+<li>通过标准化来提高组织的效率<br>一个不注重代码，文档，规范和配置标准的制定，发布和应用的组织，研发效率和质量必然低下，生产中出现出现严重问题的风险很大。<br>注解：尤其当团队扩大的时候，新人占比提高，缺乏规范导致的问题会出现的更多。<br>没有标准和规范，团队会在什么是最佳实践上造成误解。<br>团队在业务压力的情况下往往也会背离这些原则进行开发，书中举例的常见借口也是我经常用的：“这个服务对系统无关紧要”或者是”影响不大”。<br>如果是这样的话，那为什么要开发这个服务呢？所以平常开发中还是要对自己严格要求。不能牺牲代码质量，这是码农最后的坚守了！</li>
+<li>组织的警告信号</li>
+</ol>
+<ul>
+<li>过大的组织<ul>
+<li>沟通不畅</li>
+<li>生产率低下</li>
+<li>士气低落</li>
+</ul>
+</li>
+<li>过小的组织<ul>
+<li>不满意的业务合作伙伴</li>
+<li>微观管理的经理</li>
+<li>过度劳累的团队成员</li>
+</ul>
+</li>
+</ul>
+<p>上述几点都是书中的描述，也有举例说明。其实在一个团队中研发团队属于过小，而研发+产品+QA 又算一个大组织了，所以这些问题都会出现在同一个团队里。<br>能想到的解决办法就是通过标准化方式来提高组织效率，但是怎么做才是标准化，这都是需要摸索的，坚持社会主义初级阶段一百年.</p>
+<p>书中有列了一个组织团队最佳规模的事项checklist，而之前也有阅读到美团一篇技术文章讲如何保证系统高可用上，也会有个系统稳定的checklist，这个方法其实很通用，毕竟人在处理<br>问题上还是会有盲目或者考虑不周到的，通过事先列出checklist可以更有调理性的解决问题，对于团队新人也能少走弯路。QA同学在进行系统测试也会有个<br>思维导图来列举出需要测试的方方面面。这就是方法论。</p>
+<p>隔壁团队在实行敏捷看板开发的时候，列举了很多注意点，都是大字黑体加重打印在看板上。最后一条是对事不对人，本章也讲到了不同组织架构，以及冲突的解读（非常精彩）。<br>组织首先是由各种各样的人构成的，组织的活动不可能避免人的交流。有交流必然会有冲突。冲突也有区别：</p>
+<ul>
+<li><strong>认知型冲突</strong><ul>
+<li>围绕着做什么，为什么要这么做 展开</li>
+<li>需要更大的视角和经验</li>
+</ul>
+</li>
+<li><strong>情感型冲突</strong><ul>
+<li>围绕着怎么做，谁来做</li>
+<li>基于角色和自身出发</li>
+</ul>
+</li>
+</ul>
+<p>可以看出“对事不对人”就是要团队成员避免情感型冲突，提倡认知型冲突。</p>
 </span>
       
     </div>
@@ -285,7 +304,11 @@ git 增量包打包命令 :
       
         <div class="post-tags">
           
-            <a href="/tags/Git/" rel="tag">#Git</a>
+            <a href="/tags/架构设计/" rel="tag">#架构设计</a>
+          
+            <a href="/tags/读书笔记/" rel="tag">#读书笔记</a>
+          
+            <a href="/tags/软件工程/" rel="tag">#软件工程</a>
           
         </div>
       
@@ -294,17 +317,13 @@ git 增量包打包命令 :
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/13/hadoop-configure/" rel="next" title="Hadoop 伪分布式模式配置">
-                <i class="fa fa-chevron-left"></i> Hadoop 伪分布式模式配置
+              <a href="/2018/02/16/TheArtOfScalability-cha1/" rel="next" title="架构即未来第一章人对可扩展性组织的影响">
+                <i class="fa fa-chevron-left"></i> 架构即未来第一章人对可扩展性组织的影响
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/01/26/hive-over-hbase/" rel="prev" title="Hive安装及整合HBase">
-                Hive安装及整合HBase <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -331,8 +350,8 @@ git 增量包打包命令 :
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/01/26/git-auto-deploy/"
-           data-title="Git 自动部署" data-url="http://evenx86.github.io/2016/01/26/git-auto-deploy/">
+      <div class="ds-thread" data-thread-key="2018/03/03/TheArtOfScalability-cha2&3/"
+           data-title="组织与角色-架构即未来第二三章.md" data-url="http://evenx86.github.io/2018/03/03/TheArtOfScalability-cha2&3/">
       </div>
     
   </div>
@@ -422,7 +441,7 @@ git 增量包打包命令 :
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#角色和责任"><span class="nav-number">1.</span> <span class="nav-text">角色和责任</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组织的设置"><span class="nav-number">2.</span> <span class="nav-text">组织的设置</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

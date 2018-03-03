@@ -212,6 +212,114 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/09/JDK-HashMap-HashSet/" itemprop="url">
+                  HashMap与HashSet实现
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-09T19:31:20+08:00" content="2016-04-09">
+              2016-04-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/09/JDK-HashMap-HashSet/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/09/JDK-HashMap-HashSet/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="HashMap">HashMap</h2><p><code>HashMap</code>使用链表和红黑树来解决Hash冲突，当Hash冲突数比较少时使用链表，当Hash冲突比较多时使用红黑树（Java8新增）。<br><code>HashMap</code>的初始大小是16，最大是1&lt;&lt;30，大概是10亿。</p>
+<blockquote>
+<p>This map usually acts as a binned (bucketed) hash table, but when bins get too large, they are transformed into bins of TreeNodes, each structured similarly to those in java.util.TreeMap.</p>
+</blockquote>
+<p>Hashmap一般使用传统的hash桶，如果冲突过多就会转换成使用树节点(TreeNode)来替换hash链表，类似treeMap的结构，<br>大部分情况下都只是用到普通的hash桶，树节点的hash桶支持更快的查找。</p>
+<p><code>TreeNode</code>的数据结构:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Entry for Tree bins. Extends LinkedHashMap.Entry (which in turn</span><br><span class="line"> * extends Node) so can be used as extension of either regular or</span><br><span class="line"> * linked node.</span><br><span class="line"> */</span></span><br><span class="line">static <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeNode&lt;K</span>,<span class="title">V&gt;</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">LinkedHashMap</span>.<span class="title">Entry&lt;K</span>,<span class="title">V&gt;</span> &#123;</span></span><br><span class="line">    <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; parent;  <span class="comment">// red-black tree links</span></span><br><span class="line">    <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; left;</span><br><span class="line">    <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; right;</span><br><span class="line">    <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; prev;    <span class="comment">// needed to unlink next upon deletion</span></span><br><span class="line">    boolean red;</span><br><span class="line">    <span class="type">TreeNode</span>(int hash, <span class="type">K</span> key, <span class="type">V</span> <span class="function"><span class="keyword">val</span>, <span class="title">Node&lt;K</span>,<span class="title">V&gt;</span> <span class="title">next</span>) &#123;</span></span><br><span class="line">        <span class="keyword">super</span>(hash, key, <span class="function"><span class="keyword">val</span>, <span class="title">next</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Returns root of tree containing this node.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; root() &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">TreeNode</span>&lt;<span class="type">K</span>,<span class="type">V</span>&gt; r = <span class="keyword">this</span>, p;;) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((p = r.parent) == <span class="literal">null</span>)</span><br><span class="line">                <span class="keyword">return</span> r;</span><br><span class="line">            r = p;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/09/JDK-HashMap-HashSet/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/05/Java-Concurrent/" itemprop="url">
                   Java线程提升性能解惑
                 </a>
@@ -1192,125 +1300,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/16/hbase-connection-refused/" itemprop="url">
-                  HBase 只能内网连接问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-16T16:26:42+08:00" content="2016-03-16">
-              2016-03-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/16/hbase-connection-refused/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/16/hbase-connection-refused/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="问题描述">问题描述</h2><p>HBase操作只能在内网进行，在本地IDE里操作HBase则会报错。<br>这里我使用了asynchbase客户端:<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13</span>:<span class="number">47</span>:<span class="number">38</span>,<span class="number">201</span>  WARN HBaseClient:<span class="number">3217</span> - Couldn't connect <span class="keyword">to</span> <span class="keyword">the</span> RegionServer @ xx.xx.xx<span class="number">.148</span>:<span class="number">16020</span></span><br><span class="line"><span class="number">13</span>:<span class="number">47</span>:<span class="number">38</span>,<span class="number">208</span> ERROR RegionClient:<span class="number">1219</span> - Unexpected exception <span class="keyword">from</span> downstream <span class="function_start"><span class="keyword">on</span></span> [<span class="property">id</span>: <span class="number">0xa853c05b</span>]</span><br><span class="line">java.net.ConnectException: Connection refused: no further information: /xx.xx.xx<span class="number">.148</span>:<span class="number">16020</span></span><br><span class="line">    <span class="keyword">at</span> sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)</span><br><span class="line">    <span class="keyword">at</span> sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:<span class="number">739</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.channel.socket.nio.NioClientBoss.connect(NioClientBoss.java:<span class="number">152</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.channel.socket.nio.NioClientBoss.processSelectedKeys(NioClientBoss.java:<span class="number">105</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:<span class="number">79</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.channel.socket.nio.AbstractNioSelector.<span class="command">run</span>(AbstractNioSelector.java:<span class="number">337</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.channel.socket.nio.NioClientBoss.<span class="command">run</span>(NioClientBoss.java:<span class="number">42</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.util.ThreadRenamingRunnable.<span class="command">run</span>(ThreadRenamingRunnable.java:<span class="number">108</span>)</span><br><span class="line">    <span class="keyword">at</span> org.jboss.netty.util.internal.DeadLockProofWorker$<span class="number">1.</span><span class="command">run</span>(DeadLockProofWorker.java:<span class="number">42</span>)</span><br><span class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1145</span>)</span><br><span class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor$Worker.<span class="command">run</span>(ThreadPoolExecutor.java:<span class="number">615</span>)</span><br><span class="line">    <span class="keyword">at</span> java.lang.Thread.<span class="command">run</span>(Thread.java:<span class="number">745</span>)</span><br></pre></td></tr></table></figure></p>
-<p>查看该机器上16020的端口情况:</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[root@HADOOP-SLAVE-148 ~]</span># <span class="tag">netstat</span> <span class="tag">-anp</span>|<span class="tag">grep</span> <span class="tag">16020</span></span><br><span class="line"><span class="tag">Proto</span>   <span class="tag">Recv-Q</span> <span class="tag">Send-Q</span>     <span class="tag">Local</span> <span class="tag">Address</span>           <span class="tag">Foreign</span> <span class="tag">Address</span>                <span class="tag">State</span>  </span><br><span class="line"><span class="tag">tcp</span>        <span class="tag">0</span>      <span class="tag">0</span>    <span class="pseudo">::ffff</span><span class="pseudo">:10</span><span class="class">.1</span><span class="class">.6</span><span class="class">.148</span><span class="pseudo">:16020</span>      :::*                         <span class="tag">LISTEN</span>      <span class="tag">14684</span>/<span class="tag">java</span>         </span><br><span class="line"><span class="tag">tcp</span>        <span class="tag">0</span>      <span class="tag">0</span>    <span class="pseudo">::ffff</span><span class="pseudo">:10</span><span class="class">.1</span><span class="class">.6</span><span class="class">.148</span><span class="pseudo">:16020</span>      <span class="pseudo">::ffff</span><span class="pseudo">:10</span><span class="class">.128</span><span class="class">.122</span><span class="class">.153</span><span class="pseudo">:39679</span>  <span class="tag">ESTABLISHED</span> <span class="tag">14684</span>/<span class="tag">java</span></span><br></pre></td></tr></table></figure>
-<p>解读:</p>
-<blockquote>
-<p>::ffff is the IPv6 prefix for an IPv4 address mapped into IPv6 space<br>(something along those lines).<br> And it means that it is an IPv6 socket that is used for IPv4<br>communication. Application and socket-wise, it is IPv6 but network and<br>packet-wise it is IPv4. This is allowed as a transition mechanism if<br>net.ipv6.bindv6only=0 and the application didn’t set the socket option<br>IPV6_V6ONLY.<br> It seems that some recent OSes disable this option by default so that<br>IPv6 sockets can handle only real IPv6 communications.</p>
-</blockquote>
-<p>后来询问了下Hadoop群里的大神，</p>
-<blockquote>
-<p>要想让外网访问的话配置hostname为外网，或者通过nginx指向。</p>
-</blockquote>
-<p>之前配置的hostname确实是内网的。怪不得外网无法访问，在开发机开通了内网权限后就能访问了。</p>
-<h2 id="无法连接的问题集锦">无法连接的问题集锦</h2><p>问题描述:</p>
-<blockquote>
-<p>我现在用１０多台物理服务器组建了一个hadoop集群，这１０多台服务器组建成一个局域网，其中只有namenode服务器连接到外网<br>遇到的问题：我在外网无法访问到datanode节点数据<br>各位大哥，谁有好的解决方案？</p>
-</blockquote>
-<p>外网为什么要访问datanode数据?访问namenode 就是不对的做法，为何不拿出来一台做service</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1357,7 +1346,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
