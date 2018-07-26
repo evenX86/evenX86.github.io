@@ -212,6 +212,115 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/12/JDBC-DataSource-DriverManager/" itemprop="url">
+                  为什么要用DataSource代替DriverManager
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-04-12T13:50:38+08:00" content="2016-04-12">
+              2016-04-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/12/JDBC-DataSource-DriverManager/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/JDBC-DataSource-DriverManager/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>这个问题本来是SO上的一个问答:<a href="http://stackoverflow.com/questions/15198319/why-do-we-use-a-datasource-instead-of-a-drivermanager">http://stackoverflow.com/questions/15198319/why-do-we-use-a-datasource-instead-of-a-drivermanager</a></p>
+<p>大致意思是使用DataSource有更好的可扩展性并且更易于维护。<br>使用DataSource你不需要每次连接都要配置一大段的用户名密码端口，然后才能获得连接去使用数据库。DS方式的话只需要初始化的时候配置一次，每次使用直接拿出连接用就好了。<br>关于可扩展性，就是DataSource提供连接池，而DM不提供。</p>
+<p>JDK8里的描述:</p>
+<blockquote>
+<p>A factory for connections to the physical data source that this DataSource object represents. An alternative to the DriverManager facility, a DataSource object is the preferred means of getting a connection. An object that implements the DataSource interface will typically be registered with a naming service based on the Java™ Naming and Directory (JNDI) API.</p>
+</blockquote>
+<p>先看下原来DM的用法(找了个实习生写的代码，顺便帮他review):<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/12/JDBC-DataSource-DriverManager/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/09/JDK-HashMap-HashSet/" itemprop="url">
                   HashMap与HashSet实现
                 </a>
@@ -1183,129 +1292,12 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/16/asynchbase-introduce/" itemprop="url">
-                  HBase AsyncHBase客户端
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-16T16:30:32+08:00" content="2016-03-16">
-              2016-03-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/16/asynchbase-introduce/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/16/asynchbase-introduce/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="引入">引入</h2><p>HBase原生的Java客户端是完全同步的，在HBase响应请求的每个动作的时候都会短时间阻塞你的应用线程。<br>所以我们引入了asynchbase ，其也是由Java编写，并且是完全异步的，线程安全的。<br>asynchbase是在async的异步库上创建的。<br>不同于原生的HBase client，asynchbase 只能被实例化一次，只有在对不同的集群操作的时候才有可能生成多个实例。</p>
-<p>使用asynchbase客户端<br>asynchbase的主入口是HBaseClient</p>
-<blockquote>
-<ul>
-<li>asynchbase和HTable的性能对比 <a href="http://www.tsunanet.net/~tsuna/asynchbase/benchmark/viz.html" target="_blank" rel="external">http://www.tsunanet.net/~tsuna/asynchbase/benchmark/viz.html</a></li>
-<li><a href="http://dirlt.com/opentsdb.html" target="_blank" rel="external">OpenTSDB</a> is a distributed, scalable Time Series Database (TSDB) <a href="http://opentsdb.net/index.html" target="_blank" rel="external">http://opentsdb.net/index.html</a><br>从看asynchbase介绍来看，我猜想asynchbase用在MR范围还是有限的。</li>
-<li>asynchbase就是一个异步client，能够很好地解决一个app里面对于hbase有很多个连接的场景。</li>
-<li>但是在MR里面，拿我们现在的HourlyProcedure来说，每次get都是一个同步过程，一定要取回结果才能够进行下一步的操作。整个MR框架就限制了异步client的作用。</li>
-<li>asynchbase现在使用的场景应该是OpenTSDB，因为没有MR框架限制，所以异步client可以工作很好。<br>note@2012-12-10: code/java/asynchbase下面有一些使用的示例代码，并且在自己的fast-hbase-rest里面也使用了asynchbase. 使用还是比较方便的。 实现上asynchbase没有使用任何org.apache.hbase的代码，从头完成了自己的协议访问，这个可以从HBaseClient的构造参数可以看到，在里面没有使用configuration, 而是直接传入quorumSpec就是zookeeper的地址。</li>
-</ul>
-</blockquote>
-<h2 id="Sample">Sample</h2><p>HBase Table准备<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hbase(<span class="keyword">main</span>):<span class="number">023</span>:<span class="number">0</span>&gt; create <span class="string">'users'</span>,<span class="keyword">&#123;</span><span class="function">NAME =&gt;</span> <span class="string">'info'</span>,<span class="function">VERSIONS =&gt;</span> <span class="number">1</span>,<span class="function">TTL =&gt;</span> <span class="number">5184000</span>,<span class="function">BLOCKCACHE =&gt;</span> <span class="keyword">true</span><span class="keyword">&#125;</span></span><br><span class="line"><span class="number">0</span> row(s) <span class="keyword">in</span> <span class="number">2.3090</span> <span class="function">seconds</span><br><span class="line"></span><br><span class="line">=&gt;</span> <span class="constant">Hbase::Table</span> - users</span><br><span class="line">hbase(<span class="keyword">main</span>):<span class="number">024</span>:<span class="number">0</span>&gt; put <span class="string">'users'</span>,<span class="string">'1111'</span>,<span class="string">'info:password'</span>,<span class="string">'123456'</span></span><br><span class="line"><span class="number">0</span> row(s) <span class="keyword">in</span> <span class="number">0</span>.<span class="number">1140</span> seconds</span><br></pre></td></tr></table></figure></p>
-<h2 id="参考资料">参考资料</h2><ul>
-<li><a href="http://tsunanet.net/~tsuna/asynchbase/api/org/hbase/async/HBaseClient.html" target="_blank" rel="external">http://tsunanet.net/~tsuna/asynchbase/api/org/hbase/async/HBaseClient.html</a></li>
-</ul>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1346,7 +1338,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">41</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

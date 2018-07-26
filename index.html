@@ -212,6 +212,115 @@
             
               
                 
+                <a class="post-title-link" href="/2018/07/26/abstract-talk/" itemprop="url">
+                  随笔抽象
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2018-07-26T22:01:18+08:00" content="2018-07-26">
+              2018-07-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/07/26/abstract-talk/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/07/26/abstract-talk/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>道生一，一生二，二生三，三生万物 —— 《道德经》</p>
+</blockquote>
+<p>赫拉里的“人类简史” 里有一段关于人类从原始人进化到部落的记录很有意思，动物之间也会有传递信息，但是人类发展出来复杂的体系，就是语言的一个新维度：抽象思维。<br>我理解的抽象是从众多的表象里能抽象出一个能够描述这些表象的框架，理论，名词等。<br>wikipedia里对抽象的定义:</p>
+<ul>
+<li>抽象: 就是抽取事物一些本质的东西，剔除次要的表面东西。</li>
+<li>计算机科学里的抽象化: 指高级的模型，和低级的实体相对。<br>最近又翻开了CSAPP(深入理解计算机系统)…
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2018/07/26/abstract-talk/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/03/03/TheArtOfScalability-cha2&3/" itemprop="url">
                   组织与角色-架构即未来第二三章.md
                 </a>
@@ -1174,121 +1283,12 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/12/JDBC-DataSource-DriverManager/" itemprop="url">
-                  为什么要用DataSource代替DriverManager
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-04-12T13:50:38+08:00" content="2016-04-12">
-              2016-04-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/12/JDBC-DataSource-DriverManager/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/12/JDBC-DataSource-DriverManager/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>这个问题本来是SO上的一个问答:<a href="http://stackoverflow.com/questions/15198319/why-do-we-use-a-datasource-instead-of-a-drivermanager">http://stackoverflow.com/questions/15198319/why-do-we-use-a-datasource-instead-of-a-drivermanager</a></p>
-<p>大致意思是使用DataSource有更好的可扩展性并且更易于维护。<br>使用DataSource你不需要每次连接都要配置一大段的用户名密码端口，然后才能获得连接去使用数据库。DS方式的话只需要初始化的时候配置一次，每次使用直接拿出连接用就好了。<br>关于可扩展性，就是DataSource提供连接池，而DM不提供。</p>
-<p>JDK8里的描述:</p>
-<blockquote>
-<p>A factory for connections to the physical data source that this DataSource object represents. An alternative to the DriverManager facility, a DataSource object is the preferred means of getting a connection. An object that implements the DataSource interface will typically be registered with a naming service based on the Java™ Naming and Directory (JNDI) API.</p>
-</blockquote>
-<p>先看下原来DM的用法(找了个实习生写的代码，顺便帮他review):<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/12/JDBC-DataSource-DriverManager/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1329,7 +1329,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">41</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
